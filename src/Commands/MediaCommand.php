@@ -1,6 +1,6 @@
 <?php
 
-namespace Drewroberts\Media\Commands;
+namespace DrewRoberts\Media\Commands;
 
 use Illuminate\Console\Command;
 

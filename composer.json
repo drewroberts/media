@@ -1,17 +1,18 @@
 {
-    "name": "spatie/media",
-    "description": "Laravel Package for opinionated usage of Media (images :package_description videos)",
+    "name": "drewroberts/media",
+    "description": "Laravel Package for opinionated usage of Media (images & videos)",
     "keywords": [
-        "spatie",
+        "laravel",
+        "laravel package",
         "media"
     ],
-    "homepage": "https://github.com/spatie/media",
+    "homepage": "https://github.com/drewroberts/media",
     "license": "MIT",
     "authors": [
         {
             "name": "Drew Roberts",
             "email": "github@drewroberts.com",
-            "homepage": "https://spatie.be",
+            "homepage": "https://drewroberts.com",
             "role": "Developer"
         }
     ],
@@ -27,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Drewroberts\\Media\\": "src"
+            "DrewRoberts\\Media\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Drewroberts\\Media\\Tests\\": "tests"
+            "DrewRoberts\\Media\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,10 +48,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Drewroberts\\Media\\MediaServiceProvider"
+                "DrewRoberts\\Media\\MediaServiceProvider"
             ],
             "aliases": {
-                "Media": "Drewroberts\\Media\\MediaFacade"
+                "Media": "DrewRoberts\\Media\\MediaFacade"
             }
         }
     },

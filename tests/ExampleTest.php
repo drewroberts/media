@@ -1,6 +1,6 @@
 <?php
 
-namespace Drewroberts\Media\Tests;
+namespace DrewRoberts\Media\Tests;
 
 class ExampleTest extends TestCase
 {

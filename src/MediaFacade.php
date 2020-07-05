@@ -1,11 +1,11 @@
 <?php
 
-namespace Drewroberts\Media;
+namespace DrewRoberts\Media;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Drewroberts\Media\Media
+ * @see \DrewRoberts\Media\Media
  */
 class MediaFacade extends Facade
 {

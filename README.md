@@ -1,4 +1,4 @@
-# Laravel Package for opinionated usage of Media (images :package_description videos)
+# Laravel Package for opinionated usage of Media (images & videos)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/drewroberts/media.svg?style=flat-square)](https://packagist.org/packages/drewroberts/media)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/drewroberts/media/run-tests?label=tests)](https://github.com/drewroberts/media/actions?query=workflow%3Arun-tests+branch%3Amaster)

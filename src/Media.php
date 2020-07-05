@@ -1,6 +1,6 @@
 <?php
 
-namespace Drewroberts\Media;
+namespace DrewRoberts\Media;
 
 class Media
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Drewroberts\Media;
+namespace DrewRoberts\Media;
 
-use Drewroberts\Media\Commands\MediaCommand;
+use DrewRoberts\Media\Commands\MediaCommand;
 use Illuminate\Support\ServiceProvider;
 
 class MediaServiceProvider extends ServiceProvider

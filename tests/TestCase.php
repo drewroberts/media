@@ -1,8 +1,8 @@
 <?php
 
-namespace Drewroberts\Media\Tests;
+namespace DrewRoberts\Media\Tests;
 
-use Drewroberts\Media\MediaServiceProvider;
+use DrewRoberts\Media\MediaServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

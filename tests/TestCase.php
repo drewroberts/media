@@ -2,8 +2,8 @@
 
 namespace Drewroberts\Media\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Drewroberts\Media\MediaServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

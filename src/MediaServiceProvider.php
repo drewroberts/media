@@ -2,8 +2,8 @@
 
 namespace Drewroberts\Media;
 
-use Illuminate\Support\ServiceProvider;
 use Drewroberts\Media\Commands\MediaCommand;
+use Illuminate\Support\ServiceProvider;
 
 class MediaServiceProvider extends ServiceProvider
 {

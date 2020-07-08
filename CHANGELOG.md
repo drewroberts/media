@@ -6,3 +6,7 @@ All notable changes to `media` will be documented in this file
 
 - initial release
 - image & video migrations only
+
+## 1.0.1 - 2020-07-08
+
+- reduce php requirement

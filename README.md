@@ -36,13 +36,13 @@ return [
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --provider="Drewroberts\Media\MediaServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="DrewRoberts\Media\MediaServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="Drewroberts\Media\MediaServiceProvider" --tag="config"
+php artisan vendor:publish --provider="DrewRoberts\Media\MediaServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:
@@ -55,8 +55,8 @@ return [
 ## Usage
 
 ``` php
-$media = new Drewroberts\Media();
-echo $media->echoPhrase('Hello, Drewroberts!');
+$media = new DrewRoberts\Media();
+echo $media->echoPhrase('Hello, DrewRoberts!');
 ```
 
 ## Testing
@@ -75,11 +75,11 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@drewroberts.be instead of using the issue tracker.
+If you discover any security related issues, please email packages@drewroberts.com instead of using the issue tracker.
 
 ## Credits
 
-- [Drew Roberts](https://github.com/DrewRoberts)
+- [Drew Roberts](https://github.com/drewroberts)
 - [All Contributors](../../contributors)
 
 ## License

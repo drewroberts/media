@@ -10,3 +10,7 @@ All notable changes to `media` will be documented in this file
 ## 1.0.1 - 2020-07-08
 
 - reduce php requirement
+
+## 1.0.2 - 2020-07-28
+
+- add models & nova resources

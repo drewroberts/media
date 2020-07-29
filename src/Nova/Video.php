@@ -9,10 +9,11 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use Laravel\Nova\Resource;
 
 class Video extends Resource
 {
-    public static $model = \DrewRoberts\Media\Video::class;
+    public static $model = \DrewRoberts\Media\Models\Video::class;
 
     public static $title = 'id';
 

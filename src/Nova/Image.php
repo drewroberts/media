@@ -10,11 +10,12 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use Laravel\Nova\Resource;
 use Silvanite\NovaFieldCloudinary\Fields\CloudinaryImage;
 
 class Image extends Resource
 {
-    public static $model = \DrewRoberts\Media\Image::class;
+    public static $model = \DrewRoberts\Media\Models\Image::class;
 
     public static $title = 'id';
 

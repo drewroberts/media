@@ -14,3 +14,7 @@ All notable changes to `media` will be documented in this file
 ## 1.0.2 - 2020-07-28
 
 - add models & nova resources
+
+## 1.0.3 - 2020-07-29
+
+- update nova resources

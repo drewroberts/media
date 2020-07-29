@@ -33,36 +33,17 @@ return [
 ];
 ```
 
-You can publish and run the migrations with:
+The migrations will run from the package. You can extend the Models from the package if you need additional classes or functions added to them. 
 
-```bash
-php artisan vendor:publish --provider="DrewRoberts\Media\MediaServiceProvider" --tag="migrations"
-php artisan migrate
-```
+#### Registering the Nova resources
 
-You can publish the config file with:
-```bash
-php artisan vendor:publish --provider="DrewRoberts\Media\MediaServiceProvider" --tag="config"
-```
-
-This is the contents of the published config file:
+If you would like to use the Nova resources included with this package, you need to register it manually in your `NovaServiceProvider` in the `boot` method.
 
 ```php
-return [
-];
-```
-
-## Usage
-
-``` php
-$media = new DrewRoberts\Media();
-echo $media->echoPhrase('Hello, DrewRoberts!');
-```
-
-## Testing
-
-``` bash
-composer test
+Nova::resources([
+    \DrewRoberts\Media\Nova\Image::class,
+    \DrewRoberts\Media\Nova\Video::class,
+]);
 ```
 
 ## Changelog

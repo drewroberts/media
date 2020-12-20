@@ -26,12 +26,12 @@ class Image extends Model
 
     public function getUrlAttribute()
     {
-        return 'https://res.cloudinary.com/'.env('CLOUDINARY_CLOUD_NAME').'/'.$this->filename;
+        return 'https://res.cloudinary.com/' . env('CLOUDINARY_CLOUD_NAME') . '/' . $this->filename;
     }
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'creator_id');
+        return $this->belongsTo(\Illuminate\Foundation\Auth\User::class, 'creator_id');
     }
 
     public function videos()

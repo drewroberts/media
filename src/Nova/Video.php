@@ -51,11 +51,9 @@ class Video extends Resource
 
     protected function dataFields()
     {
-        $userResource = Nova::resourceForModel(getModelForGuard($this->guard_name));
-
         return [
             ID::make(),
-            BelongsTo::make('Created By', 'creator', $userResource)->hideWhenCreating()->hideWhenUpdating(),
+            BelongsTo::make('Created By', 'creator', '\App\Nova\User')->hideWhenCreating()->hideWhenUpdating(),
             DateTime::make('Created At')->hideWhenCreating()->hideWhenUpdating(),
             DateTime::make('Updated At')->hideWhenCreating()->hideWhenUpdating(),
         ];

@@ -26,3 +26,7 @@ All notable changes to `media` will be documented in this file
 ## 1.0.5 - 2020-12-20
 
 - reference user model
+
+## 1.0.6 - 2020-12-20
+
+- reference nova user class

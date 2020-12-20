@@ -52,9 +52,9 @@ class Video extends Resource
     {
         return [
             ID::make(),
-            BelongsTo::make('Created By', 'creator', '\App\Nova\User')->hideWhenCreating()->hideWhenUpdating(),
-            DateTime::make('Created At')->hideWhenCreating()->hideWhenUpdating(),
-            DateTime::make('Updated At')->hideWhenCreating()->hideWhenUpdating(),
+            BelongsTo::make('Created By', 'creator', \App\Nova\User::class)->exceptOnForms(),
+            DateTime::make('Created At')->exceptOnForms(),
+            DateTime::make('Updated At')->exceptOnForms(),
         ];
     }
 

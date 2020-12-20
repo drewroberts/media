@@ -18,3 +18,7 @@ All notable changes to `media` will be documented in this file
 ## 1.0.3 - 2020-07-29
 
 - update nova resources
+
+## 1.0.4 - 2020-12-20
+
+- reference nova user resource

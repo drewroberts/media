@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Nova;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
 
@@ -50,9 +51,11 @@ class Video extends Resource
 
     protected function dataFields()
     {
+        $userResource = Nova::resourceForModel(getModelForGuard($this->guard_name));
+
         return [
             ID::make(),
-            BelongsTo::make('Created By', 'creator', 'App\Nova\User')->hideWhenCreating()->hideWhenUpdating(),
+            BelongsTo::make('Created By', 'creator', $userResource)->hideWhenCreating()->hideWhenUpdating(),
             DateTime::make('Created At')->hideWhenCreating()->hideWhenUpdating(),
             DateTime::make('Updated At')->hideWhenCreating()->hideWhenUpdating(),
         ];

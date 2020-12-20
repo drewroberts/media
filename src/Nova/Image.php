@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
 use Silvanite\NovaFieldCloudinary\Fields\CloudinaryImage;
 
@@ -40,7 +41,7 @@ class Image extends Resource
         return [
             CloudinaryImage::make('Image', 'filename')
                 ->storeAs(function (Request $request) {
-                    return 'img-'.sha1(time());
+                    return 'img-' . sha1(time());
                 }),
             Text::make('Width')->sortable(), // Want to auto generate from upload
             Text::make('Height')->sortable(), // Want to auto generate from upload
@@ -57,9 +58,11 @@ class Image extends Resource
 
     protected function dataFields()
     {
+        $userResource = Nova::resourceForModel(getModelForGuard($this->guard_name));
+
         return [
             ID::make(),
-            BelongsTo::make('Created By', 'creator', 'App\Nova\User')->hideWhenCreating()->hideWhenUpdating(),
+            BelongsTo::make('Created By', 'creator', $userResource)->hideWhenCreating()->hideWhenUpdating(),
             DateTime::make('Created At')->hideWhenCreating()->hideWhenUpdating(),
             DateTime::make('Updated At')->hideWhenCreating()->hideWhenUpdating(),
         ];

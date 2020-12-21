@@ -29,6 +29,7 @@ class Image extends Resource
     {
         return [
             ID::make()->sortable(),
+            CloudinaryImage::make('Image', 'filename'),
             Text::make('Filename')->sortable(),
             Text::make('Width')->sortable(),
             Text::make('Height')->sortable(),
@@ -44,13 +45,20 @@ class Image extends Resource
                 })->hideWhenUpdating(),
             Text::make('Width')->exceptOnForms(),
             Text::make('Height')->exceptOnForms(),
-            Text::make('Description')->sortable(),
-            Text::make('Alt')->sortable(),
-            Text::make('Credit')->sortable(),
 
+            new Panel('Info Fields', $this->infoFields()),
             new Panel('Data Fields', $this->dataFields()),
 
             HasMany::make('Videos'),
+        ];
+    }
+
+    protected function infoFields()
+    {
+        return [
+            Text::make('Description')->nullable(),
+            Text::make('Alt')->nullable(),
+            Text::make('Credit')->nullable(),
         ];
     }
 

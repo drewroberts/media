@@ -22,6 +22,15 @@ class Video extends Model
                 $video->creator_id = auth()->id();
             }
         });
+
+        static::saving(function ($video) {
+            if (empty($video->identifier)) {
+                throw new \Exception('Video must have an identifier on YouTube or Vimeo.');
+            }
+            if (empty($video->source)) {
+                $video->source = 'youtube';
+            }
+        });
     }
 
     public function image()

@@ -42,8 +42,8 @@ class Image extends Resource
                 ->storeAs(function (Request $request) {
                     return 'img-' . sha1(time());
                 }),
-            Text::make('Width')->sortable(), // Want to auto generate from upload
-            Text::make('Height')->sortable(), // Want to auto generate from upload
+            Text::make('Width')->exceptOnForms(),
+            Text::make('Height')->exceptOnForms(),
             Text::make('Description')->sortable(),
             Text::make('Alt')->sortable(),
             Text::make('Credit')->sortable(),

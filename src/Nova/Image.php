@@ -41,17 +41,16 @@ class Image extends Resource
             CloudinaryImage::make('Image', 'filename')
                 ->storeAs(function (Request $request) {
                     return 'img-' . sha1(time());
-                }),
+                })->hideWhenUpdating(),
             Text::make('Width')->exceptOnForms(),
             Text::make('Height')->exceptOnForms(),
             Text::make('Description')->sortable(),
             Text::make('Alt')->sortable(),
             Text::make('Credit')->sortable(),
 
-            HasMany::make('Videos'),
-
             new Panel('Data Fields', $this->dataFields()),
 
+            HasMany::make('Videos'),
         ];
     }
 

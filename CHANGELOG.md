@@ -34,3 +34,7 @@ All notable changes to `media` will be documented in this file
 ## 1.0.7 - 2020-12-21
 
 - update user class
+
+## 1.0.8 - 2020-12-21
+
+- save image dimensions automatically

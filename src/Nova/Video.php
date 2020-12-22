@@ -68,6 +68,7 @@ class Video extends Resource
             ID::make(),
             BelongsTo::make('Created By', 'creator', \App\Nova\User::class)->exceptOnForms(),
             DateTime::make('Created At')->exceptOnForms(),
+            BelongsTo::make('Updated By', 'updater', \App\Nova\User::class)->exceptOnForms(),
             DateTime::make('Updated At')->exceptOnForms(),
         ];
     }

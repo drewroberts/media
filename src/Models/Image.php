@@ -39,6 +39,11 @@ class Image extends Model
         return $this->belongsTo(\App\Models\User::class, 'creator_id');
     }
 
+    public function updater()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'updater_id');
+    }
+
     public function videos()
     {
         return $this->hasMany(Video::class);

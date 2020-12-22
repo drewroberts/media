@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('credit')->nullable(); // Used for amp-img attribution
 
             $table->foreignId('creator_id')->references('id')->on('users');
+            $table->foreignId('updater_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

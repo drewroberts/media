@@ -27,6 +27,7 @@ class CreateVideosTable extends Migration
             $table->boolean('embeddable')->default(1);
 
             $table->foreignId('creator_id')->nullable()->references('id')->on('users'); // If user added it via Admin (Nova)
+            $table->foreignId('updater_id')->nullable()->references('id')->on('users'); // Nullable since videos can be pulled from YouTube API
             $table->dateTime('stream_started_at')->nullable(); // When stream actually started on YouTube
             $table->dateTime('stream_scheduled_at')->nullable(); // When the stream was scheduled to start on YouTube
             $table->dateTime('published_at')->nullable(); // When video was published on YouTube

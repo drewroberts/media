@@ -48,8 +48,6 @@ class Image extends Resource
 
             new Panel('Info Fields', $this->infoFields()),
             new Panel('Data Fields', $this->dataFields()),
-
-            HasMany::make('Videos'),
         ];
     }
 
@@ -68,6 +66,7 @@ class Image extends Resource
             ID::make(),
             BelongsTo::make('Created By', 'creator', \App\Nova\User::class)->exceptOnForms(),
             DateTime::make('Created At')->exceptOnForms(),
+            BelongsTo::make('Updated By', 'updater', \App\Nova\User::class)->exceptOnForms(),
             DateTime::make('Updated At')->exceptOnForms(),
         ];
     }

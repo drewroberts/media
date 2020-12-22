@@ -31,6 +31,9 @@ class Video extends Model
             if (empty($video->source)) {
                 $video->source = 'youtube';
             }
+            if (auth()->check()) {
+                $video->updater_id = auth()->id();
+            }
         });
     }
 

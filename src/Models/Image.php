@@ -22,6 +22,12 @@ class Image extends Model
                 $image->height = $data[1];
             }
         });
+
+        static::saving(function ($image) {
+            if (auth()->check()) {
+                $image->updater_id = auth()->id();
+            }
+        });
     }
 
     public function getUrlAttribute()

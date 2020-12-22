@@ -50,3 +50,7 @@ All notable changes to `media` will be documented in this file
 ## 2.0.1 - 2020-12-22
 
 - update model casts
+
+## 2.0.2 - 2020-12-22
+
+- save updater on images & videos

@@ -8,9 +8,10 @@ class Video extends Model
 {
     protected $guarded = ['id'];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'stream_scheduled_at' => 'datetime',
+        'stream_started_at' => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     protected static function boot()

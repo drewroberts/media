@@ -42,3 +42,7 @@ All notable changes to `media` will be documented in this file
 ## 1.0.9 - 2020-12-21
 
 - update image & video nova resources
+
+## 2.0.0 - 2020-12-22
+
+- add updater to images & videos

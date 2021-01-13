@@ -31,7 +31,10 @@
     "autoload": {
         "psr-4": {
             "DrewRoberts\\Media\\": "src"
-        }
+        },
+        "files": [
+            "src/Helpers/Test.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

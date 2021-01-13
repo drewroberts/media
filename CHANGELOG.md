@@ -54,3 +54,7 @@ All notable changes to `media` will be documented in this file
 ## 2.0.2 - 2020-12-22
 
 - save updater on images & videos
+
+## 2.0.3 - 2021-01-13
+
+- add model factories

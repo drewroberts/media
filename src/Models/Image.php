@@ -49,4 +49,9 @@ class Image extends Model
     {
         return $this->hasMany(Video::class);
     }
+
+    protected static function newFactory()
+    {
+        return new \DrewRoberts\Media\Database\Factories\ImageFactory;
+    }
 }

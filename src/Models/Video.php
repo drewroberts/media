@@ -51,4 +51,9 @@ class Video extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'updater_id');
     }
+
+    protected static function newFactory()
+    {
+        return new \DrewRoberts\Media\Database\Factories\VideoFactory;
+    }
 }

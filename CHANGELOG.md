@@ -58,3 +58,7 @@ All notable changes to `media` will be documented in this file
 ## 2.0.3 - 2021-01-13
 
 - add model factories
+
+## 2.0.4 - 2021-01-14
+
+- add model factory trait

@@ -23,7 +23,7 @@ class VideoFactory extends Factory
             'description'  => $this->faker->sentences(1, true),
             'image_id'     => randomOrCreate(Image::class),
             'creator_id'   => randomOrCreate(User::class),
-            'updater_id'    => randomOrCreate(User::class),
+            'updater_id'   => randomOrCreate(User::class),
         ];
     }
 }

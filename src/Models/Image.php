@@ -2,10 +2,13 @@
 
 namespace DrewRoberts\Media\Models;
 
+use DrewRoberts\Media\Traits\HasPackageFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
+    use HasPackageFactory;
+
     protected $guarded = ['id'];
 
     protected static function boot()
@@ -48,10 +51,5 @@ class Image extends Model
     public function videos()
     {
         return $this->hasMany(Video::class);
-    }
-
-    protected static function newFactory()
-    {
-        return new \DrewRoberts\Media\Database\Factories\ImageFactory;
     }
 }

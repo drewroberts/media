@@ -2,10 +2,13 @@
 
 namespace DrewRoberts\Media\Models;
 
+use DrewRoberts\Media\Traits\HasPackageFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
+    use HasPackageFactory;
+
     protected $guarded = ['id'];
 
     protected $casts = [
@@ -50,10 +53,5 @@ class Video extends Model
     public function updater()
     {
         return $this->belongsTo(\App\Models\User::class, 'updater_id');
-    }
-
-    protected static function newFactory()
-    {
-        return new \DrewRoberts\Media\Database\Factories\VideoFactory;
     }
 }

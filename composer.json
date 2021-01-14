@@ -30,7 +30,8 @@
     },
     "autoload": {
         "psr-4": {
-            "DrewRoberts\\Media\\": "src"
+            "DrewRoberts\\Media\\": "src",
+            "DrewRoberts\\Media\\Database\\Factories\\": "database/factories/"
         },
         "files": [
             "src/Helpers/Test.php"

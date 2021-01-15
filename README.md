@@ -42,6 +42,7 @@ If you would like to use the Nova resources included with this package, you need
 ```php
 Nova::resources([
     \DrewRoberts\Media\Nova\Image::class,
+    \DrewRoberts\Media\Nova\Tag::class,
     \DrewRoberts\Media\Nova\Video::class,
 ]);
 ```

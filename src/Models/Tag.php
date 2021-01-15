@@ -21,9 +21,18 @@ class Tag extends Model implements Sortable
     {
         parent::boot();
 
+        static::creating(function ($tag) {
+            if (auth()->check()) {
+                $tag->creator_id = auth()->id();
+            }
+        });
+
         static::saving(function ($tag) {
             if (empty($tag->slug)) {
                 $tag->slug = $tag->generateSlug();
+            }
+            if (auth()->check()) {
+                $tag->updater_id = auth()->id();
             }
         });
     }
@@ -90,7 +99,7 @@ class Tag extends Model implements Sortable
     {
         $tag = static::findFromString($name, $type);
 
-        if (! $tag) {
+        if (!$tag) {
             $tag = static::create([
                 'name' => $name,
                 'type' => $type,

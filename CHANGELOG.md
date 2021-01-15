@@ -66,3 +66,7 @@ All notable changes to `media` will be documented in this file
 ## 3.0.0 - 2021-01-15
 
 - add tags
+
+## 3.0.1 - 2021-01-15
+
+- save tag creator & updater

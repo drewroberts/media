@@ -46,7 +46,7 @@ trait HasTags
      */
     public function setTagsAttribute($tags)
     {
-        if (!$this->exists) {
+        if (! $this->exists) {
             $this->queuedTags = $tags;
 
             return;

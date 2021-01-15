@@ -90,7 +90,7 @@ class Tag extends Model implements Sortable
     {
         $tag = static::findFromString($name, $type);
 
-        if (!$tag) {
+        if (! $tag) {
             $tag = static::create([
                 'name' => $name,
                 'type' => $type,

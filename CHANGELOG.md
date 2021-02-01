@@ -70,3 +70,7 @@ All notable changes to `media` will be documented in this file
 ## 3.0.1 - 2021-01-15
 
 - save tag creator & updater
+
+## 3.0.2 - 2021-01-31
+
+- require tipoff support package

@@ -2,8 +2,8 @@
 
 namespace DrewRoberts\Media\Models;
 
-use DrewRoberts\Media\Traits\HasPackageFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tipoff\Support\Traits\HasPackageFactory;
 
 class Video extends Model
 {

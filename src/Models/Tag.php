@@ -2,7 +2,6 @@
 
 namespace DrewRoberts\Media\Models;
 
-use DrewRoberts\Media\Traits\HasPackageFactory;
 use DrewRoberts\Media\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
@@ -10,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Tipoff\Support\Traits\HasPackageFactory;
 
 class Tag extends Model implements Sortable
 {
@@ -99,7 +99,7 @@ class Tag extends Model implements Sortable
     {
         $tag = static::findFromString($name, $type);
 
-        if (! $tag) {
+        if (!$tag) {
             $tag = static::create([
                 'name' => $name,
                 'type' => $type,

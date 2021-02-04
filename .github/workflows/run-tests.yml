@@ -35,10 +35,33 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
 
-      - name: Install dependencies
+      - name: Setup problem matchers
         run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - if: matrix.os == 'ubuntu-latest'
+        name: Setup Ubuntu Nova
+        env:
+          NOVA_USERNAME: ${{ secrets.NovaUsername }}
+          NOVA_PASSWORD: ${{ secrets.NovaPassword }}
+        run: composer config http-basic.nova.laravel.com ${NOVA_USERNAME} ${NOVA_PASSWORD}
+
+      - if: matrix.os == 'windows-latest'
+        name: Setup Windows Nova
+        env:
+          NOVA_USERNAME: ${{ secrets.NovaUsername }}
+          NOVA_PASSWORD: ${{ secrets.NovaPassword }}
+        run: composer config http-basic.nova.laravel.com ${env:NOVA_USERNAME} ${env:NOVA_PASSWORD}
+
+      - name: Install dependencies
+        env:
+          NOVA_USERNAME: ${{ secrets.NovaUsername }}
+          NOVA_PASSWORD: ${{ secrets.NovaPassword }}
+        run: |
+          composer config http-basic.nova.laravel.com ${NOVA_USERNAME} ${NOVA_PASSWORD}
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
         run: vendor/bin/phpunit

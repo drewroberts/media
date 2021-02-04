@@ -4,6 +4,7 @@ docs
 vendor
 coverage
 .phpunit.result.cache
+**/.DS_Store
 .idea
 .php_cs.cache
 

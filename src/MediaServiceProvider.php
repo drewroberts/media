@@ -47,7 +47,7 @@ class MediaServiceProvider extends ServiceProvider
             ->hasMigration([
                 '2015_05_20_100000_create_images_table',
                 '2015_05_20_110000_create_videos_table',
-                '2015_05_20_120000_create_tag_tables'
+                '2015_05_20_120000_create_tag_tables',
             ])
             ->hasCommand(MediaCommand::class);
     }

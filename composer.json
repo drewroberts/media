@@ -20,7 +20,7 @@
         "php": "^7.4|^8.0",
         "silvanite/nova-field-cloudinary": "^1.3",
         "spatie/eloquent-sortable": "^3.5",
-        "tipoff/support": "^1.0.1"
+        "tipoff/support": "^1.0.11"
     },
     "require-dev": {
         "laravel/legacy-factories": "1.0.4",

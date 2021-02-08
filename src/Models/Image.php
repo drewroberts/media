@@ -19,16 +19,17 @@ class Image extends Model
             if (auth()->check()) {
                 $image->creator_id = auth()->id();
             }
-            if (empty($image->width)) {
-                $data = getimagesize($image->getUrlAttribute());
-                $image->width = $data[0];
-                $image->height = $data[1];
-            }
         });
 
         static::saving(function ($image) {
             if (auth()->check()) {
                 $image->updater_id = auth()->id();
+            }
+            
+            if (empty($image->width)) {
+                $data = getimagesize($image->getUrlAttribute());
+                $image->width = $data[0];
+                $image->height = $data[1];
             }
         });
     }

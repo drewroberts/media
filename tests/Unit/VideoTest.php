@@ -2,6 +2,7 @@
 
 namespace DrewRoberts\Media\Tests\Unit;
 
+use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,6 +14,17 @@ class VideoTest extends TestCase
     use RefreshDatabase,
         PHPMock,
         WithFaker;
+
+    /** @test */
+    public function it_is_associated_with_an_image()
+    {
+        $image = Image::factory()->create();
+        $video = Video::factory()->create([
+            'image_id' => $image->id,
+        ]);
+
+        $this->assertInstanceOf(Image::class, $video->image);
+    }
 
     /** @test */
     public function it_keeps_track_of_who_created_it()

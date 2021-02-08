@@ -25,7 +25,7 @@ class Image extends Model
             if (auth()->check()) {
                 $image->updater_id = auth()->id();
             }
-            
+
             if (empty($image->width)) {
                 $data = getimagesize($image->getUrlAttribute());
                 $image->width = $data[0];

@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
+        "php-mock/php-mock-phpunit": "^2.6",
         "phpunit/phpunit": "^9.3",
         "spatie/laravel-ray": "^1.9",
         "vimeo/psalm": "^4.4"

@@ -3,6 +3,7 @@
 namespace DrewRoberts\Media\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
+use DrewRoberts\Media\Tests\Support\Models\User;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -11,7 +12,9 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/database/factories');
+        foreach (config('media.models') as $class) {
+            $class::createTable();
+        }
     }
 
     protected function getPackageProviders($app)
@@ -19,5 +22,12 @@ class TestCase extends Orchestra
         return [
             MediaServiceProvider::class,
         ];
+    }
+
+    public function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('media.models', [
+            'user' => User::class,
+        ]);
     }
 }

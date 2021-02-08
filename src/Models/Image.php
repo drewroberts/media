@@ -35,17 +35,17 @@ class Image extends Model
 
     public function getUrlAttribute()
     {
-        return 'https://res.cloudinary.com/' . env('CLOUDINARY_CLOUD_NAME') . '/' . $this->filename;
+        return 'https://res.cloudinary.com/' . config('media.cloudinary_cloud_name') . '/' . $this->filename;
     }
 
     public function creator()
     {
-        return $this->belongsTo(\App\Models\User::class, 'creator_id');
+        return $this->belongsTo(config('media.models.user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(\App\Models\User::class, 'updater_id');
+        return $this->belongsTo(config('media.models.user'), 'updater_id');
     }
 
     public function videos()

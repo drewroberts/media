@@ -2,7 +2,6 @@
 
 namespace DrewRoberts\Media\Database\Factories;
 
-use App\Models\User;
 use DrewRoberts\Media\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,8 +22,8 @@ class ImageFactory extends Factory
             'description'   => $this->faker->sentences(1, true),
             'alt'           => $this->faker->word,
             'credit'        => $this->faker->name,
-            'creator_id'    => randomOrCreate(User::class),
-            'updater_id'    => randomOrCreate(User::class),
+            'creator_id'    => randomOrCreate(config('media.models.user')),
+            'updater_id'    => randomOrCreate(config('media.models.user')),
         ];
     }
 }

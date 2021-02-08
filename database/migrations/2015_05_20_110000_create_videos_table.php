@@ -24,7 +24,7 @@ class CreateVideosTable extends Migration
             $table->string('broadcast')->nullable(); // Options include 'none', 'live', 'upcoming'
             $table->string('privacy')->nullable(); // Options include 'public', 'private', 'unlisted'
             $table->string('location')->nullable();
-            $table->boolean('embeddable')->default(1);
+            $table->boolean('embeddable')->default(true);
 
             $table->foreignId('creator_id')->nullable()->references('id')->on('users'); // If user added it via Admin (Nova)
             $table->foreignId('updater_id')->nullable()->references('id')->on('users'); // Nullable since videos can be pulled from YouTube API

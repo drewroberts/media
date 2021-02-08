@@ -5,15 +5,43 @@ namespace DrewRoberts\Media\Tests\Unit;
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Tests\TestCase;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use phpmock\phpunit\PHPMock;
 
 class VideoTest extends TestCase
 {
     use RefreshDatabase,
-        PHPMock,
         WithFaker;
+
+    /** @test */
+    public function it_throws_an_exception_when_there_is_no_identifier()
+    {
+        $this->expectException(Exception::class);
+
+        $video = Video::factory()->make(['identifier' => null]);
+
+        $video->save();
+    }
+
+    /** @test */
+    public function it_has_a_source()
+    {
+        $source = $this->faker->word;
+        $video = Video::factory()->create(['source' => $source]);
+
+        $this->assertEquals($source, $video->source);
+    }
+
+    /** @test */
+    public function the_video_source_defaults_to_youtube()
+    {
+        $video = Video::factory()->make(['source' => null]);
+
+        $video->save();
+
+        $this->assertEquals('youtube', $video->source);
+    }
 
     /** @test */
     public function it_is_associated_with_an_image()

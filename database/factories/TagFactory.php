@@ -2,7 +2,6 @@
 
 namespace DrewRoberts\Media\Database\Factories;
 
-use App\Models\User;
 use DrewRoberts\Media\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,8 +16,8 @@ class VideoFactory extends Factory
         return [
             'name'         => $word,
             'slug'         => $word,
-            'creator_id'   => randomOrCreate(User::class),
-            'updater_id'   => randomOrCreate(User::class),
+            'creator_id'   => randomOrCreate(app('user')),
+            'updater_id'   => randomOrCreate(app('user')),
         ];
     }
 }

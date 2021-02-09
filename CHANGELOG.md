@@ -79,3 +79,10 @@ All notable changes to `media` will be documented in this file
 
 - allow publishable migrations
 - update php requirement
+
+## 3.0.4 - 2021-02-09
+
+- extend tipoff/support base model
+- use creator & updater traits
+- resolve classes based on tipoff/support config
+- load migrations from package

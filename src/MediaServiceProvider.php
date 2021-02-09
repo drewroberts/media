@@ -7,7 +7,7 @@ namespace DrewRoberts\Media;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class ReviewsServiceProvider extends PackageServiceProvider
+class MediaServiceProvider extends PackageServiceProvider
 {
     public function boot()
     {

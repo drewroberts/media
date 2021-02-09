@@ -2,11 +2,12 @@
 
 namespace DrewRoberts\Media\Database\Factories;
 
+use DrewRoberts\Media\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ImageFactory extends Factory
 {
-    protected $model = app('image');
+    protected $model = Image::class;
 
     public function definition()
     {

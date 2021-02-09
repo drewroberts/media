@@ -10,8 +10,8 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
-use Tipoff\Support\Traits\HasUpdater;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Tag extends BaseModel implements Sortable
 {
@@ -92,7 +92,7 @@ class Tag extends BaseModel implements Sortable
     {
         $tag = static::findFromString($name, $type);
 
-        if (!$tag) {
+        if (! $tag) {
             $tag = static::create([
                 'name' => $name,
                 'type' => $type,

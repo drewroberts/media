@@ -5,15 +5,15 @@ namespace DrewRoberts\Media\Models;
 use DrewRoberts\Media\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasUpdater;
 use Tipoff\Support\Traits\HasPackageFactory;
 
-class Tag extends Model implements Sortable
+class Tag extends BaseModel implements Sortable
 {
     use SortableTrait, HasSlug, HasCreator, HasUpdater, HasPackageFactory;
 

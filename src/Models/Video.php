@@ -2,12 +2,12 @@
 
 namespace DrewRoberts\Media\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasUpdater;
 use Tipoff\Support\Traits\HasPackageFactory;
 
-class Video extends Model
+class Video extends BaseModel
 {
     use HasCreator, HasUpdater, HasPackageFactory;
 

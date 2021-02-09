@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Tipoff\Support\Traits\HasCreator;
+use Tipoff\Support\Traits\HasUpdater;
 use Tipoff\Support\Traits\HasPackageFactory;
 
 class Tag extends Model implements Sortable
 {
-    use SortableTrait, HasSlug, HasPackageFactory;
+    use SortableTrait, HasSlug, HasCreator, HasUpdater, HasPackageFactory;
 
     protected $guarded = ['id'];
 
@@ -21,18 +23,9 @@ class Tag extends Model implements Sortable
     {
         parent::boot();
 
-        static::creating(function ($tag) {
-            if (auth()->check()) {
-                $tag->creator_id = auth()->id();
-            }
-        });
-
         static::saving(function ($tag) {
             if (empty($tag->slug)) {
                 $tag->slug = $tag->generateSlug();
-            }
-            if (auth()->check()) {
-                $tag->updater_id = auth()->id();
             }
         });
     }
@@ -99,7 +92,7 @@ class Tag extends Model implements Sortable
     {
         $tag = static::findFromString($name, $type);
 
-        if (! $tag) {
+        if (!$tag) {
             $tag = static::create([
                 'name' => $name,
                 'type' => $type,
@@ -112,15 +105,5 @@ class Tag extends Model implements Sortable
     public static function getTypes(): Collection
     {
         return static::groupBy('type')->pluck('type');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(app('user'), 'updater_id');
     }
 }

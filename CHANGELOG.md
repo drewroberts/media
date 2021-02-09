@@ -86,3 +86,7 @@ All notable changes to `media` will be documented in this file
 - use creator & updater traits
 - resolve classes based on tipoff/support config
 - load migrations from package
+
+## 3.0.5 - 2021-02-09
+
+- update service provider

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DrewRoberts\Media;
 
 use Spatie\LaravelPackageTools\Package;

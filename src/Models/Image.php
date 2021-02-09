@@ -40,16 +40,16 @@ class Image extends Model
 
     public function creator()
     {
-        return $this->belongsTo(\App\Models\User::class, 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(\App\Models\User::class, 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function videos()
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(app('video'));
     }
 }

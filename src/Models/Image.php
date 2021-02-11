@@ -3,11 +3,13 @@
 namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Image extends Model
 {
-    use HasPackageFactory;
+    use HasPackageFactory, HasCreator, HasUpdater;
 
     protected $guarded = ['id'];
 
@@ -16,19 +18,10 @@ class Image extends Model
         parent::boot();
 
         static::creating(function ($image) {
-            if (auth()->check()) {
-                $image->creator_id = auth()->id();
-            }
             if (empty($image->width)) {
                 $data = getimagesize($image->getUrlAttribute());
                 $image->width = $data[0];
                 $image->height = $data[1];
-            }
-        });
-
-        static::saving(function ($image) {
-            if (auth()->check()) {
-                $image->updater_id = auth()->id();
             }
         });
     }
@@ -38,18 +31,8 @@ class Image extends Model
         return 'https://res.cloudinary.com/' . env('CLOUDINARY_CLOUD_NAME') . '/' . $this->filename;
     }
 
-    public function creator()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'updater_id');
-    }
-
     public function videos()
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(app('video'));
     }
 }

@@ -3,11 +3,14 @@
 namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
+
 
 class Video extends Model
 {
-    use HasPackageFactory;
+    use HasPackageFactory, HasCreator, HasUpdater;
 
     protected $guarded = ['id'];
 
@@ -21,21 +24,12 @@ class Video extends Model
     {
         parent::boot();
 
-        static::creating(function ($video) {
-            if (auth()->check()) {
-                $video->creator_id = auth()->id();
-            }
-        });
-
         static::saving(function ($video) {
             if (empty($video->identifier)) {
                 throw new \Exception('Video must have an identifier on YouTube or Vimeo.');
             }
             if (empty($video->source)) {
                 $video->source = 'youtube';
-            }
-            if (auth()->check()) {
-                $video->updater_id = auth()->id();
             }
         });
     }
@@ -44,14 +38,5 @@ class Video extends Model
     {
         return $this->belongsTo(Image::class);
     }
-
-    public function creator()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'updater_id');
-    }
+    
 }

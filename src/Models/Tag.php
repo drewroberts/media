@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Tag extends Model implements Sortable
 {
-    use SortableTrait, HasSlug, HasPackageFactory;
+    use SortableTrait, HasSlug, HasPackageFactory, HasCreator, HasUpdater;
 
     protected $guarded = ['id'];
 
@@ -21,18 +23,9 @@ class Tag extends Model implements Sortable
     {
         parent::boot();
 
-        static::creating(function ($tag) {
-            if (auth()->check()) {
-                $tag->creator_id = auth()->id();
-            }
-        });
-
         static::saving(function ($tag) {
             if (empty($tag->slug)) {
                 $tag->slug = $tag->generateSlug();
-            }
-            if (auth()->check()) {
-                $tag->updater_id = auth()->id();
             }
         });
     }
@@ -114,13 +107,4 @@ class Tag extends Model implements Sortable
         return static::groupBy('type')->pluck('type');
     }
 
-    public function creator()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'updater_id');
-    }
 }

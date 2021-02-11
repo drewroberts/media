@@ -2,15 +2,16 @@
 
 namespace DrewRoberts\Media\Models;
 
-use Illuminate\Database\Eloquent\Model;
+
+use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-
-class Video extends Model
+class Video extends BaseModel
 {
-    use HasPackageFactory, HasCreator, HasUpdater;
+
+    use HasCreator, HasUpdater, HasPackageFactory;
 
     protected $guarded = ['id'];
 
@@ -36,7 +37,7 @@ class Video extends Model
 
     public function image()
     {
-        return $this->belongsTo(Image::class);
+        return $this->belongsTo(app('image'));
     }
-    
+
 }

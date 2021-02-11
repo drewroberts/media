@@ -1,35 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DrewRoberts\Media;
 
-use DrewRoberts\Media\Commands\MediaCommand;
-use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class MediaServiceProvider extends ServiceProvider
+class MediaServiceProvider extends PackageServiceProvider
 {
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/media.php' => config_path('media.php'),
-            ], 'config');
-
-            $this->publishes([
-                __DIR__.'/../resources/views' => base_path('resources/views/vendor/media'),
-            ], 'views');
-
-            $this->commands([
-                MediaCommand::class,
-            ]);
-        }
-
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'media');
+        parent::boot();
     }
 
-    public function register()
+    public function configurePackage(Package $package): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/media.php', 'media');
+        $package
+            ->name('media')
+            ->hasConfigFile();
     }
 }

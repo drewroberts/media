@@ -22,8 +22,8 @@ class ImageFactory extends Factory
             'description'   => $this->faker->sentences(1, true),
             'alt'           => $this->faker->word,
             'credit'        => $this->faker->name,
-            'creator_id'    => randomOrCreate(config('media.models.user')),
-            'updater_id'    => randomOrCreate(config('media.models.user')),
+            'creator_id'    => randomOrCreate(app('user')),
+            'updater_id'    => randomOrCreate(app('user')),
         ];
     }
 }

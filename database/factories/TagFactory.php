@@ -16,8 +16,8 @@ class VideoFactory extends Factory
         return [
             'name'         => $word,
             'slug'         => $word,
-            'creator_id'   => randomOrCreate(config('media.models.user')),
-            'updater_id'   => randomOrCreate(config('media.models.user')),
+            'creator_id'   => randomOrCreate(app('user')),
+            'updater_id'   => randomOrCreate(app('user')),
         ];
     }
 }

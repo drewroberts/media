@@ -21,8 +21,8 @@ class VideoFactory extends Factory
             'title'        => $word,
             'description'  => $this->faker->sentences(1, true),
             'image_id'     => randomOrCreate(Image::class),
-            'creator_id'   => randomOrCreate(config('media.models.user')),
-            'updater_id'   => randomOrCreate(config('media.models.user')),
+            'creator_id'   => randomOrCreate(app('user')),
+            'updater_id'   => randomOrCreate(app('user')),
         ];
     }
 }

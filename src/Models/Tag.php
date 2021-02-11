@@ -5,15 +5,17 @@ namespace DrewRoberts\Media\Models;
 use DrewRoberts\Media\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
-class Tag extends Model implements Sortable
+class Tag extends BaseModel implements Sortable
 {
-    use SortableTrait, HasSlug, HasPackageFactory;
+    use SortableTrait, HasSlug, HasCreator, HasUpdater, HasPackageFactory;
 
     protected $guarded = ['id'];
 
@@ -21,18 +23,9 @@ class Tag extends Model implements Sortable
     {
         parent::boot();
 
-        static::creating(function ($tag) {
-            if (auth()->check()) {
-                $tag->creator_id = auth()->id();
-            }
-        });
-
         static::saving(function ($tag) {
             if (empty($tag->slug)) {
                 $tag->slug = $tag->generateSlug();
-            }
-            if (auth()->check()) {
-                $tag->updater_id = auth()->id();
             }
         });
     }
@@ -112,15 +105,5 @@ class Tag extends Model implements Sortable
     public static function getTypes(): Collection
     {
         return static::groupBy('type')->pluck('type');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'updater_id');
     }
 }

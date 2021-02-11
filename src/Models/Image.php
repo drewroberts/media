@@ -41,12 +41,12 @@ class Image extends Model
 
     public function creator()
     {
-        return $this->belongsTo(config('media.models.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('media.models.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function videos()

@@ -4,6 +4,7 @@ namespace DrewRoberts\Media\Tests\Unit;
 
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
+use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -118,27 +119,27 @@ class ImageTest extends TestCase
     /** @test */
     public function it_keeps_track_of_who_created_it()
     {
-        $user = (config('media.models.user'))::factory()->create();
+        $user = User::factory()->create();
 
         $this->be($user);
 
         $image = Image::factory()->create();
 
-        $this->assertInstanceOf(config('media.models.user'), $image->creator);
+        $this->assertInstanceOf(User::class, $image->creator);
         $this->assertEquals($user->id, $image->creator->id);
     }
 
     /** @test */
     public function it_keeps_track_of_who_updated_it()
     {
-        $user = (config('media.models.user'))::factory()->create();
+        $user = User::factory()->create();
         $image = Image::factory()->make();
 
         $this->be($user);
 
         $image->save();
 
-        $this->assertInstanceOf(config('media.models.user'), $image->updater);
+        $this->assertInstanceOf(User::class, $image->updater);
         $this->assertEquals($user->id, $image->updater->id);
     }
 }

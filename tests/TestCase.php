@@ -4,30 +4,23 @@ namespace DrewRoberts\Media\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
 use DrewRoberts\Media\Tests\Support\Models\User;
-use Orchestra\Testbench\TestCase as Orchestra;
+use Tipoff\Support\SupportServiceProvider;
+use Tipoff\TestSupport\BaseTestCase;
 
-class TestCase extends Orchestra
+class TestCase extends BaseTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        foreach (config('media.models') as $class) {
-            $class::createTable();
-        }
-    }
-
     protected function getPackageProviders($app)
     {
         return [
+            SupportServiceProvider::class,
             MediaServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
-        $app['config']->set('media.models', [
-            'user' => User::class,
-        ]);
+        parent::getEnvironmentSetUp($app);
+
+        $app['config']->set('tipoff.model_class.user', User::class);
     }
 }

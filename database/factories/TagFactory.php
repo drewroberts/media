@@ -5,7 +5,7 @@ namespace DrewRoberts\Media\Database\Factories;
 use DrewRoberts\Media\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class VideoFactory extends Factory
+class TagFactory extends Factory
 {
     protected $model = Tag::class;
 

@@ -3,36 +3,24 @@
 namespace DrewRoberts\Media\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
-use Orchestra\Testbench\TestCase as Orchestra;
+use DrewRoberts\Media\Tests\Support\Models\User;
+use Tipoff\Support\SupportServiceProvider;
+use Tipoff\TestSupport\BaseTestCase;
 
-class TestCase extends Orchestra
+class TestCase extends BaseTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withFactories(__DIR__.'/database/factories');
-    }
-
     protected function getPackageProviders($app)
     {
         return [
+            SupportServiceProvider::class,
             MediaServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
+        parent::getEnvironmentSetUp($app);
 
-        /*
-        include_once __DIR__.'/../database/migrations/create_media_table.php.stub';
-        (new \CreatePackageTable())->up();
-        */
+        $app['config']->set('tipoff.model_class.user', User::class);
     }
 }

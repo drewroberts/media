@@ -17,7 +17,7 @@ class Image extends BaseModel
     {
         parent::boot();
 
-        static::creating(function ($image) {
+        static::saving(function ($image) {
             if (empty($image->width)) {
                 $data = getimagesize($image->getUrlAttribute());
                 $image->width = $data[0];
@@ -28,7 +28,7 @@ class Image extends BaseModel
 
     public function getUrlAttribute()
     {
-        return 'https://res.cloudinary.com/' . env('CLOUDINARY_CLOUD_NAME') . '/' . $this->filename;
+        return 'https://res.cloudinary.com/' . config('media.cloudinary_cloud_name') . '/' . $this->filename;
     }
 
     public function videos()

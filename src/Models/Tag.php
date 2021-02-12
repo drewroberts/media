@@ -53,7 +53,7 @@ class Tag extends BaseModel implements Sortable
      * @param string|array|\ArrayAccess $values
      * @param string|null $type
      *
-     * @return \DrewRoberts\Media\Tag|static
+     * @return mixed
      */
     public static function findOrCreate($values, string $type = null)
     {

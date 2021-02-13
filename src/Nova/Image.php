@@ -39,8 +39,8 @@ class Image extends Resource
     {
         return [
             CloudinaryImage::make('Image', 'filename')
-                ->storeAs(function (Request $request) {
-                    return 'img-' . sha1(time());
+                ->storeAs(function () {
+                    return 'img-' . sha1((string)time());
                 })->hideWhenUpdating(),
             Text::make('Width')->exceptOnForms(),
             Text::make('Height')->exceptOnForms(),
@@ -63,9 +63,9 @@ class Image extends Resource
     {
         return [
             ID::make(),
-            BelongsTo::make('Created By', 'creator', \App\Nova\User::class)->exceptOnForms(),
+            BelongsTo::make('Created By', 'creator', app('nova.user'))->exceptOnForms(),
             DateTime::make('Created At')->exceptOnForms(),
-            BelongsTo::make('Updated By', 'updater', \App\Nova\User::class)->exceptOnForms(),
+            BelongsTo::make('Updated By', 'updater', app('nova.user'))->exceptOnForms(),
             DateTime::make('Updated At')->exceptOnForms(),
         ];
     }

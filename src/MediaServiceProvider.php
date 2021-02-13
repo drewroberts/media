@@ -7,9 +7,9 @@ namespace DrewRoberts\Media;
 use Tipoff\Media\Models\Image;
 use Tipoff\Media\Models\Tag;
 use Tipoff\Media\Models\Video;
-use Tipoff\Media\Policies\Image;
-use Tipoff\Media\Policies\Tag;
-use Tipoff\Media\Policies\Video;
+use Tipoff\Media\Policies\ImagePolicy;
+use Tipoff\Media\Policies\TagPolicy;
+use Tipoff\Media\Policies\VideoPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 

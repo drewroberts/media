@@ -104,6 +104,9 @@ class Tag extends BaseModel implements Sortable
 
     public static function getTypes(): Collection
     {
-        return static::groupBy('type')->pluck('type');
+        return static::select('type')
+            ->distinct()
+            ->get()
+            ->pluck('type');
     }
 }

@@ -54,6 +54,18 @@ class TagTest extends TestCase
     }
 
     /** @test */
+    public function it_returns_all_tags_of_a_certain_type_in_order()
+    {
+        Tag::factory()->create(['type' => 'type_1']);
+        Tag::factory()->create(['type' => 'type_1']);
+        Tag::factory()->create(['type' => 'type_2']);
+
+        $tags = Tag::getWithType('type_1');
+
+        $this->assertCount(2, $tags);
+    }
+
+    /** @test */
     public function it_finds_a_tag_by_name()
     {
         $name = $this->faker->word;

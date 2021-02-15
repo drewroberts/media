@@ -22,6 +22,20 @@ class TagTest extends TestCase
     }
 
     /** @test */
+    public function it_lists_all_tag_types_without_repeating_them()
+    {
+        Tag::factory()->create(['type' => 'type_1']);
+        Tag::factory()->create(['type' => 'type_1']);
+        Tag::factory()->create(['type' => 'type_2']);
+
+        $types = Tag::getTypes();
+
+        $this->assertCount(2, $types);
+        $this->assertContains('type_1', $types);
+        $this->assertContains('type_2', $types);
+    }
+
+    /** @test */
     public function it_keeps_track_of_who_created_it()
     {
         $user = User::factory()->create();

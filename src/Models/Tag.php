@@ -81,13 +81,6 @@ class Tag extends BaseModel implements Sortable
             ->first();
     }
 
-    public static function findFromStringOfAnyType(string $name)
-    {
-        return static::query()
-            ->where('name', $name)
-            ->first();
-    }
-
     protected static function findOrCreateFromString(string $name, string $type = null)
     {
         $tag = static::findFromString($name, $type);

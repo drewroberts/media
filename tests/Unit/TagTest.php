@@ -22,6 +22,20 @@ class TagTest extends TestCase
     }
 
     /** @test */
+    public function tag_scope_with_type()
+    {
+        Tag::factory()->create(['type' => 'type_1']);
+        Tag::factory()->create(['type' => 'type_1']);
+        Tag::factory()->create(['type' => 'type_2']);
+
+        $count = Tag::withType('type_1')->count();
+        $this->assertEquals(2, $count);
+
+        $count = Tag::withType()->count();
+        $this->assertEquals(3, $count);
+    }
+
+    /** @test */
     public function it_finds_a_tag_by_name()
     {
         $name = $this->faker->word;

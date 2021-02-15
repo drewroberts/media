@@ -36,6 +36,24 @@ class TagTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_a_slug_on_save()
+    {
+        $tag = Tag::factory()->make();
+
+        $tag->save();
+
+        $this->assertNotNull($tag->slug);
+    }
+
+    /** @test */
+    public function it_uses_its_slug_for_route_model_binding()
+    {
+        $tag = Tag::factory()->create();
+
+        $this->assertEquals('slug', $tag->getRouteKeyName());
+    }
+
+    /** @test */
     public function it_finds_a_tag_by_name()
     {
         $name = $this->faker->word;

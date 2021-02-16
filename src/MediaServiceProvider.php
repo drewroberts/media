@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace DrewRoberts\Media;
 
-use Tipoff\Media\Models\Image;
-use Tipoff\Media\Models\Tag;
-use Tipoff\Media\Models\Video;
-use Tipoff\Media\Policies\ImagePolicy;
-use Tipoff\Media\Policies\TagPolicy;
-use Tipoff\Media\Policies\VideoPolicy;
+use App\Policies\VideoPolicy;
+use DrewRoberts\Media\Models\Image;
+use DrewRoberts\Media\Models\Tag;
+use DrewRoberts\Media\Models\Video;
+use DrewRoberts\Media\Policies\ImagePolicy;
+use DrewRoberts\Media\Policies\TagPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 

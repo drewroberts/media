@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Policies;
+namespace DrewRoberts\Media\Policies;
 
 use DrewRoberts\Media\Models\Video;
 use Illuminate\Auth\Access\HandlesAuthorization;

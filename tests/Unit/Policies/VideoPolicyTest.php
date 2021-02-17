@@ -11,7 +11,7 @@ class VideoPolicyTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_view_video()
+    public function a_user_can_view_videos()
     {
         $user = self::createPermissionedUser('view videos', true);
 

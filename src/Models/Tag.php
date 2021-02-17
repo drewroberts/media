@@ -48,26 +48,7 @@ class Tag extends BaseModel implements Sortable
 
         return $query->where('type', $type)->ordered();
     }
-
-    /**
-     * @param string|array|\ArrayAccess $values
-     * @param string|null $type
-     *
-     * @return mixed
-     */
-    public static function findOrCreate($values, string $type = null)
-    {
-        $tags = collect($values)->map(function ($value) use ($type) {
-            if ($value instanceof self) {
-                return $value;
-            }
-
-            return static::findOrCreateFromString($value, $type);
-        });
-
-        return is_string($values) ? $tags->first() : $tags;
-    }
-
+    
     public static function getWithType(string $type): DbCollection
     {
         return static::withType($type)->ordered()->get();

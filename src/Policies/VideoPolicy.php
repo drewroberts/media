@@ -14,36 +14,21 @@ class VideoPolicy
 
     public function viewAny(UserInterface $user)
     {
-        return $user->hasPermissionTo('view videos') ? true : false;
+        return $user->hasPermissionTo('view videos');
     }
 
     public function view(UserInterface $user, Video $video)
     {
-        return $user->hasPermissionTo('view videos') ? true : false;
+        return $user->hasPermissionTo('view videos');
     }
 
     public function create(UserInterface $user)
     {
-        return $user->hasPermissionTo('create videos') ? true : false;
+        return $user->hasPermissionTo('create videos');
     }
 
     public function update(UserInterface $user, Video $video)
     {
-        return $user->hasPermissionTo('update videos') ? true : false;
-    }
-
-    public function delete(UserInterface $user, Video $video)
-    {
-        return false;
-    }
-
-    public function restore(UserInterface $user, Video $video)
-    {
-        return false;
-    }
-
-    public function forceDelete(UserInterface $user, Video $video)
-    {
-        return false;
+        return $user->hasPermissionTo('update videos');
     }
 }

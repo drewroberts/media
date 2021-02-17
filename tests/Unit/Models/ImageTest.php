@@ -1,6 +1,6 @@
 <?php
 
-namespace DrewRoberts\Media\Tests\Unit;
+namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;

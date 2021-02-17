@@ -1,6 +1,6 @@
 <?php
 
-namespace DrewRoberts\Media\Tests\Unit;
+namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Tag;
 use DrewRoberts\Media\Tests\Support\Models\User;

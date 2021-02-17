@@ -48,7 +48,7 @@ class Tag extends BaseModel implements Sortable
 
         return $query->where('type', $type)->ordered();
     }
-    
+
     public static function getWithType(string $type): DbCollection
     {
         return static::withType($type)->ordered()->get();

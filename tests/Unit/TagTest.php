@@ -14,6 +14,15 @@ class TagTest extends TestCase
         WithFaker;
 
     /** @test */
+    public function it_has_a_name()
+    {
+        $name = $this->faker->word;
+        $tag = Tag::factory()->create(['name' => $name]);
+
+        $this->assertEquals($name, $tag->name);
+    }
+
+    /** @test */
     public function it_has_a_path()
     {
         $tag = Tag::factory()->create();

@@ -28,7 +28,9 @@ class Image extends BaseModel
 
     public function getUrlAttribute()
     {
-        return 'https://res.cloudinary.com/' . config('media.cloudinary_cloud_name') . '/' . $this->filename;
+        $cloudName = config('filesystem.disks.cloudinary.cloud_name');
+
+        return 'https://res.cloudinary.com/' . $cloudName . '/' . $this->filename;
     }
 
     public function videos()

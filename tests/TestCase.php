@@ -22,5 +22,6 @@ class TestCase extends BaseTestCase
         parent::getEnvironmentSetUp($app);
 
         $app['config']->set('tipoff.model_class.user', User::class);
+        $app['config']->set('filesystem.disks.cloudinary.cloud_name', 'test');
     }
 }

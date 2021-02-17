@@ -86,7 +86,7 @@ class ImageTest extends TestCase
     /** @test */
     public function it_has_an_url()
     {
-        config(['media.cloudinary_cloud_name' => 'test']);
+        config(['filesystem.disks.cloudinary.cloud_name' => 'test']);
 
         $image = Image::factory()->create();
 

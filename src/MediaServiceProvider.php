@@ -23,7 +23,6 @@ class MediaServiceProvider extends TipoffServiceProvider
                 Tag::class => TagPolicy::class,
                 Video::class => VideoPolicy::class,
             ])
-            ->name('media')
-            ->hasConfigFile();
+            ->name('media');
     }
 }

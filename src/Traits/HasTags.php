@@ -12,11 +12,6 @@ trait HasTags
 {
     protected array $queuedTags = [];
 
-    public static function getTagClassName(): string
-    {
-        return Tag::class;
-    }
-
     public static function bootHasTags()
     {
         static::created(function (Model $taggableModel) {
@@ -37,7 +32,7 @@ trait HasTags
     public function tags(): MorphToMany
     {
         return $this
-            ->morphToMany(self::getTagClassName(), 'taggable')
+            ->morphToMany(app('tag'), 'taggable')
             ->ordered();
     }
 
@@ -129,9 +124,7 @@ trait HasTags
      */
     public function attachTags($tags, string $type = null)
     {
-        $className = static::getTagClassName();
-
-        $tags = collect($className::findOrCreate($tags, $type));
+        $tags = collect(app('tag')::findOrCreate($tags, $type));
 
         $this->tags()->syncWithoutDetaching($tags->pluck('id')->toArray());
 
@@ -186,9 +179,7 @@ trait HasTags
      */
     public function syncTags($tags)
     {
-        $className = static::getTagClassName();
-
-        $tags = collect($className::findOrCreate($tags));
+        $tags = collect(app('tag')::findOrCreate($tags));
 
         $this->tags()->sync($tags->pluck('id')->toArray());
 
@@ -203,9 +194,7 @@ trait HasTags
      */
     public function syncTagsWithType($tags, string $type = null)
     {
-        $className = static::getTagClassName();
-
-        $tags = collect($className::findOrCreate($tags, $type));
+        $tags = collect(app('tag')::findOrCreate($tags, $type));
 
         $this->syncTagIds($tags->pluck('id')->toArray(), $type);
 
@@ -223,9 +212,7 @@ trait HasTags
                 return $value;
             }
 
-            $className = static::getTagClassName();
-
-            return $className::findFromString($value, $type, $locale);
+            return app('tag')::findFromString($value, $type, $locale);
         });
     }
 
@@ -236,9 +223,7 @@ trait HasTags
                 return $value;
             }
 
-            $className = static::getTagClassName();
-
-            return $className::findFromStringOfAnyType($value, $locale);
+            return app('tag')::findFromStringOfAnyType($value, $locale);
         });
     }
 

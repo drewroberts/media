@@ -14,26 +14,26 @@ class TagPolicy
 
     public function viewAny(UserInterface $user)
     {
-        return $user->hasPermissionTo('view tags') ? true : false;
+        return $user->hasPermissionTo('view tags');
     }
 
     public function view(UserInterface $user, Tag $tag)
     {
-        return $user->hasPermissionTo('view tags') ? true : false;
+        return $user->hasPermissionTo('view tags');
     }
 
     public function create(UserInterface $user)
     {
-        return $user->hasPermissionTo('create tags') ? true : false;
+        return $user->hasPermissionTo('create tags');
     }
 
     public function update(UserInterface $user, Tag $tag)
     {
-        return $user->hasPermissionTo('update tags') ? true : false;
+        return $user->hasPermissionTo('update tags');
     }
 
     public function delete(UserInterface $user, Tag $tag)
     {
-        return $user->hasPermissionTo('delete tags') ? true : false;
+        return $user->hasPermissionTo('delete tags');
     }
 }

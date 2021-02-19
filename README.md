@@ -47,6 +47,16 @@ Nova::resources([
 ]);
 ```
 
+## Models
+
+We include the following models in this package:
+
+**List of Models**
+
+- Image
+- Tag
+- Video
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

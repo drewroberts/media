@@ -24,9 +24,9 @@ class MediaServiceProvider extends TipoffServiceProvider
                 Video::class => VideoPolicy::class,
             ])
             ->hasNovaResources([
-                \Tipoff\Locations\Nova\Image::class,
-                \Tipoff\Locations\Nova\Tag::class,
-                \Tipoff\Locations\Nova\Video::class,
+                \DrewRoberts\Media\Nova\Image::class,
+                \DrewRoberts\Media\Nova\Tag::class,
+                \DrewRoberts\Media\Nova\Video::class,
             ])
             ->name('media')
             ->hasConfigFile();

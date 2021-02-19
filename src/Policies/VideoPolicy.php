@@ -32,18 +32,18 @@ class VideoPolicy
         return $user->hasPermissionTo('update videos');
     }
     
-    public function delete(UserInterface $user, Video $video)	
-    {	
-        return false;	
-    }	
+    public function delete(UserInterface $user, Video $video)
+    {
+        return false;
+    }
 
-    public function restore(UserInterface $user, Video $video)	
-    {	
-        return false;	
-    }	
+    public function restore(UserInterface $user, Video $video)
+    {
+        return false;
+    }
 
-    public function forceDelete(UserInterface $user, Video $video)	
-    {	
-        return false;	
+    public function forceDelete(UserInterface $user, Video $video)
+    {
+        return false;
     }
 }

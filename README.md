@@ -15,6 +15,12 @@ You can install the package via composer:
 composer require drewroberts/media
 ```
 
+You can publish the config file with:
+
+```bash
+php artisan vendor:publish --provider="DrewRoberts\Media\MediaServiceProvider" --tag="config"
+```
+
 Add the cloudinary disk to the filesystem config and set the environment variables for your Cloudinary account.
 
 ```php

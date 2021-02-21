@@ -90,3 +90,10 @@ All notable changes to `media` will be documented in this file
 ## 3.0.5 - 2021-02-09
 
 - update service provider
+
+## 3.1.0 - 2021-02-20
+
+- add policies
+- register policies
+- add nova resources
+- register nova resources

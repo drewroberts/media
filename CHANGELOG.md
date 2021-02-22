@@ -97,3 +97,8 @@ All notable changes to `media` will be documented in this file
 - register policies
 - add nova resources
 - register nova resources
+
+## 3.1.1 - 2021-02-22
+
+- seed permissions
+- hasmedia trait

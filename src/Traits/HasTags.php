@@ -21,4 +21,11 @@ trait HasTags
     {
         $this->tags()->detach($tag);
     }
+
+    public function syncTags($tags)
+    {
+        $ids = collect($tags)->pluck('id')->toArray();
+
+        $this->tags()->sync($ids);
+    }
 }

@@ -59,4 +59,20 @@ class HasTagsTest extends TestCase
 
         $this->assertCount(0, $taggable->tags);
     }
+
+    /** @test */
+    public function it_syncs_tags()
+    {
+        $taggable = TaggableStub::create();
+        $previousTag = Tag::factory()->create();
+
+        $taggable->attachTag($previousTag);
+
+        $taggable->syncTags(
+            Tag::factory()->count(3)->create()
+        );
+
+        $this->assertCount(3, $taggable->tags);
+        $this->assertFalse($taggable->tags->contains($previousTag));
+    }
 }

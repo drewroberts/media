@@ -16,7 +16,7 @@ class TagTest extends TestCase
     /** @test */
     public function it_has_a_name()
     {
-        $name = $this->faker->word;
+        $name = '#TagName';
         $tag = Tag::factory()->create(['name' => $name]);
 
         $this->assertEquals($name, $tag->name);
@@ -88,7 +88,7 @@ class TagTest extends TestCase
     /** @test */
     public function it_finds_a_tag_by_name()
     {
-        $name = $this->faker->word;
+        $name = '#TagName';
         $target = Tag::factory()->create(['name' => $name]);
 
         $tag = Tag::findFromString($name);
@@ -104,7 +104,7 @@ class TagTest extends TestCase
     /** @test */
     public function it_finds_a_tag_from_a_string_that_matches_a_certain_type()
     {
-        $name = $this->faker->word;
+        $name = '#TagName';
         $type = $this->faker->word;
 
         Tag::factory()->create([

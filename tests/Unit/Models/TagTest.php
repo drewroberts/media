@@ -23,6 +23,17 @@ class TagTest extends TestCase
     }
 
     /** @test */
+    public function it_transforms_the_name_before_saving()
+    {
+        $name = "#$%^&*()Tag name 01~`!@-_+={}[]|\/:;\"'<>,.?";
+        $tag = Tag::factory()->make(['name' => $name]);
+
+        $tag->save();
+
+        $this->assertEquals('#TagName01', $tag->name);
+    }
+
+    /** @test */
     public function it_has_a_path()
     {
         $tag = Tag::factory()->create();

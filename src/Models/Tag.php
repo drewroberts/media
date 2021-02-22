@@ -6,6 +6,7 @@ use DrewRoberts\Media\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Tipoff\Support\Models\BaseModel;
@@ -19,15 +20,11 @@ class Tag extends BaseModel implements Sortable
 
     protected $guarded = ['id'];
 
-    protected static function boot()
+    public function setNameAttribute($value)
     {
-        parent::boot();
+        $name = preg_replace('/[^\w\s]/', '', $value);
 
-        static::saving(function ($tag) {
-            if (empty($tag->slug)) {
-                $tag->slug = $tag->generateSlug();
-            }
-        });
+        $this->attributes['name'] = '#' . Str::studly($name);
     }
 
     public function getRouteKeyName()

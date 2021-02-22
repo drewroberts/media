@@ -34,4 +34,17 @@ class HasTagsTest extends TestCase
         $this->assertInstanceOf(Collection::class, $taggable->tags);
         $this->assertInstanceOf(Tag::class, $taggable->tags->first());
     }
+
+    /** @test */
+    public function it_attaches_a_tag()
+    {
+        $taggable = TaggableStub::create();
+
+        $tag = Tag::factory()->create();
+
+        $taggable->attachTag($tag);
+
+        $this->assertCount(1, $taggable->tags);
+        $this->assertEquals($tag->id, $taggable->tags->first()->id);
+    }
 }

@@ -16,4 +16,9 @@ trait HasTags
     {
         $this->tags()->save($tag);
     }
+
+    public function detachTag(Tag $tag)
+    {
+        $this->tags()->detach($tag);
+    }
 }

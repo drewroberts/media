@@ -47,4 +47,16 @@ class HasTagsTest extends TestCase
         $this->assertCount(1, $taggable->tags);
         $this->assertEquals($tag->id, $taggable->tags->first()->id);
     }
+
+    /** @test */
+    public function it_detaches_a_tag()
+    {
+        $taggable = TaggableStub::create();
+        $tag = Tag::factory()->create();
+
+        $taggable->attachTag($tag);
+        $taggable->detachTag($tag);
+
+        $this->assertCount(0, $taggable->tags);
+    }
 }

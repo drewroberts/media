@@ -16,9 +16,7 @@ use Tipoff\Support\Traits\HasUpdater;
 class Tag extends BaseModel implements Sortable
 {
     use SortableTrait, HasCreator, HasUpdater, HasPackageFactory;
-
-    protected $guarded = ['id'];
-
+    
     public static function boot()
     {
         parent::boot();

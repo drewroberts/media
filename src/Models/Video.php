@@ -11,8 +11,6 @@ class Video extends BaseModel
 {
     use HasCreator, HasUpdater, HasPackageFactory;
 
-    protected $guarded = ['id'];
-
     protected $casts = [
         'stream_scheduled_at' => 'datetime',
         'stream_started_at' => 'datetime',

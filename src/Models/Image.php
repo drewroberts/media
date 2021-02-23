@@ -11,8 +11,6 @@ class Image extends BaseModel
 {
     use HasCreator, HasUpdater, HasPackageFactory;
 
-    protected $guarded = ['id'];
-
     protected static function boot()
     {
         parent::boot();

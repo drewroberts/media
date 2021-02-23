@@ -65,7 +65,7 @@ class TagTest extends TestCase
         $tag->save();
 
         $this->assertNotNull($tag->slug);
-        $this->assertEquals('tag-name', $tag->slug);
+        $this->assertEquals('tagname', $tag->slug);
     }
 
     /** @test */

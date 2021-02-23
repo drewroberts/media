@@ -16,17 +16,16 @@ use Tipoff\Support\Traits\HasUpdater;
 class Tag extends BaseModel implements Sortable
 {
     use SortableTrait, HasCreator, HasUpdater, HasPackageFactory;
-    
+
     public static function boot()
     {
         parent::boot();
 
         static::saving(static function ($tag) {
             $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
-            $splitUpName = Str::splitAtCapitalLetters($sanitizedName);
 
-            $tag->slug = Str::slug($splitUpName);
-            $tag->name = '#' . Str::studly($splitUpName);
+            $tag->slug = Str::slug($sanitizedName);
+            $tag->name = '#' . Str::studly($sanitizedName);
         });
     }
 

@@ -23,10 +23,6 @@ class MediaServiceProvider extends TipoffServiceProvider
         Str::macro('keepAlphanumericCharacters', static function ($value) {
             return preg_replace('/[^\w\s]/', '', $value);
         });
-
-        Str::macro('splitAtCapitalLetters', static function ($value) {
-            return implode(' ', preg_split('/(?=[A-Z])/', $value));
-        });
     }
 
     public function configureTipoffPackage(TipoffPackage $package): void

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\Void_;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Tipoff\Support\Models\BaseModel;
@@ -19,6 +20,15 @@ class Tag extends BaseModel implements Sortable
     use SortableTrait, HasSlug, HasCreator, HasUpdater, HasPackageFactory;
 
     protected $guarded = ['id'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(static function ($tag) {
+            $tag->slug = $tag->generateSlug();
+        });
+    }
 
     public function setNameAttribute($value)
     {

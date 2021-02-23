@@ -124,6 +124,41 @@ class HasTagsTest extends TestCase
     }
 
     /** @test */
+    public function it_detaches_a_tag_by_name()
+    {
+        $name = '#TagName';
+        $taggable = TaggableStub::create();
+
+        $tag = Tag::factory()->create([
+            'name' => $name,
+            'type' => null,
+        ]);
+
+        $taggable->attachTag($tag);
+        $taggable->detachTagByName($name);
+
+        $this->assertCount(0, $taggable->tags);
+    }
+
+    /** @test */
+    public function it_detaches_a_tag_by_name_and_type()
+    {
+        $name = '#TagName';
+        $type = $this->faker->word;
+        $taggable = TaggableStub::create();
+
+        $tag = Tag::factory()->create([
+            'name' => $name,
+            'type' => $type,
+        ]);
+
+        $taggable->attachTag($tag);
+        $taggable->detachTagByName($name, $type);
+
+        $this->assertCount(0, $taggable->tags);
+    }
+
+    /** @test */
     public function it_syncs_tags()
     {
         $taggable = TaggableStub::create();

@@ -29,6 +29,17 @@ trait HasTags
         $this->tags()->detach($tag);
     }
 
+    public function detachTagByName(string $name, $type = null)
+    {
+        $tag = $this->tags()->where('name', $name)
+            ->where('type', $type)
+            ->first();
+
+        if (! is_null($tag)) {
+            $this->detachTag($tag);
+        }
+    }
+
     public function syncTags($tags)
     {
         $ids = collect($tags)->pluck('id')->toArray();

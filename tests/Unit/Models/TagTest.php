@@ -31,8 +31,21 @@ class TagTest extends TestCase
         $tag->save();
 
         $this->assertEquals('#TagName01', $tag->name);
+        $this->assertEquals('tagname01', $tag->slug);
     }
 
+    /** @test */
+    public function it_strips_all_hashtags_and_add_one_at_the_beginning()
+    {
+        $name = "#Tag #Name##";
+        $tag = Tag::factory()->make(['name' => $name]);
+
+        $tag->save();
+
+        $this->assertEquals('#TagName', $tag->name);
+        $this->assertEquals('tagname', $tag->slug);
+    }
+    
     /** @test */
     public function it_has_a_path()
     {

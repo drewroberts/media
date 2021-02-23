@@ -20,8 +20,12 @@ class MediaServiceProvider extends TipoffServiceProvider
     {
         parent::boot();
 
-        Str::macro('keepAlphanumericCharacters', static function ($value) {
+        Str::macro('keepAlphanumericCharactersAndSpaces', static function ($value) {
             return preg_replace('/[^\w\s]/', '', $value);
+        });
+
+        Str::macro('keepAlphanumericCharacters', static function ($value) {
+            return preg_replace('/[^\w]/', '', $value);
         });
     }
 

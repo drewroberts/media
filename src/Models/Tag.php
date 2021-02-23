@@ -24,9 +24,15 @@ class Tag extends BaseModel implements Sortable
         static::saving(static function ($tag) {
             $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
 
-            $tag->slug = Str::slug($sanitizedName);
-            $tag->name = '#' . Str::studly($sanitizedName);
+            $tag->slug = strtolower($sanitizedName);
         });
+    }
+
+    public function setNameAttribute($value)
+    {
+        $sanitizedName = Str::keepAlphanumericCharactersAndSpaces($value);
+
+        $this->attributes['name'] = '#' . Str::studly($sanitizedName);
     }
 
     public function getRouteKeyName()

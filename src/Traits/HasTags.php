@@ -17,6 +17,13 @@ trait HasTags
         $this->tags()->save($tag);
     }
 
+    public function attachTagByName(string $name, $type = null)
+    {
+        $tag = Tag::findOrCreateFromString($name, $type);
+
+        $this->attachTag($tag);
+    }
+
     public function detachTag(Tag $tag)
     {
         $this->tags()->detach($tag);

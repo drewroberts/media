@@ -58,11 +58,14 @@ class TagTest extends TestCase
     /** @test */
     public function it_generates_a_slug_on_save()
     {
-        $tag = Tag::factory()->make();
+        $tag = Tag::factory()->make([
+            'name' => '#TagName',
+        ]);
 
         $tag->save();
 
         $this->assertNotNull($tag->slug);
+        $this->assertEquals('tag-name', $tag->slug);
     }
 
     /** @test */

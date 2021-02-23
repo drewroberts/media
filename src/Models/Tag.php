@@ -2,7 +2,6 @@
 
 namespace DrewRoberts\Media\Models;
 
-use DrewRoberts\Media\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
 use Illuminate\Support\Collection;
@@ -16,15 +15,21 @@ use Tipoff\Support\Traits\HasUpdater;
 
 class Tag extends BaseModel implements Sortable
 {
-    use SortableTrait, HasSlug, HasCreator, HasUpdater, HasPackageFactory;
+    use SortableTrait, HasCreator, HasUpdater, HasPackageFactory;
 
     protected $guarded = ['id'];
 
-    public function setNameAttribute($value)
+    public static function boot()
     {
-        $name = preg_replace('/[^\w\s]/', '', $value);
+        parent::boot();
 
-        $this->attributes['name'] = '#' . Str::studly($name);
+        static::saving(static function ($tag) {
+            $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
+            $splitUpName = Str::splitAtCapitalLetters($sanitizedName);
+
+            $tag->slug = Str::slug($splitUpName);
+            $tag->name = '#' . Str::studly($splitUpName);
+        });
     }
 
     public function getRouteKeyName()

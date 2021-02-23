@@ -10,11 +10,25 @@ use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Policies\ImagePolicy;
 use DrewRoberts\Media\Policies\TagPolicy;
 use DrewRoberts\Media\Policies\VideoPolicy;
+use Illuminate\Support\Str;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
 class MediaServiceProvider extends TipoffServiceProvider
 {
+    public function boot()
+    {
+        parent::boot();
+
+        Str::macro('keepAlphanumericCharacters', static function ($value) {
+            return preg_replace('/[^\w\s]/', '', $value);
+        });
+
+        Str::macro('splitAtCapitalLetters', static function ($value) {
+            return implode(' ', preg_split('/(?=[A-Z])/', $value));
+        });
+    }
+
     public function configureTipoffPackage(TipoffPackage $package): void
     {
         $package

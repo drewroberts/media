@@ -15,7 +15,6 @@ class TagFactory extends Factory
 
         return [
             'name'         => $word,
-            'slug'         => $word,
             'creator_id'   => randomOrCreate(app('user')),
             'updater_id'   => randomOrCreate(app('user')),
         ];

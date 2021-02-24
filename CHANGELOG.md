@@ -102,3 +102,7 @@ All notable changes to `media` will be documented in this file
 
 - seed permissions
 - hasmedia trait
+
+## 3.2.0 - 2021-02-24
+
+- update tag formatting as hashtags

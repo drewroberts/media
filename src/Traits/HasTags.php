@@ -2,7 +2,6 @@
 
 namespace DrewRoberts\Media\Traits;
 
-
 use DrewRoberts\Media\Models\Tag;
 
 trait HasTags

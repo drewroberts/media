@@ -9,6 +9,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class HasTagsTest extends TestCase
@@ -172,5 +173,24 @@ class HasTagsTest extends TestCase
 
         $this->assertCount(3, $taggable->tags);
         $this->assertFalse($taggable->tags->contains($previousTag));
+    }
+
+    /** @test */
+    public function it_deletes_all_tag_associations_as_taggable_is_being_deleted()
+    {
+        $taggable = TaggableStub::create();
+        $tags = Tag::factory()->count(3)->create();
+
+        $tags->each(static function ($tag) use ($taggable) {
+            $taggable->attachTag($tag);
+        });
+
+        $taggable->delete();
+
+        $count = DB::table('taggables')
+            ->where('taggable_id', $taggable->id)
+            ->count();
+
+        $this->assertEquals(0, $count);
     }
 }

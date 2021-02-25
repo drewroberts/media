@@ -6,6 +6,13 @@ use DrewRoberts\Media\Models\Tag;
 
 trait HasTags
 {
+    public static function bootHasTags()
+    {
+        static::deleting(function ($taggable) {
+            $taggable->tags()->detach();
+        });
+    }
+
     public function tags()
     {
         return $this->morphToMany(app('tag'), 'taggable');

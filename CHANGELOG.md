@@ -110,3 +110,7 @@ All notable changes to `media` will be documented in this file
 ## 3.2.1 - 2021-02-27
 
 - ability to delete tags
+
+## 3.2.2 - 2021-02-27
+
+- bump dependencies

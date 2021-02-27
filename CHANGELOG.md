@@ -106,3 +106,7 @@ All notable changes to `media` will be documented in this file
 ## 3.2.0 - 2021-02-24
 
 - update tag formatting as hashtags
+
+## 3.2.1 - 2021-02-27
+
+- ability to delete tags

@@ -6,6 +6,7 @@ use DrewRoberts\Media\MediaServiceProvider;
 use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\Support\Providers\NovaPackageServiceProvider;
 use Laravel\Nova\NovaCoreServiceProvider;
+use Silvanite\NovaFieldCloudinary\Providers\PackageServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
 
@@ -18,6 +19,7 @@ class TestCase extends BaseTestCase
             MediaServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
+            PackageServiceProvider::class,
         ];
     }
 

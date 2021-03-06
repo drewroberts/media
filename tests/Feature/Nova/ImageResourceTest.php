@@ -20,6 +20,13 @@ class ImageResourceTest extends TestCase
     {
         Config::set('app.key', 'base64:CA0WFs+ECA4gq/G95GpRwEaYsoNdUF0cAziYkc83ISE=');
 
+        Config::set('filesystems.disks.cloudinary', [
+            'driver' => 'cloudinary',
+            'api_key' => env('CLOUDINARY_API_KEY', 'nonsense'),
+            'api_secret' => env('CLOUDINARY_API_SECRET', 'nonsense'),
+            'cloud_name' => env('CLOUDINARY_CLOUD_NAME', 'nonsense'),
+        ]);
+        
         Image::factory()->count(1)->create();
 
         $this->actingAs(self::createPermissionedUser('view images', true));

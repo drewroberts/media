@@ -2,8 +2,10 @@
 
 namespace DrewRoberts\Media\Tests;
 
+use Laravel\Nova\NovaCoreServiceProvider;
 use DrewRoberts\Media\MediaServiceProvider;
 use DrewRoberts\Media\Tests\Support\Models\User;
+use DrewRoberts\Media\Tests\Support\Providers\NovaPackageServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
 
@@ -14,6 +16,8 @@ class TestCase extends BaseTestCase
         return [
             SupportServiceProvider::class,
             MediaServiceProvider::class,
+            NovaCoreServiceProvider::class,
+            NovaPackageServiceProvider::class,
         ];
     }
 

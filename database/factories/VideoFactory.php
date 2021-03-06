@@ -20,7 +20,7 @@ class VideoFactory extends Factory
             'name'         => $this->faker->unique->sentence,
             'title'        => $word,
             'description'  => $this->faker->sentences(1, true),
-            'image_id'     => randomOrCreate(Image::class),
+            'image_id'     => randomOrCreate(app('image')),
             'creator_id'   => randomOrCreate(app('user')),
             'updater_id'   => randomOrCreate(app('user')),
         ];

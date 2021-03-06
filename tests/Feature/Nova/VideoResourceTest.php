@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace DrewRoberts\Media\Tests\Feature\Nova;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class VideoResourceTest extends TestCase

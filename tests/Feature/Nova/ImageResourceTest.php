@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace DrewRoberts\Media\Tests\Feature\Nova;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ImageResourceTest extends TestCase
 {
     //use DatabaseTransactions;
-    use RefreshDatabase; 
+    use RefreshDatabase;
 
     /** @test */
     public function index()

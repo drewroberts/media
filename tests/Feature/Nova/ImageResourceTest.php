@@ -8,6 +8,7 @@ use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 
 class ImageResourceTest extends TestCase
 {
@@ -17,6 +18,8 @@ class ImageResourceTest extends TestCase
     /** @test */
     public function index()
     {
+        Config::set('app.key', 'base64:CA0WFs+ECA4gq/G95GpRwEaYsoNdUF0cAziYkc83ISE=');
+
         Image::factory()->count(1)->create();
 
         $this->actingAs(self::createPermissionedUser('view images', true));

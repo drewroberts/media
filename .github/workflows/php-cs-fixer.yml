@@ -25,5 +25,6 @@ jobs:
                 with:
                     commit_message: Fix styling
                     branch: ${{ steps.extract_branch.outputs.branch }}
+                    push_options: --force
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

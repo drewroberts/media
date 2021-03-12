@@ -3,10 +3,10 @@
 namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Tag;
-use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tipoff\Authorization\Models\User;
 
 class TagTest extends TestCase
 {

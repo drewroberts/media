@@ -4,12 +4,12 @@ namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
-use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use phpmock\phpunit\PHPMock;
+use Tipoff\Authorization\Models\User;
 
 class ImageTest extends TestCase
 {

@@ -114,3 +114,9 @@ All notable changes to `media` will be documented in this file
 ## 3.2.2 - 2021-02-27
 
 - bump dependencies
+
+## 3.3.0 - 2021-03-12
+
+- migrate permissions
+- grant permissions to roles
+- improve tests

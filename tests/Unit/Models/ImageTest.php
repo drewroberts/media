@@ -1,6 +1,6 @@
 <?php
 
-namespace DrewRoberts\Media\Tests\Unit\Models {
+namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
@@ -8,6 +8,8 @@ use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Mockery;
+use phpmock\mockery\PHPMockery;
 use Tipoff\Authorization\Models\User;
 
 class ImageTest extends TestCase
@@ -97,6 +99,8 @@ class ImageTest extends TestCase
     /** @test */
     public function it_determines_the_dimensions_if_empty()
     {
+        PHPMockery::mock('DrewRoberts\Media\Models', 'getimagesize')->andReturn([24, 60]);
+
         $image = Image::factory()->make([
             'filename' => 'test.jpg',
             'width' => null,
@@ -107,6 +111,8 @@ class ImageTest extends TestCase
 
         $this->assertEquals(24, $image->width);
         $this->assertEquals(60, $image->height);
+
+        Mockery::close();
     }
 
     /** @test */
@@ -134,12 +140,5 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(User::class, $image->updater);
         $this->assertEquals($user->id, $image->updater->id);
-    }
-}
-}
-
-namespace DrewRoberts\Media\Models {
-    function getimagesize() {
-        return [24, 60];
     }
 }

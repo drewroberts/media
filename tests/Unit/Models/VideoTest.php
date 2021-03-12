@@ -4,12 +4,12 @@ namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
-use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\TestCase;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
+use Tipoff\Authorization\Models\User;
 
 class VideoTest extends TestCase
 {

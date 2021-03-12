@@ -4,17 +4,17 @@ namespace DrewRoberts\Media\Tests\Unit\Models;
 
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
-use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use phpmock\phpunit\PHPMock;
+use Mockery;
+use phpmock\mockery\PHPMockery;
+use Tipoff\Authorization\Models\User;
 
 class ImageTest extends TestCase
 {
     use RefreshDatabase,
-        PHPMock,
         WithFaker;
 
     /** @test */
@@ -99,21 +99,20 @@ class ImageTest extends TestCase
     /** @test */
     public function it_determines_the_dimensions_if_empty()
     {
+        PHPMockery::mock('DrewRoberts\Media\Models', 'getimagesize')->andReturn([24, 60]);
+
         $image = Image::factory()->make([
             'filename' => 'test.jpg',
             'width' => null,
             'height' => null,
         ]);
 
-        $this->getFunctionMock('DrewRoberts\Media\Models', 'getimagesize')
-            ->expects($this->once())
-            ->with($image->url)
-            ->willReturn([24, 60]);
-
         $image->save();
 
         $this->assertEquals(24, $image->width);
         $this->assertEquals(60, $image->height);
+
+        Mockery::close();
     }
 
     /** @test */

@@ -9,16 +9,16 @@ class AddMediaPermissions extends BasePermissionsMigration
     public function up()
     {
         $permissions = [
-         'view images',
-         'create images',
-         'update images',
-         'view tags',
-         'create tags',
-         'update tags',
-         'delete tags',
-         'view videos',
-         'create videos',
-         'update videos',
+         'view images' => ['Owner', 'Staff'],
+         'create images' => ['Owner'],
+         'update images' => ['Owner'],
+         'view tags' => ['Owner', 'Staff'],
+         'create tags' => ['Owner'],
+         'update tags' => ['Owner'],
+         'delete tags' => [],
+         'view videos' => ['Owner', 'Staff'],
+         'create videos' => ['Owner'],
+         'update videos' => ['Owner'],
         ];
 
         $this->createPermissions($permissions);

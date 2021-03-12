@@ -139,7 +139,8 @@ class ImageTest extends TestCase
 }
 
 namespace DrewRoberts\Media\Models {
-    function getimagesize() {
+    function getimagesize()
+    {
         return [24, 60];
     }
 }

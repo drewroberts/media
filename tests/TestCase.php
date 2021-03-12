@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DrewRoberts\Media\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
-use DrewRoberts\Media\Tests\Support\Models\User;
 use DrewRoberts\Media\Tests\Support\Providers\NovaPackageServiceProvider;
 use Laravel\Nova\NovaCoreServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
+use Tipoff\Authorization\AuthorizationServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
 
@@ -15,16 +18,11 @@ class TestCase extends BaseTestCase
     {
         return [
             SupportServiceProvider::class,
+            AuthorizationServiceProvider::class,
+            PermissionServiceProvider::class,
             MediaServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app['config']->set('tipoff.model_class.user', User::class);
     }
 }

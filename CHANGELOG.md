@@ -120,3 +120,7 @@ All notable changes to `media` will be documented in this file
 - migrate permissions
 - grant permissions to roles
 - improve tests
+
+## 3.3.1 - 2021-03-17
+
+- improve nova resources

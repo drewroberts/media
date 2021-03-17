@@ -9,8 +9,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
 use Silvanite\NovaFieldCloudinary\Fields\CloudinaryImage;
+use Tipoff\Support\Nova\BaseResource;
 
-class Image extends Resource
+class Image extends BaseResource
 {
     public static $model = \DrewRoberts\Media\Models\Image::class;
 

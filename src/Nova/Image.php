@@ -59,34 +59,12 @@ class Image extends Resource
         ];
     }
 
-    protected function dataFields()
+    protected function dataFields(): array
     {
-        return [
-            ID::make(),
-            BelongsTo::make('Created By', 'creator', app('nova.user'))->exceptOnForms(),
-            DateTime::make('Created At')->exceptOnForms(),
-            BelongsTo::make('Updated By', 'updater', app('nova.user'))->exceptOnForms(),
-            DateTime::make('Updated At')->exceptOnForms(),
-        ];
-    }
-
-    public function cards(Request $request)
-    {
-        return [];
-    }
-
-    public function filters(Request $request)
-    {
-        return [];
-    }
-
-    public function lenses(Request $request)
-    {
-        return [];
-    }
-
-    public function actions(Request $request)
-    {
-        return [];
+        return array_merge(
+            parent::dataFields(),
+            $this->creatorDataFields(),
+            $this->updaterDataFields(),
+        );
     }
 }

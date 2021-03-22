@@ -11,7 +11,7 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('identifier')->unique()->index(); // ID on YouTube.
-            $table->string('source')->default('youtube');
+            $table->string('source');
             $table->string('name'); // Internal reference name for video
             $table->string('title')->nullable();
             $table->text('description')->nullable();

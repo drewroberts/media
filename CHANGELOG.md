@@ -124,3 +124,7 @@ All notable changes to `media` will be documented in this file
 ## 3.3.1 - 2021-03-17
 
 - improve nova resources
+
+## 3.4.0 - 2021-03-21
+
+- update migrations

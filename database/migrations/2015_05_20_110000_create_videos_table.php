@@ -25,12 +25,13 @@ class CreateVideosTable extends Migration
             $table->string('privacy')->nullable(); // Options include 'public', 'private', 'unlisted'
             $table->string('location')->nullable();
             $table->boolean('embeddable')->default(true);
-          
-            $table->foreignIdFor(app('user'), 'creator_id'); // If user added it via Admin (Nova)
-            $table->foreignIdFor(app('user'), 'updater_id')->nullable(); // Nullable since videos can be pulled from YouTube API
+
             $table->dateTime('stream_started_at')->nullable(); // When stream actually started on YouTube
             $table->dateTime('stream_scheduled_at')->nullable(); // When the stream was scheduled to start on YouTube
             $table->dateTime('published_at')->nullable(); // When video was published on YouTube
+
+            $table->foreignIdFor(app('user'), 'creator_id')->nullable(); // If user added it via Admin (Nova)
+            $table->foreignIdFor(app('user'), 'updater_id')->nullable(); // Nullable since videos can be pulled from YouTube API
             $table->timestamps();
         });
     }

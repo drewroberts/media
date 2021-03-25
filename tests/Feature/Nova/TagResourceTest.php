@@ -37,6 +37,6 @@ class TagResourceTest extends TestCase
         $response = $this->getJson("nova-api/tags/{$tag->id}")
             ->assertOk();
 
-        $this->assertEquals($image->id, $response->json('resource.id.value'));
+        $this->assertEquals($tag->id, $response->json('resource.id.value'));
     }
 }

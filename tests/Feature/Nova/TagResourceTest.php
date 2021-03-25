@@ -28,7 +28,7 @@ class TagResourceTest extends TestCase
 
     /** @test */
     public function show()
-    {        
+    {
         $user = User::factory()->create();
         $tag = Tag::factory()->create();
 
@@ -40,4 +40,3 @@ class TagResourceTest extends TestCase
         $this->assertEquals($image->id, $response->json('resource.id.value'));
     }
 }
-

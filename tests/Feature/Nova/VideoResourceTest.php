@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DrewRoberts\Media\Tests\Feature\Nova;
 
-use DrewRoberts\Media\Tests\TestCase;
 use DrewRoberts\Media\Models\Video;
+use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
 
@@ -28,7 +28,7 @@ class VideoResourceTest extends TestCase
 
     /** @test */
     public function show()
-    {        
+    {
         $user = User::factory()->create();
         $video = Video::factory()->create();
 

@@ -7,25 +7,36 @@ namespace DrewRoberts\Media\Tests\Feature\Nova;
 use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Config;
+use Tipoff\Authorization\Models\User;
 
 class VideoResourceTest extends TestCase
 {
-    //use DatabaseTransactions;
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     /** @test */
     public function index()
     {
-        Config::set('app.key', 'base64:CA0WFs+ECA4gq/G95GpRwEaYsoNdUF0cAziYkc83ISE=');
+        Video::factory()->count(4)->create();
 
-        Video::factory()->count(1)->create();
+        $this->actingAs(User::factory()->create()->assignRole('Admin'));
 
-        $this->actingAs(self::createPermissionedUser('view videos', true));
+        $response = $this->getJson('nova-api/videos')
+            ->assertOk();
 
-        $response = $this->getJson('nova-api/videos')->assertOk();
+        $this->assertCount(4, $response->json('resources'));
+    }
 
-        $this->assertCount(1, $response->json('resources'));
+    /** @test */
+    public function show()
+    {
+        $user = User::factory()->create();
+        $video = Video::factory()->create();
+
+        $this->actingAs(User::factory()->create()->assignRole('Admin'));
+
+        $response = $this->getJson("nova-api/videos/{$video->id}")
+            ->assertOk();
+
+        $this->assertEquals($video->id, $response->json('resource.id.value'));
     }
 }

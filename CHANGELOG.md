@@ -128,3 +128,7 @@ All notable changes to `media` will be documented in this file
 ## 3.4.0 - 2021-03-21
 
 - update migrations
+
+## 3.4.1 - 2021-03-26
+
+- update tests

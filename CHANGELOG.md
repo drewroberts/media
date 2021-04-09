@@ -132,3 +132,7 @@ All notable changes to `media` will be documented in this file
 ## 3.4.1 - 2021-03-26
 
 - update tests
+
+## 3.5.0 - 2021-04-09
+
+- bump support dependencies

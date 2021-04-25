@@ -15,10 +15,10 @@ class Video extends BaseResource
 {
     public static $model = \DrewRoberts\Media\Models\Video::class;
 
-    public static $title = 'id';
+    public static $title = 'name';
 
     public static $search = [
-        'id',
+        'name', 'title'
     ];
 
     public static $group = 'Media';

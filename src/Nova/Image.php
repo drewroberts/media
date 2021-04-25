@@ -14,10 +14,10 @@ class Image extends BaseResource
 {
     public static $model = \DrewRoberts\Media\Models\Image::class;
 
-    public static $title = 'id';
+    public static $title = 'filename';
 
     public static $search = [
-        'id',
+        'filename',
     ];
 
     public static $group = 'Media';

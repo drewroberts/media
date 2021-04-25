@@ -5,6 +5,7 @@ namespace DrewRoberts\Media\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Silvanite\NovaFieldCloudinary\Fields\CloudinaryImage;
@@ -40,6 +41,7 @@ class Image extends BaseResource
                 ->storeAs(function () {
                     return 'img-' . sha1((string)time());
                 })->hideWhenUpdating(),
+            nova('video') ? HasMany::make('Video', 'videos', nova('video')) : null,
             Text::make('Width')->exceptOnForms(),
             Text::make('Height')->exceptOnForms(),
 

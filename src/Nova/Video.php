@@ -18,7 +18,7 @@ class Video extends BaseResource
     public static $title = 'name';
 
     public static $search = [
-        'name', 'title'
+        'name', 'title',
     ];
 
     public static $group = 'Media';

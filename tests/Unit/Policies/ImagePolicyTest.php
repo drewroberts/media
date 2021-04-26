@@ -79,7 +79,7 @@ class ImagePolicyTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_force_delete_a_image()
+    public function a_user_cannot_force_delete_an_image()
     {
         $user = self::createPermissionedUser('force delete images', true);
         $video = Image::factory()->create();
@@ -88,7 +88,7 @@ class ImagePolicyTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_restore_a_image()
+    public function a_user_cannot_restore_an_image()
     {
         $user = self::createPermissionedUser('restore images', true);
         $video = Image::factory()->create();

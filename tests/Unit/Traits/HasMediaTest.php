@@ -2,13 +2,13 @@
 
 namespace DrewRoberts\Media\Tests\Unit\Traits;
 
-use Mockery;
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Tests\TestCase;
 use DrewRoberts\Media\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
 
 class HasMediaTest extends TestCase
 {

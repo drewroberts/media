@@ -77,4 +77,22 @@ class VideoPolicyTest extends TestCase
 
         $this->assertFalse($user->can('update', $video));
     }
+
+    /** @test */
+    public function a_user_cannot_force_delete_a_video()
+    {
+        $user = self::createPermissionedUser('force delete videos', true);
+        $video = Video::factory()->create();
+
+        $this->assertFalse($user->can('forceDelete', $video));
+    }
+
+    /** @test */
+    public function a_user_cannot_restore_a_video()
+    {
+        $user = self::createPermissionedUser('restore videos', true);
+        $video = Video::factory()->create();
+
+        $this->assertFalse($user->can('restore', $video));
+    }
 }

@@ -77,4 +77,22 @@ class ImagePolicyTest extends TestCase
 
         $this->assertFalse($user->can('update', $image));
     }
+
+    /** @test */
+    public function a_user_cannot_force_delete_an_image()
+    {
+        $user = self::createPermissionedUser('force delete images', true);
+        $video = Image::factory()->create();
+
+        $this->assertFalse($user->can('forceDelete', $video));
+    }
+
+    /** @test */
+    public function a_user_cannot_restore_an_image()
+    {
+        $user = self::createPermissionedUser('restore images', true);
+        $video = Image::factory()->create();
+
+        $this->assertFalse($user->can('restore', $video));
+    }
 }

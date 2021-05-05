@@ -39,8 +39,8 @@ class Tag extends BaseResource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name'),
-            Text::make('Slug')->exceptOnForms(),
+            Text::make('Name')->rules('required'),
+            Text::make('Slug')->exceptOnForms()->rules('required'),
             Text::make('Type')->nullable(),
             Number::make('Order Column')->nullable(),
 

@@ -3,6 +3,7 @@
 namespace DrewRoberts\Media\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -14,10 +15,10 @@ class Image extends BaseResource
 {
     public static $model = \DrewRoberts\Media\Models\Image::class;
 
-    public static $title = 'id';
+    public static $title = 'filename';
 
     public static $search = [
-        'id',
+        'filename',
     ];
 
     public static $group = 'Media';
@@ -40,6 +41,7 @@ class Image extends BaseResource
                 ->storeAs(function () {
                     return 'img-' . sha1((string)time());
                 })->hideWhenUpdating(),
+            nova('video') ? HasMany::make('Video', 'videos', nova('video')) : null,
             Text::make('Width')->exceptOnForms(),
             Text::make('Height')->exceptOnForms(),
 

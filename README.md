@@ -40,7 +40,7 @@ return [
 
 ## Models
 
-We include the following models in this package:
+The following models are included in this package:
 
 **List of Models**
 

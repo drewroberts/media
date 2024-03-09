@@ -34,7 +34,7 @@ class ImagePolicy
     
     public function delete(UserInterface $user, Image $image)
     {
-        return $user->hasPermissionTo('create images');
+        return false;
     }
 
     public function restore(UserInterface $user, Image $image)

@@ -10,9 +10,6 @@ use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Policies\ImagePolicy;
 use DrewRoberts\Media\Policies\TagPolicy;
 use DrewRoberts\Media\Policies\VideoPolicy;
-use Illuminate\Support\Str;
-use Tipoff\Support\TipoffPackage;
-use Tipoff\Support\TipoffServiceProvider;
 
 class MediaServiceProvider extends TipoffServiceProvider
 {
@@ -36,11 +33,6 @@ class MediaServiceProvider extends TipoffServiceProvider
                 Image::class => ImagePolicy::class,
                 Tag::class => TagPolicy::class,
                 Video::class => VideoPolicy::class,
-            ])
-            ->hasNovaResources([
-                \DrewRoberts\Media\Nova\Image::class,
-                \DrewRoberts\Media\Nova\Tag::class,
-                \DrewRoberts\Media\Nova\Video::class,
             ])
             ->name('media')
             ->hasConfigFile();

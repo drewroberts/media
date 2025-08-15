@@ -2,9 +2,9 @@
 
 namespace DrewRoberts\Media;
 
+use DrewRoberts\Media\Commands\MediaCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use DrewRoberts\Media\Commands\MediaCommand;
 
 class MediaServiceProvider extends PackageServiceProvider
 {

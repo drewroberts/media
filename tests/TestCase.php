@@ -2,9 +2,9 @@
 
 namespace DrewRoberts\Media\Tests;
 
+use DrewRoberts\Media\MediaServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use DrewRoberts\Media\MediaServiceProvider;
 
 class TestCase extends Orchestra
 {

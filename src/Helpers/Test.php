@@ -6,8 +6,8 @@ if (! function_exists('randomOrCreate')) {
     /**
      * Get random model or create model using factory.
      *
-     * @param string|Model $classNameOrModel
-     * @return Model
+     * @param  string|Model  $classNameOrModel
+     *
      * @throws Exception
      */
     function randomOrCreate($classNameOrModel): Model
@@ -21,7 +21,7 @@ if (! function_exists('randomOrCreate')) {
         }
 
         if (! isset($className)) {
-            throw new Exception('Cannot find class for ' . $classNameOrModel);
+            throw new Exception('Cannot find class for '.$classNameOrModel);
         }
 
         if ($className::count() > 0) {

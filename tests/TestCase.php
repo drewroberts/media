@@ -1,30 +1,37 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DrewRoberts\Media\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
-use Laravel\Nova\NovaCoreServiceProvider;
-use Silvanite\NovaFieldCloudinary\Providers\PackageServiceProvider;
-use Spatie\Permission\PermissionServiceProvider;
-use Tipoff\Authorization\AuthorizationServiceProvider;
-use Tipoff\Support\SupportServiceProvider;
-use Tipoff\TestSupport\BaseTestCase;
-use Tipoff\TestSupport\Providers\NovaPackageServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Orchestra\Testbench\TestCase as Orchestra;
 
-class TestCase extends BaseTestCase
+class TestCase extends Orchestra
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Factory::guessFactoryNamesUsing(
+            fn (string $modelName) => 'DrewRoberts\\Media\\Database\\Factories\\'.class_basename($modelName).'Factory'
+        );
+    }
+
     protected function getPackageProviders($app)
     {
         return [
-            SupportServiceProvider::class,
-            AuthorizationServiceProvider::class,
-            PermissionServiceProvider::class,
             MediaServiceProvider::class,
-            NovaCoreServiceProvider::class,
-            NovaPackageServiceProvider::class,
-            PackageServiceProvider::class,
         ];
+    }
+
+    public function getEnvironmentSetUp($app)
+    {
+        config()->set('database.default', 'testing');
+
+        /*
+         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
+            (include $migration->getRealPath())->up();
+         }
+         */
     }
 }

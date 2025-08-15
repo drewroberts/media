@@ -15,9 +15,9 @@ class TagFactory extends Factory
         $word = $this->faker->unique()->word;
 
         return [
-            'name'         => $word,
-            'creator_id'    => randomOrCreate(User::class),
-            'updater_id'    => randomOrCreate(User::class),
+            'name' => $word,
+            'creator_id' => randomOrCreate(User::class),
+            'updater_id' => randomOrCreate(User::class),
         ];
     }
 }

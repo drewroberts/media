@@ -2,10 +2,8 @@
 
 namespace DrewRoberts\Media\Models;
 
-use App\Models\User;
-use DrewRoberts\Media\Models\Video;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Image extends Model
@@ -48,7 +46,7 @@ class Image extends Model
 
     public function getUrlAttribute()
     {
-        return 'https://res.cloudinary.com/' . config('media.cloudinary_cloud_name') . '/' . $this->filename;
+        return 'https://res.cloudinary.com/'.config('media.cloudinary_cloud_name').'/'.$this->filename;
     }
 
     public function videos()

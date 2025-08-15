@@ -2,19 +2,19 @@
 
 namespace DrewRoberts\Media\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
 class Tag extends Model implements Sortable
 {
-    use SortableTrait, HasFactory;
+    use HasFactory, SortableTrait;
 
     protected $guarded = ['id'];
 
@@ -53,7 +53,7 @@ class Tag extends Model implements Sortable
     {
         $sanitizedName = Str::keepAlphanumericCharactersAndSpaces($value);
 
-        $this->attributes['name'] = '#' . Str::studly($sanitizedName);
+        $this->attributes['name'] = '#'.Str::studly($sanitizedName);
     }
 
     public function getRouteKeyName()

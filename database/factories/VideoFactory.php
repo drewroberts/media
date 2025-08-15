@@ -16,14 +16,14 @@ class VideoFactory extends Factory
         $word = $this->faker->unique()->word;
 
         return [
-            'identifier'   => $this->faker->unique->isbn10,
-            'source'       => $this->faker->randomElement(['youtube', 'vimeo', 'other']),
-            'name'         => $this->faker->unique->sentence,
-            'title'        => $word,
-            'description'  => $this->faker->sentences(1, true),
-            'image_id'     => randomOrCreate(Image::class),
-            'creator_id'    => randomOrCreate(User::class),
-            'updater_id'    => randomOrCreate(User::class),
+            'identifier' => $this->faker->unique->isbn10,
+            'source' => $this->faker->randomElement(['youtube', 'vimeo', 'other']),
+            'name' => $this->faker->unique->sentence,
+            'title' => $word,
+            'description' => $this->faker->sentences(1, true),
+            'image_id' => randomOrCreate(Image::class),
+            'creator_id' => randomOrCreate(User::class),
+            'updater_id' => randomOrCreate(User::class),
         ];
     }
 }

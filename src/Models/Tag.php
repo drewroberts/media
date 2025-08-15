@@ -4,28 +4,46 @@ namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as DbCollection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
-use Tipoff\Support\Models\BaseModel;
-use Tipoff\Support\Traits\HasCreator;
-use Tipoff\Support\Traits\HasPackageFactory;
-use Tipoff\Support\Traits\HasUpdater;
 
-class Tag extends BaseModel implements Sortable
+class Tag extends Model implements Sortable
 {
-    use SortableTrait, HasCreator, HasUpdater, HasPackageFactory;
+    use SortableTrait;
 
     public static function boot()
     {
         parent::boot();
+
+        static::creating(function ($model) {
+            if (auth()->check()) {
+                $model->creator_id = auth()->id();
+            }
+        });
+
+        static::saving(function ($model) {
+            if (auth()->check()) {
+                $model->updater_id = auth()->id();
+            }
+        });
 
         static::saving(static function ($tag) {
             $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
 
             $tag->slug = strtolower($sanitizedName);
         });
+    }
+
+    /**
+     * @return \
+     */
+    public function creator()
+    {
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function setNameAttribute($value)

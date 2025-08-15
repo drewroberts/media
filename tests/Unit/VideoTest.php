@@ -126,7 +126,7 @@ it('enforces unique filename', function () {
         'height' => 600,
     ]);
 
-    expect(fn() => Video::create([
+    expect(fn () => Video::create([
         'filename' => '/unique-test.mp4',
         'duration' => 90,
         'width' => 400,
@@ -140,8 +140,8 @@ it('uses factory', function () {
 });
 
 it('has guarded id field', function () {
-    $video = new Video();
-    
+    $video = new Video;
+
     expect($video->getGuarded())->toBe(['id']);
 });
 

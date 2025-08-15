@@ -172,8 +172,8 @@ it('uses factory', function () {
 });
 
 it('has guarded id field', function () {
-    $tag = new Tag();
-    
+    $tag = new Tag;
+
     expect($tag->getGuarded())->toBe(['id']);
 });
 

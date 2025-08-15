@@ -17,7 +17,7 @@ it('can manage tag lifecycle with authentication', function () {
     // Create tag
     $tag = Tag::create([
         'name' => 'lifecycle tag',
-        'type' => 'test'
+        'type' => 'test',
     ]);
 
     expect($tag->creator_id)->toBe($this->user->id)
@@ -37,7 +37,7 @@ it('can filter and organize tags by type', function () {
     collect(['category', 'author', 'topic', 'category', 'author'])->each(function ($type, $index) {
         Tag::create([
             'name' => "Tag {$index}",
-            'type' => $type
+            'type' => $type,
         ]);
     });
 

@@ -118,7 +118,7 @@ it('enforces unique filename', function () {
         'height' => 600,
     ]);
 
-    expect(fn() => Image::create([
+    expect(fn () => Image::create([
         'filename' => '/unique-test.jpg',
         'width' => 400,
         'height' => 300,
@@ -131,8 +131,8 @@ it('uses factory', function () {
 });
 
 it('has guarded id field', function () {
-    $image = new Image();
-    
+    $image = new Image;
+
     expect($image->getGuarded())->toBe(['id']);
 });
 

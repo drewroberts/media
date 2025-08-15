@@ -2,7 +2,6 @@
 
 use DrewRoberts\Media\Models\Image;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +22,7 @@ it('can handle complete image lifecycle with authentication', function () {
         'height' => 1080,
         'description' => 'Lifecycle test image',
         'alt' => 'Test alt text',
-        'credit' => 'Test Photographer'
+        'credit' => 'Test Photographer',
     ]);
 
     expect($image->creator_id)->toBe($this->user->id)
@@ -32,7 +31,7 @@ it('can handle complete image lifecycle with authentication', function () {
     // Update image
     $image->update([
         'description' => 'Updated description',
-        'alt' => 'Updated alt text'
+        'alt' => 'Updated alt text',
     ]);
 
     $image->refresh();
@@ -89,14 +88,14 @@ it('can handle image gallery operations', function () {
 
 it('can validate image file extensions', function () {
     $validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
-    
+
     foreach ($validExtensions as $ext) {
         $image = Image::create([
             'filename' => "/test.{$ext}",
             'width' => 800,
             'height' => 600,
         ]);
-        
+
         expect($image->extension)->toBe($ext);
     }
 });
@@ -123,7 +122,7 @@ it('can process bulk image operations', function () {
 
     // Update all images with credit
     Image::where('filename', 'like', '/bulk/%')->update([
-        'credit' => 'Bulk Photographer'
+        'credit' => 'Bulk Photographer',
     ]);
 
     $updatedImages = Image::where('credit', 'Bulk Photographer')->get();
@@ -149,6 +148,6 @@ it('can search and filter images', function () {
     $largeLandscapeImages = Image::byDimensions(1500, 900)
         ->byAspectRatio('landscape')
         ->get();
-    
+
     expect($largeLandscapeImages)->toHaveCount(2);
 });

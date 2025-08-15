@@ -5,7 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/drewroberts/media/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/drewroberts/media/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/drewroberts/media.svg?style=flat-square)](https://packagist.org/packages/drewroberts/media)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+The media package utilizes Cloudinary for images and YouTube for videos. Createe a free cloudinary account for each laravel application utilitizing this package here:
+
+- [Cloudinary](https://cloudinary.com)
 
 ## Models
 

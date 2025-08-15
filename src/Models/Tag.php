@@ -2,7 +2,6 @@
 
 namespace DrewRoberts\Media\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
@@ -42,12 +41,12 @@ class Tag extends Model implements Sortable
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'creator_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'creator_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(User::class, 'updater_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'updater_id');
     }
 
     public function setNameAttribute($value)

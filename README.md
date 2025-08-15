@@ -30,10 +30,10 @@ composer require drewroberts/media
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --provider="DrewRoberts\Media\MediaServiceProvider" --tag="config"
+php artisan vendor:publish --tag="media-config"
 ```
 
-Add the cloudinary disk to the filesystem config and set the environment variables for your Cloudinary account.
+Or you can add the cloudinary disk to the filesystem config and set the environment variables for your Cloudinary account:
 
 ```php
 return [
@@ -72,50 +72,3 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
-
-
-
-
-
-## Installation
-
-You can install the package via composer:
-
-```bash
-composer require drewroberts/media
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="media-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="media-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="media-views"
-```
-
-## Usage
-
-```php
-$media = new DrewRoberts\Media();
-echo $media->echoPhrase('Hello, DrewRoberts!');
-```
-
-

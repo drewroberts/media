@@ -3,9 +3,8 @@
 namespace DrewRoberts\Media\Models;
 
 use App\Models\User;
-use DrewRoberts\Media\Models\Image;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Video extends Model

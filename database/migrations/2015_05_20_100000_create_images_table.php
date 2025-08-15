@@ -16,7 +16,7 @@ class CreateImagesTable extends Migration
             $table->text('description')->nullable();
             $table->string('alt')->nullable();
             $table->string('credit')->nullable(); // Used for amp-img attribution
-            
+
             $table->unsignedBigInteger('creator_id');
             $table->foreign('creator_id')->references('id')->on('users');
             $table->unsignedBigInteger('updater_id');

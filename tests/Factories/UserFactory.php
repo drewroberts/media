@@ -22,10 +22,11 @@ class UserFactory extends Factory
 class TestUser extends Model
 {
     protected $table = 'users';
+
     protected $fillable = ['name', 'email', 'password'];
-    
+
     public static function factory()
     {
-        return new UserFactory();
+        return new UserFactory;
     }
 }

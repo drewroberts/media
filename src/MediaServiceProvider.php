@@ -2,6 +2,7 @@
 
 namespace DrewRoberts\Media;
 
+use Illuminate\Support\Str;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -9,6 +10,18 @@ class MediaServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
+        // String helper macros used by the models
+        if (! Str::hasMacro('keepAlphanumericCharactersAndSpaces')) {
+            Str::macro('keepAlphanumericCharactersAndSpaces', static function ($value) {
+                return preg_replace('/[^\w\s]/', '', $value);
+            });
+        }
+        if (! Str::hasMacro('keepAlphanumericCharacters')) {
+            Str::macro('keepAlphanumericCharacters', static function ($value) {
+                return preg_replace('/[^\w]/', '', $value);
+            });
+        }
+
         /*
          * This class is a Package Service Provider
          *

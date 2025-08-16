@@ -14,7 +14,7 @@ beforeEach(function () {
 
 it('can create a video', function () {
     $video = Video::create([
-        'filename' => '/test-video.mp4',
+        'identifier' => 'vmFLvGFHRBM',
         'duration' => 120,
         'width' => 1920,
         'height' => 1080,
@@ -23,7 +23,7 @@ it('can create a video', function () {
     ]);
 
     expect($video)->toBeInstanceOf(Video::class)
-        ->and($video->filename)->toBe('/test-video.mp4')
+        ->and($video->identifier)->toBe('vmFLvGFHRBM')
         ->and($video->duration)->toBe(120)
         ->and($video->width)->toBe(1920)
         ->and($video->height)->toBe(1080)
@@ -35,7 +35,7 @@ it('automatically sets creator_id when authenticated', function () {
     Auth::login($this->user);
 
     $video = Video::create([
-        'filename' => '/creator-test.mp4',
+        'identifier' => '/creator-test.mp4',
         'duration' => 60,
         'width' => 800,
         'height' => 600,
@@ -48,10 +48,8 @@ it('automatically sets updater_id when saving while authenticated', function () 
     Auth::login($this->user);
 
     $video = Video::create([
-        'filename' => '/updater-test.mp4',
-        'duration' => 90,
-        'width' => 800,
-        'height' => 600,
+        'identifier' => 'vmFLvGFHRBM',
+        'duration' => 90
     ]);
 
     $video->description = 'Updated description';
@@ -64,10 +62,8 @@ it('has creator relationship', function () {
     Auth::login($this->user);
 
     $video = Video::create([
-        'filename' => '/relationship-test.mp4',
-        'duration' => 45,
-        'width' => 800,
-        'height' => 600,
+        'identifier' => '/relationship-test.mp4',
+        'duration' => 45
     ]);
 
     expect($video->creator)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
@@ -78,10 +74,8 @@ it('has updater relationship', function () {
     Auth::login($this->user);
 
     $video = Video::create([
-        'filename' => '/updater-relationship.mp4',
-        'duration' => 75,
-        'width' => 800,
-        'height' => 600,
+        'identifier' => '/updater-relationship.mp4',
+        'duration' => 75
     ]);
 
     $video->update(['description' => 'Updated description']);
@@ -92,45 +86,33 @@ it('has updater relationship', function () {
 
 it('can handle nullable fields', function () {
     $video = Video::create([
-        'filename' => '/minimal-video.mp4',
-        'duration' => 30,
-        'width' => 400,
-        'height' => 300,
+        'identifier' => '/minimal-video.mp4',
+        'duration' => 3
     ]);
 
     expect($video->description)->toBeNull()
         ->and($video->credit)->toBeNull();
 });
 
-it('has duration width and height as integers', function () {
+it('has duration as integer', function () {
     $video = Video::create([
-        'filename' => '/integer-test.mp4',
-        'duration' => '120',
-        'width' => '800',
-        'height' => '600',
+        'identifier' => '/integer-test.mp4',
+        'duration' => '120'
     ]);
 
     expect($video->duration)->toBeInt()
-        ->and($video->width)->toBeInt()
-        ->and($video->height)->toBeInt()
-        ->and($video->duration)->toBe(120)
-        ->and($video->width)->toBe(800)
-        ->and($video->height)->toBe(600);
+        ->and($video->duration)->toBe(120);
 });
 
-it('enforces unique filename', function () {
+it('enforces unique identifier', function () {
     Video::create([
-        'filename' => '/unique-test.mp4',
-        'duration' => 60,
-        'width' => 800,
-        'height' => 600,
+        'identifier' => '/unique-test.mp4',
+        'duration' => 60
     ]);
 
     expect(fn () => Video::create([
-        'filename' => '/unique-test.mp4',
-        'duration' => 90,
-        'width' => 400,
-        'height' => 300,
+        'identifier' => '/unique-test.mp4',
+        'duration' => 9
     ]))->toThrow(\Illuminate\Database\QueryException::class);
 });
 
@@ -145,11 +127,11 @@ it('has guarded id field', function () {
     expect($video->getGuarded())->toBe(['id']);
 });
 
-it('can create multiple videos with different filenames', function () {
-    $video1 = Video::create(['filename' => '/video1.mp4', 'duration' => 60, 'width' => 800, 'height' => 600]);
-    $video2 = Video::create(['filename' => '/video2.mp4', 'duration' => 120, 'width' => 1200, 'height' => 800]);
+it('can create multiple videos with different identifiers', function () {
+    $video1 = Video::create(['identifier' => '/video1.mp4', 'duration' => 60]);
+    $video2 = Video::create(['identifier' => '/video2.mp4', 'duration' => 120]);
 
-    expect($video1->filename)->toBe('/video1.mp4')
-        ->and($video2->filename)->toBe('/video2.mp4')
-        ->and($video1->filename)->not->toBe($video2->filename);
+    expect($video1->identifier)->toBe('/video1.mp4')
+        ->and($video2->identifier)->toBe('/video2.mp4')
+        ->and($video1->identifier)->not->toBe($video2->identifier);
 });

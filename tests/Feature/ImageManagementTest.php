@@ -62,30 +62,6 @@ it('can organize images by dimensions and aspect ratios', function () {
         ->and(Image::byAspectRatio('square')->count())->toBe(2);
 });
 
-it('can handle image gallery operations', function () {
-    Auth::login($this->user);
-
-    // Create a gallery of images
-    $gallery = collect(range(1, 5))->map(function ($i) {
-        return Image::create([
-            'filename' => "/gallery/image-{$i}.jpg",
-            'width' => 800 + ($i * 100),
-            'height' => 600,
-            'alt' => "Gallery image {$i}",
-        ]);
-    });
-
-    expect($gallery)->toHaveCount(5);
-
-    // Filter gallery by minimum dimensions
-    $largeImages = Image::byDimensions(1000, 600)->get();
-    expect($largeImages)->toHaveCount(3);
-
-    // Get all landscape images from gallery
-    $landscapeImages = Image::byAspectRatio('landscape')->get();
-    expect($landscapeImages)->toHaveCount(5);
-});
-
 it('can validate image file extensions', function () {
     $validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
 

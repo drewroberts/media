@@ -18,6 +18,10 @@ class Tag extends Model implements Sortable
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'order_column' => 'integer',
+    ];
+
     public static function boot()
     {
         parent::boot();

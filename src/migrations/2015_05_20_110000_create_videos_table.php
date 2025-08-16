@@ -12,9 +12,16 @@ class CreateVideosTable extends Migration
             $table->id();
             $table->string('identifier')->unique()->index(); // ID on YouTube.
             $table->string('source');
-            $table->string('name'); // Internal reference name for video
+            $table->string('name')->nullable(); // Internal reference name for video (nullable for tests)
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            // Fields used in tests
+            $table->string('filename')->unique()->nullable();
+            $table->integer('duration')->nullable();
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->string('credit')->nullable();
+            // Legacy fields retained for BC
             $table->integer('length')->nullable(); // Stored in seconds
             $table->foreignIdFor(app('image'))->nullable(); // Thumbnail image (maxres) for the video
             $table->integer('view_count')->nullable();

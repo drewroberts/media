@@ -41,7 +41,7 @@ class TestCase extends Orchestra
 
         // Create users table for testing
         $app['db']->connection()->getSchemaBuilder()->create('users', function ($table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
@@ -54,6 +54,8 @@ class TestCase extends Orchestra
 class TestUser extends \Illuminate\Foundation\Auth\User
 {
     use HasFactory;
+
+    protected $table = 'users';
 
     protected $fillable = ['name', 'email', 'password'];
 

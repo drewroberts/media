@@ -53,10 +53,11 @@ class TestCase extends Orchestra
 class TestUser extends \Illuminate\Foundation\Auth\User
 {
     protected $fillable = ['name', 'email', 'password'];
-    
+
     protected static function newFactory()
     {
-        return new class extends \Illuminate\Database\Eloquent\Factories\Factory {
+        return new class extends \Illuminate\Database\Eloquent\Factories\Factory
+        {
             protected $model = TestUser::class;
 
             public function definition()

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserFactory extends Factory
 {
@@ -26,11 +26,12 @@ class UserFactory extends Factory
 class TestUser extends Model
 {
     protected $table = 'users';
+
     protected $fillable = ['name', 'email', 'password'];
-    
+
     public static function factory(): UserFactory
     {
-        return new UserFactory();
+        return new UserFactory;
     }
 }
 
@@ -45,18 +46,23 @@ beforeEach(function () {
         'created_at' => now(),
         'updated_at' => now(),
     ]);
-    
+
     Storage::fake('public');
 });
 
 it('can handle complete image lifecycle with authentication', function () {
     // Create a simple user model for auth
-    $user = new class {
+    $user = new class
+    {
         public $id;
-        public function __construct($id) { $this->id = $id; }
+
+        public function __construct($id)
+        {
+            $this->id = $id;
+        }
     };
     $user->id = $this->user;
-    
+
     Auth::shouldReceive('login')->with($user);
     Auth::shouldReceive('check')->andReturn(true);
     Auth::shouldReceive('id')->andReturn($this->user);

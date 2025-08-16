@@ -22,7 +22,7 @@ return [
     env('CLOUDINARY_UPLOAD_ROUTE', null),
     env('CLOUDINARY_UPLOAD_ACTION', null),
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     | Cloudinary Configuration
     |--------------------------------------------------------------------------

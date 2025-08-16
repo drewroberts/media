@@ -16,8 +16,6 @@ it('can create a video', function () {
     $video = Video::create([
         'identifier' => 'vmFLvGFHRBM',
         'duration' => 120,
-        'width' => 1920,
-        'height' => 1080,
         'description' => 'Test video',
         'credit' => 'Test videographer',
     ]);
@@ -25,8 +23,6 @@ it('can create a video', function () {
     expect($video)->toBeInstanceOf(Video::class)
         ->and($video->identifier)->toBe('vmFLvGFHRBM')
         ->and($video->duration)->toBe(120)
-        ->and($video->width)->toBe(1920)
-        ->and($video->height)->toBe(1080)
         ->and($video->description)->toBe('Test video')
         ->and($video->credit)->toBe('Test videographer');
 });
@@ -37,8 +33,6 @@ it('automatically sets creator_id when authenticated', function () {
     $video = Video::create([
         'identifier' => '/creator-test.mp4',
         'duration' => 60,
-        'width' => 800,
-        'height' => 600,
     ]);
 
     expect($video->creator_id)->toBe($this->user->id);

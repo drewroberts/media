@@ -16,6 +16,7 @@ class CreateVideosTable extends Migration
             $table->string('name')->nullable(); // Internal reference name for video (nullable for tests)
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->text('credit')->nullable();
             $table->integer('duration')->nullable(); // Stored in seconds
             $table->foreignIdFor(Image::class)->nullable(); // Thumbnail image (maxres) for the video
             $table->integer('view_count')->nullable();

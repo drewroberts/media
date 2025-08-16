@@ -1,0 +1,40 @@
+name: Feature Request
+description: Request a feature for this Laravel package
+title: "[FEATURE]: "
+labels: ["feature"]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              We look forward to adding more features to this Laravel package. Can you be as detailed as possible in describing what you want added
+    - type: textarea
+      id: desired-feature
+      attributes:
+          label: What feature do you want?
+          description: What do you want to improve?
+          placeholder: I cannot currently do X thing and I would like too add it because..
+      validations:
+          required: true
+    - type: input
+      id: php-version
+      attributes:
+          label: PHP Version
+          description: What version of PHP are you running? Please be as specific as possible
+          placeholder: 8.4.0
+      validations:
+          required: false
+    - type: input
+      id: laravel-version
+      attributes:
+        label: Laravel Version
+        description: What version of Laravel are you running? Please be as specific as possible
+        placeholder: 12.0.0
+      validations:
+        required: false
+    - type: textarea
+      id: notes
+      attributes:
+          label: Notes
+          description: Use this field to provide any other notes that you feel might be relevant to the feature issue you are creating.
+      validations:
+          required: false

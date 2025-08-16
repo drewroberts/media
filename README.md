@@ -27,13 +27,23 @@ You can install the package via composer:
 composer require drewroberts/media
 ```
 
-You can publish the config file with:
+Add your Cloudinary credentials to your `.env` file:
 
-```bash
-php artisan vendor:publish --tag="media-config"
+```
+CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+CLOUDINARY_NOTIFICATION_URL=
+CLOUDINARY_UPLOAD_ROUTE=
+CLOUDINARY_UPLOAD_ACTION=
 ```
 
-Or you can add the cloudinary disk to the filesystem config and set the environment variables for your Cloudinary account:
+> [!NOTE]  
+> You can get your `CLOUDINARY_URL` from your [Cloudinary console](https://cloudinary.com/console). It typically looks like this: `cloudinary://API_KEY:API_SECRET@CLOUD_NAME`. Make sure to replace `API_KEY`, `API_SECRET`, and `CLOUD_NAME` with your actual Cloudinary credentials.
+
+Add a new `cloudinary` key to your `config/filesystems.php` disk key like so:
 
 ```php
 return [
@@ -42,12 +52,21 @@ return [
         ...
         'cloudinary' => [
             'driver' => 'cloudinary',
-            'api_key' => env('CLOUDINARY_API_KEY'),
-            'api_secret' => env('CLOUDINARY_API_SECRET'),
-            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+            'key' => env('CLOUDINARY_KEY'),
+            'secret' => env('CLOUDINARY_SECRET'),
+            'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+            'url' => env('CLOUDINARY_URL'),
+            'secure' => (bool) env('CLOUDINARY_SECURE', true),
+            'prefix' => env('CLOUDINARY_PREFIX'),
         ]
     ]
 ];
+```
+
+You can publish the config file with:
+
+```bash
+php artisan vendor:publish --tag="media-config"
 ```
 
 ## Testing

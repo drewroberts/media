@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @property int $id
+ * @property string|null $filename
+ * @property int|null $width
+ * @property int|null $height
+ * @property string|null $description
+ * @property string|null $alt
+ * @property string|null $credit
+ */
+
 namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

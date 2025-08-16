@@ -12,12 +12,12 @@ class MediaServiceProvider extends PackageServiceProvider
     {
         // String helper macros used by the models
         if (! Str::hasMacro('keepAlphanumericCharactersAndSpaces')) {
-            Str::macro('keepAlphanumericCharactersAndSpaces', static function ($value) {
+            Str::macro('keepAlphanumericCharactersAndSpaces', function ($value) {
                 return preg_replace('/[^\w\s]/', '', $value);
             });
         }
         if (! Str::hasMacro('keepAlphanumericCharacters')) {
-            Str::macro('keepAlphanumericCharacters', static function ($value) {
+            Str::macro('keepAlphanumericCharacters', function ($value) {
                 return preg_replace('/[^\w]/', '', $value);
             });
         }

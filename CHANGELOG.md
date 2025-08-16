@@ -136,3 +136,10 @@ All notable changes to `media` will be documented in this file
 ## 3.5.0 - 2021-04-09
 
 - bump support dependencies
+
+## 12.0.0 - 2025-08-15
+
+- upgrade to laravel 12
+- remove laravel nova
+- remove tipoff packages
+- bump dependencies

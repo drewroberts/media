@@ -1,5 +1,6 @@
 <?php
 
+use DrewRoberts\Media\Models\Image;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ class CreateVideosTable extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->integer('length')->nullable(); // Stored in seconds
-            $table->foreignIdFor(app('image'))->nullable(); // Thumbnail image (maxres) for the video
+            $table->foreignIdFor(Image::class)->nullable(); // Thumbnail image (maxres) for the video
             $table->integer('view_count')->nullable();
             $table->integer('like_count')->nullable();
             $table->integer('dislike_count')->nullable();

@@ -30,18 +30,18 @@ composer require drewroberts/media
 Add your Cloudinary credentials to your `.env` file:
 
 ```
-CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_KEY=
 CLOUDINARY_SECRET=
-CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_UPLOAD_PRESET=your_upload_preset
-CLOUDINARY_NOTIFICATION_URL=
+
 CLOUDINARY_UPLOAD_ROUTE=
 CLOUDINARY_UPLOAD_ACTION=
+CLOUDINARY_NOTIFICATION_URL=
 ```
 
 > [!NOTE]  
-> You can get your `CLOUDINARY_URL` from your [Cloudinary console](https://cloudinary.com/console). It typically looks like this: `cloudinary://API_KEY:API_SECRET@CLOUD_NAME`. Make sure to replace `API_KEY`, `API_SECRET`, and `CLOUD_NAME` with your actual Cloudinary credentials.
+> You can get your credentials from your [Cloudinary console](https://cloudinary.com/console).
 
 Add a new `cloudinary` key to your `config/filesystems.php` disk key like so:
 

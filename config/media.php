@@ -10,6 +10,23 @@ return [
     | Cloudinary Configuration
     |--------------------------------------------------------------------------
     |
+    | Here you may configure your Cloudinary settings. Cloudinary is a cloud hosted
+    | media management service for all file uploads, storage, delivery and transformation needs.
+    |
+    |
+    */
+    env('CLOUDINARY_CLOUD_NAME', 'username'),
+    env('CLOUDINARY_KEY', null),
+    env('CLOUDINARY_SECRET', null),
+    env('CLOUDINARY_UPLOAD_PRESET', null),
+    env('CLOUDINARY_UPLOAD_ROUTE', null),
+    env('CLOUDINARY_UPLOAD_ACTION', null),
+
+        /*
+    |--------------------------------------------------------------------------
+    | Cloudinary Configuration
+    |--------------------------------------------------------------------------
+    |
     | An HTTP or HTTPS URL to notify your application (a webhook) when the process of uploads, deletes, and any API
     | that accepts notification_url has completed.
     |
@@ -20,23 +37,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Cloudinary Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure your Cloudinary settings. Cloudinary is a cloud hosted
-    | media management service for all file uploads, storage, delivery and transformation needs.
-    |
-    |
-    */
-    env('CLOUDINARY_URL', null),
-    env('CLOUDINARY_KEY', null),
-    env('CLOUDINARY_SECRET', null),
-    env('CLOUDINARY_UPLOAD_PRESET', null),
-    env('CLOUDINARY_UPLOAD_ROUTE', null),
-    env('CLOUDINARY_UPLOAD_ACTION', null),
-
-    /*
-    |--------------------------------------------------------------------------
     | Package Variable
     |--------------------------------------------------------------------------
     |
@@ -44,6 +44,17 @@ return [
     |
     |
     */
-    'cloudinary_cloud_name' => env('CLOUDINARY_CLOUD_NAME', 'images'),
+    'cloudinary_cloud_name' => env('CLOUDINARY_CLOUD_NAME', 'username'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cloudinary URL
+    |--------------------------------------------------------------------------
+    |
+    | Create the default Cloudinary URL from the other .env variables.
+    |
+    |
+    */
+    env('CLOUDINARY_URL', 'cloudinary://'.env('CLOUDINARY_KEY', null).':'.env('CLOUDINARY_SECRET', null).'@'.env('CLOUDINARY_CLOUD_NAME', 'username')),
 
 ];

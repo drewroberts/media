@@ -35,6 +35,9 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
+        // Set up auth configuration for testing
+        config()->set('auth.providers.users.model', TestUser::class);
+
         // Create users table for testing
         $app['db']->connection()->getSchemaBuilder()->create('users', function ($table) {
             $table->increments('id');
@@ -46,10 +49,32 @@ class TestCase extends Orchestra
     }
 }
 
+// Create a test user model for testing purposes
+class TestUser extends \Illuminate\Foundation\Auth\User
+{
+    protected $fillable = ['name', 'email', 'password'];
+    
+    protected static function newFactory()
+    {
+        return new class extends \Illuminate\Database\Eloquent\Factories\Factory {
+            protected $model = TestUser::class;
+
+            public function definition()
+            {
+                return [
+                    'name' => $this->faker->name(),
+                    'email' => $this->faker->unique()->safeEmail(),
+                    'password' => bcrypt('password'),
+                ];
+            }
+        };
+    }
+}
+
 uses(TestCase::class, RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->user = config('auth.providers.users.model')::factory()->create([
+    $this->user = TestUser::factory()->create([
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => bcrypt('password'),

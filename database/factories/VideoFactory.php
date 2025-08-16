@@ -1,6 +1,7 @@
 <?php
 
 namespace DrewRoberts\Media\Database\Factories;
+
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;

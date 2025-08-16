@@ -1,6 +1,7 @@
 <?php
 
 namespace DrewRoberts\Media\Database\Factories;
+
 use DrewRoberts\Media\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

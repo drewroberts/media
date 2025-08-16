@@ -31,9 +31,19 @@ return [
     env('CLOUDINARY_URL', null),
     env('CLOUDINARY_KEY', null),
     env('CLOUDINARY_SECRET', null),
-    env('CLOUDINARY_CLOUD_NAME', null),
     env('CLOUDINARY_UPLOAD_PRESET', null),
     env('CLOUDINARY_UPLOAD_ROUTE', null),
     env('CLOUDINARY_UPLOAD_ACTION', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Package Variable
+    |--------------------------------------------------------------------------
+    |
+    | Create the variable used to access images within this media package w/ default.
+    |
+    |
+    */
+    'cloudinary_cloud_name' => env('CLOUDINARY_CLOUD_NAME', 'images'),
 
 ];

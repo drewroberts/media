@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->user = \Illuminate\Foundation\Auth\User::factory()->create();
+    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
 });
 
 it('can manage tag lifecycle with authentication', function () {

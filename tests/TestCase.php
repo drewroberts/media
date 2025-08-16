@@ -4,6 +4,7 @@ namespace DrewRoberts\Media\Tests;
 
 use DrewRoberts\Media\MediaServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -40,7 +41,7 @@ class TestCase extends Orchestra
 
         // Create users table for testing
         $app['db']->connection()->getSchemaBuilder()->create('users', function ($table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
@@ -52,6 +53,10 @@ class TestCase extends Orchestra
 // Create a test user model for testing purposes
 class TestUser extends \Illuminate\Foundation\Auth\User
 {
+    use HasFactory;
+
+    protected $table = 'users';
+
     protected $fillable = ['name', 'email', 'password'];
 
     protected static function newFactory()

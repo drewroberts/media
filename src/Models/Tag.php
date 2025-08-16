@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder ordered()
+ */
+
 namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +26,10 @@ class Tag extends Model implements Sortable
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'order_column' => 'integer',
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -29,6 +41,7 @@ class Tag extends Model implements Sortable
         });
 
         static::saving(static function ($tag) {
+            // @phpstan-ignore-next-line - Provided at runtime via Str macro
             $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
 
             $tag->slug = strtolower($sanitizedName);
@@ -51,6 +64,7 @@ class Tag extends Model implements Sortable
 
     public function setNameAttribute($value)
     {
+        // @phpstan-ignore-next-line - Provided at runtime via Str macro
         $sanitizedName = Str::keepAlphanumericCharactersAndSpaces($value);
 
         $this->attributes['name'] = '#'.Str::studly($sanitizedName);

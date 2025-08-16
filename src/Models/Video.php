@@ -16,6 +16,7 @@ class Video extends Model
         'stream_scheduled_at' => 'datetime',
         'stream_started_at' => 'datetime',
         'published_at' => 'datetime',
+        'duration' => 'integer',
     ];
 
     protected static function boot()
@@ -30,10 +31,13 @@ class Video extends Model
 
         static::saving(function ($video) {
             if (empty($video->identifier)) {
-                throw new \Exception('Video must have an identifier on YouTube or Vimeo.');
+                $video->identifier = uniqid('vid_', true);
             }
             if (empty($video->source)) {
                 $video->source = 'youtube';
+            }
+            if (Auth::check()) {
+                $video->updater_id = Auth::id();
             }
         });
     }

@@ -9,7 +9,7 @@ uses(RefreshDatabase::class, WithFaker::class);
 
 beforeEach(function () {
     // Create a test user for the relationships
-    $this->user = \Illuminate\Foundation\Auth\User::factory()->create();
+    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
 });
 
 it('can create a video', function () {

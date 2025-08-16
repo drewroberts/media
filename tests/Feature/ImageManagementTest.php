@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->user = \Illuminate\Foundation\Auth\User::factory()->create();
+    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
     Storage::fake('public');
 });
 

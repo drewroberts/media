@@ -59,6 +59,7 @@ class Image extends Model
     public function getExtensionAttribute(): ?string
     {
         $parts = pathinfo($this->filename ?? '');
+
         return isset($parts['extension']) ? strtolower($parts['extension']) : null;
     }
 
@@ -73,7 +74,7 @@ class Image extends Model
         // Matches tests: select images where either dimension exceeds the given minimums
         return $query->where(function ($q) use ($minWidth, $minHeight) {
             $q->where('width', '>', $minWidth)
-              ->orWhere('height', '>', $minHeight);
+                ->orWhere('height', '>', $minHeight);
         });
     }
 

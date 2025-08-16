@@ -49,7 +49,7 @@ it('automatically sets updater_id when saving while authenticated', function () 
 
     $video = Video::create([
         'identifier' => 'vmFLvGFHRBM',
-        'duration' => 90
+        'duration' => 90,
     ]);
 
     $video->description = 'Updated description';
@@ -63,7 +63,7 @@ it('has creator relationship', function () {
 
     $video = Video::create([
         'identifier' => '/relationship-test.mp4',
-        'duration' => 45
+        'duration' => 45,
     ]);
 
     expect($video->creator)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
@@ -75,7 +75,7 @@ it('has updater relationship', function () {
 
     $video = Video::create([
         'identifier' => '/updater-relationship.mp4',
-        'duration' => 75
+        'duration' => 75,
     ]);
 
     $video->update(['description' => 'Updated description']);
@@ -87,7 +87,7 @@ it('has updater relationship', function () {
 it('can handle nullable fields', function () {
     $video = Video::create([
         'identifier' => '/minimal-video.mp4',
-        'duration' => 3
+        'duration' => 3,
     ]);
 
     expect($video->description)->toBeNull()
@@ -97,7 +97,7 @@ it('can handle nullable fields', function () {
 it('has duration as integer', function () {
     $video = Video::create([
         'identifier' => '/integer-test.mp4',
-        'duration' => '120'
+        'duration' => '120',
     ]);
 
     expect($video->duration)->toBeInt()
@@ -107,12 +107,12 @@ it('has duration as integer', function () {
 it('enforces unique identifier', function () {
     Video::create([
         'identifier' => '/unique-test.mp4',
-        'duration' => 60
+        'duration' => 60,
     ]);
 
     expect(fn () => Video::create([
         'identifier' => '/unique-test.mp4',
-        'duration' => 9
+        'duration' => 9,
     ]))->toThrow(\Illuminate\Database\QueryException::class);
 });
 

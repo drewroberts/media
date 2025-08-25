@@ -35,6 +35,7 @@ Required (single URL form):
 
 ```
 CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+FILESYSTEM_DISK=cloudinary
 ```
 
 OR required (separate values):
@@ -43,6 +44,7 @@ OR required (separate values):
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_KEY=
 CLOUDINARY_SECRET=
+FILESYSTEM_DISK=cloudinary
 ```
 
 Optional:

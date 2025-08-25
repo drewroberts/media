@@ -50,6 +50,19 @@ return [
 ];
 ```
 
+## Migrations
+
+This package auto-runs its migrations and does not publish them.
+
+The following tables are created:
+
+- images
+- videos
+- tags
+- taggables
+
+Note: Because migrations are auto-loaded, you don’t need to vendor:publish them. If you need to customize the schema, override with your own migrations in your application.
+
 ## Testing
 
 ```bash

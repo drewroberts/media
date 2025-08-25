@@ -47,7 +47,7 @@ CLOUDINARY_SECRET=
 
 Optional:
 
-``
+```
 # Optional path prefix for all assets
 CLOUDINARY_PREFIX=
 

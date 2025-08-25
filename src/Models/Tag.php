@@ -40,7 +40,6 @@ class Tag extends Model implements Sortable
         });
 
         static::saving(static function ($tag) {
-            // @phpstan-ignore-next-line - Provided at runtime via Str macro
             $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
 
             $tag->slug = strtolower($sanitizedName);
@@ -63,7 +62,6 @@ class Tag extends Model implements Sortable
 
     public function setNameAttribute($value)
     {
-        // @phpstan-ignore-next-line - Provided at runtime via Str macro
         $sanitizedName = Str::keepAlphanumericCharactersAndSpaces($value);
 
         $this->attributes['name'] = '#'.Str::studly($sanitizedName);
@@ -110,7 +108,7 @@ class Tag extends Model implements Sortable
             ->first();
     }
 
-    protected static function findOrCreateFromString(string $name, $type = null)
+    public static function findOrCreateFromString(string $name, $type = null)
     {
         $tag = static::findFromString($name, $type);
 

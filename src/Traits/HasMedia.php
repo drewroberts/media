@@ -3,6 +3,7 @@
 namespace DrewRoberts\Media\Traits;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
+use InvalidArgumentException;
 
 trait HasMedia
 {
@@ -28,11 +29,17 @@ trait HasMedia
      */
     public function getImagePathAttribute()
     {
-        $cloudName = config('filesystem.disks.cloudinary.cloud_name');
+        $cloudName = config('filesystems.disks.cloudinary.cloud');
+        if (! $cloudName) {
+            throw new InvalidArgumentException('Cloudinary disk misconfigured: set filesystems.disks.cloudinary.cloud');
+        }
+
+        $transform = config('media.transforms.cover', 't_cover');
+        $fallback = config('media.fallback_image', 'img/ogimage.jpg');
 
         return $this->image === null
-            ? url('img/ogimage.jpg')
-            : "https://res.cloudinary.com/{$cloudName}/t_cover/{$this->image->filename}";
+            ? url($fallback)
+            : "https://res.cloudinary.com/{$cloudName}/{$transform}/{$this->image->filename}";
     }
 
     /**
@@ -42,10 +49,16 @@ trait HasMedia
      */
     public function getPlaceholderPathAttribute()
     {
-        $cloudName = config('filesystem.disks.cloudinary.cloud_name');
+        $cloudName = config('filesystems.disks.cloudinary.cloud');
+        if (! $cloudName) {
+            throw new InvalidArgumentException('Cloudinary disk misconfigured: set filesystems.disks.cloudinary.cloud');
+        }
+
+        $transform = config('media.transforms.cover_placeholder', 't_coverplaceholder');
+        $fallback = config('media.fallback_image', 'img/ogimage.jpg');
 
         return $this->image === null
-            ? url('img/ogimage.jpg')
-            : "https://res.cloudinary.com/{$cloudName}/t_coverplaceholder/{$this->image->filename}";
+            ? url($fallback)
+            : "https://res.cloudinary.com/{$cloudName}/{$transform}/{$this->image->filename}";
     }
 }

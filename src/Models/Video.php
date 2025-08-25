@@ -2,13 +2,14 @@
 
 namespace DrewRoberts\Media\Models;
 
+use DrewRoberts\Media\Traits\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Video extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTags;
 
     protected $guarded = ['id'];
 

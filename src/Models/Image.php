@@ -5,6 +5,7 @@ namespace DrewRoberts\Media\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
 
 /**
  * @property int $id
@@ -62,7 +63,10 @@ class Image extends Model
 
     public function getUrlAttribute()
     {
-        $cloudName = config('filesystem.disks.cloudinary.cloud_name');
+        $cloudName = config('filesystems.disks.cloudinary.cloud');
+        if (! $cloudName) {
+            throw new InvalidArgumentException('Cloudinary disk misconfigured: set filesystems.disks.cloudinary.cloud');
+        }
 
         $filename = $this->getAttribute('filename');
 

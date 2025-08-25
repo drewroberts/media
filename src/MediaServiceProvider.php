@@ -32,4 +32,10 @@ class MediaServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->runsMigrations();
     }
+
+    public function packageBooted(): void
+    {
+        // Auto-load package migrations from database/migrations without publishing
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+    }
 }

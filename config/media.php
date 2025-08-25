@@ -2,8 +2,10 @@
 
 // config for DrewRoberts/Media
 return [
-    // Use env() with default null values (allowed inside config files)
-    'cloudinary_cloud_name' => env('CLOUDINARY_CLOUD_NAME', null),
-    'cloudinary_api_key' => env('CLOUDINARY_API_KEY', null),
-    'cloudinary_api_secret' => env('CLOUDINARY_API_SECRET', null),
+    // Package-level overrides if desired; by default, Cloudinary credentials
+    // are expected to be defined in the filesystem disk configuration
+    // under `filesystems.disks.cloudinary.*`. Leave null to use disk values.
+    'cloudinary_cloud_name' => null,
+    'cloudinary_api_key' => null,
+    'cloudinary_api_secret' => null,
 ];

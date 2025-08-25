@@ -1,5 +1,11 @@
 <?php
 
+namespace DrewRoberts\Media\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 /**
  * @property int $id
  * @property string|null $filename
@@ -9,13 +15,6 @@
  * @property string|null $alt
  * @property string|null $credit
  */
-
-namespace DrewRoberts\Media\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-
 class Image extends Model
 {
     use HasFactory;
@@ -63,12 +62,17 @@ class Image extends Model
 
     public function getUrlAttribute()
     {
-        return 'https://res.cloudinary.com/'.config('media.cloudinary_cloud_name').'/'.$this->filename;
+    $cloudName = config('filesystem.disks.cloudinary.cloud_name');
+
+    $filename = $this->getAttribute('filename');
+
+    return 'https://res.cloudinary.com/'.$cloudName.'/'.$filename;
     }
 
     public function getExtensionAttribute(): ?string
     {
-        $parts = pathinfo($this->filename ?? '');
+    $filename = $this->getAttribute('filename');
+    $parts = pathinfo($filename ?? '');
 
         return isset($parts['extension']) ? strtolower($parts['extension']) : null;
     }

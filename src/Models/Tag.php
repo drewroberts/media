@@ -76,13 +76,13 @@ class Tag extends Model implements Sortable
 
     public function getPathAttribute()
     {
-    $slug = (string) $this->getAttribute('slug');
+        $slug = (string) $this->getAttribute('slug');
 
-    return "/tags/{$slug}";
+        return "/tags/{$slug}";
     }
 
     /**
-     * @param Builder<Tag> $query
+     * @param  Builder<Tag>  $query
      * @return Builder<Tag>
      */
     public function scopeWithType(Builder $query, $type = null): Builder

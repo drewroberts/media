@@ -62,17 +62,17 @@ class Image extends Model
 
     public function getUrlAttribute()
     {
-    $cloudName = config('filesystem.disks.cloudinary.cloud_name');
+        $cloudName = config('filesystem.disks.cloudinary.cloud_name');
 
-    $filename = $this->getAttribute('filename');
+        $filename = $this->getAttribute('filename');
 
-    return 'https://res.cloudinary.com/'.$cloudName.'/'.$filename;
+        return 'https://res.cloudinary.com/'.$cloudName.'/'.$filename;
     }
 
     public function getExtensionAttribute(): ?string
     {
-    $filename = $this->getAttribute('filename');
-    $parts = pathinfo($filename ?? '');
+        $filename = $this->getAttribute('filename');
+        $parts = pathinfo($filename ?? '');
 
         return isset($parts['extension']) ? strtolower($parts['extension']) : null;
     }

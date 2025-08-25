@@ -2,6 +2,7 @@
 
 namespace DrewRoberts\Media;
 
+use DrewRoberts\Media\Support\Sanitizer;
 use Illuminate\Support\Str;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -13,12 +14,12 @@ class MediaServiceProvider extends PackageServiceProvider
         // String helper macros used by the models
         if (! Str::hasMacro('keepAlphanumericCharactersAndSpaces')) {
             Str::macro('keepAlphanumericCharactersAndSpaces', function ($value) {
-                return preg_replace('/[^\w\s]/', '', $value);
+                return Sanitizer::keepAlphanumericCharactersAndSpaces((string) $value);
             });
         }
         if (! Str::hasMacro('keepAlphanumericCharacters')) {
             Str::macro('keepAlphanumericCharacters', function ($value) {
-                return preg_replace('/[^\w]/', '', $value);
+                return Sanitizer::keepAlphanumericCharacters((string) $value);
             });
         }
 

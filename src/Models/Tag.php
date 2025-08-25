@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use DrewRoberts\Media\Support\Sanitizer;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
@@ -40,7 +41,7 @@ class Tag extends Model implements Sortable
         });
 
         static::saving(static function ($tag) {
-            $sanitizedName = Str::keepAlphanumericCharacters($tag->name);
+            $sanitizedName = Sanitizer::keepAlphanumericCharacters($tag->name);
 
             $tag->slug = strtolower($sanitizedName);
 
@@ -62,7 +63,7 @@ class Tag extends Model implements Sortable
 
     public function setNameAttribute($value)
     {
-        $sanitizedName = Str::keepAlphanumericCharactersAndSpaces($value);
+        $sanitizedName = Sanitizer::keepAlphanumericCharactersAndSpaces($value);
 
         $this->attributes['name'] = '#'.Str::studly($sanitizedName);
     }

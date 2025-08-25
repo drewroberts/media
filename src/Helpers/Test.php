@@ -12,15 +12,11 @@ if (! function_exists('randomOrCreate')) {
      */
     function randomOrCreate($classNameOrModel): Model
     {
-        $className = null;
-
         if (is_string($classNameOrModel)) {
             $className = $classNameOrModel;
         } elseif ($classNameOrModel instanceof Model) {
             $className = get_class($classNameOrModel);
-        }
-
-        if ($className === null) {
+        } else {
             throw new Exception('Cannot find class for '.$classNameOrModel);
         }
 

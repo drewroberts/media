@@ -15,7 +15,7 @@ class VideoFactory extends Factory
         $word = $this->faker->unique()->word;
 
         return [
-            'identifier' => $this->faker->unique()->isbn10,
+            'identifier' => $this->faker->unique()->isbn10(),
             'source' => $this->faker->randomElement(['youtube', 'vimeo', 'other']),
             'name' => $this->faker->unique()->sentence,
             'title' => $word,

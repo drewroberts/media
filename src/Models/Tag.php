@@ -1,13 +1,5 @@
 <?php
 
-/**
- * @property int $id
- * @property string $name
- * @property string $slug
- *
- * @method static \Illuminate\Database\Eloquent\Builder ordered()
- */
-
 namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -20,6 +12,13 @@ use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ *
+ * @method static Builder<Tag> ordered()
+ */
 class Tag extends Model implements Sortable
 {
     use HasFactory, SortableTrait;
@@ -77,9 +76,15 @@ class Tag extends Model implements Sortable
 
     public function getPathAttribute()
     {
-        return "/tags/{$this->slug}";
+        $slug = (string) $this->getAttribute('slug');
+
+        return "/tags/{$slug}";
     }
 
+    /**
+     * @param  Builder<Tag>  $query
+     * @return Builder<Tag>
+     */
     public function scopeWithType(Builder $query, $type = null): Builder
     {
         if (is_null($type)) {
@@ -89,6 +94,9 @@ class Tag extends Model implements Sortable
         return $query->where('type', $type)->ordered();
     }
 
+    /**
+     * @return DbCollection<int, Tag>
+     */
     public static function getWithType(string $type): DbCollection
     {
         return static::withType($type)->ordered()->get();

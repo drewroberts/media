@@ -2,7 +2,6 @@
 
 // config for DrewRoberts/Media
 return [
-
     // Use env() with default null values (allowed inside config files)
 
     /*
@@ -56,5 +55,4 @@ return [
     |
     */
     env('CLOUDINARY_URL', 'cloudinary://'.env('CLOUDINARY_KEY', null).':'.env('CLOUDINARY_SECRET', null).'@'.env('CLOUDINARY_CLOUD_NAME', 'username')),
-
 ];

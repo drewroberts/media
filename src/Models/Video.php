@@ -7,6 +7,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @property int $id
+ * @property string $identifier
+ * @property string $source
+ * @property string|null $name
+ * @property string|null $title
+ * @property string|null $description
+ * @property string|null $credit
+ * @property int|null $duration
+ * @property int|null $image_id
+ * @property int|null $view_count
+ * @property int|null $like_count
+ * @property int|null $dislike_count
+ * @property int|null $comment_count
+ * @property string|null $broadcast
+ * @property string|null $privacy
+ * @property string|null $location
+ * @property bool $embeddable
+ * @property \Illuminate\Support\Carbon|null $stream_started_at
+ * @property \Illuminate\Support\Carbon|null $stream_scheduled_at
+ * @property \Illuminate\Support\Carbon|null $published_at
+ * @property int|null $creator_id
+ * @property int|null $updater_id
+ */
 class Video extends Model
 {
     use HasFactory, HasTags;
@@ -18,6 +42,7 @@ class Video extends Model
         'stream_started_at' => 'datetime',
         'published_at' => 'datetime',
         'duration' => 'integer',
+        'embeddable' => 'boolean',
     ];
 
     protected static function boot()

@@ -126,6 +126,27 @@ Notes
 - You can customize request timeout, base URL, and thumbnail selection order via `config/media.php` under the `youtube` key (publish the config if needed).
 - API quota or configuration issues will surface as clear exceptions; ensure the key is set in environments where the service is used.
 
+## Filament Admin Resources
+
+This package ships first‑party Filament resources for managing media:
+
+- Images: Resource, pages, form schema, and table
+- Tags: Resource, pages, form schema, and table
+- Videos: Resource, pages, form schema, and table, including:
+    - Create via YouTube URL/ID (fetches metadata on submit)
+    - Edit with read‑only metadata and editable “Internal Name”, “Credit”, and “Thumbnail”
+    - A “Refresh API Data” button on the edit page to pull the latest details from YouTube
+
+How they’re registered
+
+- The package provides a Filament plugin that auto‑discovers resources from `DrewRoberts\Media\Filament\Resources`.
+- In your Filament Panel config, install the package plugin (if not auto‑discovered in your setup).
+
+User Resource in your application
+
+- This package does not provide a Filament User resource. Your Laravel application should create its own Filament User resource with `php artisan make:filament-resource Customer`
+- The media models reference your app’s user model via `config('auth.providers.users.model')` for `creator_id` and `updater_id` relations. No additional wiring is required.
+
 ## Migrations
 
 This package auto-runs its migrations and does not publish them.

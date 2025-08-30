@@ -47,6 +47,10 @@ class TestCase extends Orchestra
             $table->string('password');
             $table->timestamps();
         });
+
+        // Provide a fake YouTube API key so service passes configuration checks in tests
+        $_ENV['YOUTUBE_API_KEY'] = 'test-key';
+        $_SERVER['YOUTUBE_API_KEY'] = 'test-key';
     }
 }
 

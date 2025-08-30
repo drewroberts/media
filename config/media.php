@@ -10,4 +10,19 @@ return [
 
     // Relative path used when a model has no image; wrapped with url() in code
     'fallback_image' => 'img/ogimage.jpg',
+
+    // YouTube Data API V3 integration
+    'youtube' => [
+        // Set in your application .env
+        'api_key' => env('YOUTUBE_API_KEY'),
+
+        // Request options
+        'timeout' => 8.0, // seconds
+        'base_url' => 'https://www.googleapis.com/youtube/v3',
+
+        // Preferred order for thumbnails
+        'thumbnail_preference' => [
+            'maxres', 'standard', 'high', 'medium', 'default',
+        ],
+    ],
 ];

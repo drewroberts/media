@@ -31,7 +31,7 @@ composer require drewroberts/media
 
 Add your Cloudinary credentials to your `.env` file. Choose one of the following options:
 
-Required (single URL form):
+Required env variables:
 
 ```
 CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
@@ -87,6 +87,21 @@ return [
 
     // Relative path; wrapped with url() in code when no image exists
     'fallback_image' => 'img/ogimage.jpg',
+
+    // YouTube Data API V3 integration (Non-OAuth)
+    'youtube' => [
+        // Set in your application's .env
+        'api_key' => env('YOUTUBE_API_KEY'),
+
+        // HTTP request options
+        'timeout' => 8.0, // seconds
+        'base_url' => 'https://www.googleapis.com/youtube/v3',
+
+        // Preferred order for selecting thumbnails
+        'thumbnail_preference' => [
+            'maxres', 'standard', 'high', 'medium', 'default',
+        ],
+    ],
 ];
 ```
 
@@ -94,6 +109,22 @@ return [
 > In your Cloudinary console, create a Named Transformation called `t_cover` sized to 1200x630 pixels. This package references that name to render cover images.
 >
 > Create another Named Transformation `t_coverplaceholder` sized to 120x63 pixels. This is intended as a lightweight loading placeholder, while the full `t_cover` image can be lazy-loaded by the frontend.
+
+### YouTube Data API v3 (Non-OAuth)
+
+This package integrates with the official YouTube Data API v3 using an API key (no OAuth). It is used to parse YouTube links, fetch video details (title, description, duration, publish date, statistics, etc.), and pick the best thumbnail.
+
+Required env variable:
+
+```
+YOUTUBE_API_KEY=
+```
+
+Notes
+
+- Obtain an API key from your [Google Cloud Console](https://console.developers.google.com/) and enable the YouTube Data API v3 for your project.
+- You can customize request timeout, base URL, and thumbnail selection order via `config/media.php` under the `youtube` key (publish the config if needed).
+- API quota or configuration issues will surface as clear exceptions; ensure the key is set in environments where the service is used.
 
 ## Migrations
 

@@ -38,5 +38,10 @@ class MediaServiceProvider extends PackageServiceProvider
     {
         // Auto-load package migrations from database/migrations without publishing
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        // Bind YouTube service for facade usage
+        $this->app->singleton(\DrewRoberts\Media\Support\YouTube\YouTubeService::class, function () {
+            return new \DrewRoberts\Media\Support\YouTube\YouTubeService(config('media.youtube.api_key'));
+        });
     }
 }

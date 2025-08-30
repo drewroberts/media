@@ -143,3 +143,9 @@ All notable changes to `media` will be documented in this file
 - remove laravel nova
 - remove tipoff packages
 - bump dependencies
+
+## 12.1.0 - 2025-08-30
+
+- create filament resources
+- wrap youtube api
+- add youtube importer

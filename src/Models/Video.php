@@ -68,6 +68,6 @@ class Video extends Model
         }
 
         // Use the youtu.be short link format
-        return sprintf('https://youtu.be/', $this->identifier);
+        return sprintf('https://youtu.be/%s', $this->identifier);
     }
 }

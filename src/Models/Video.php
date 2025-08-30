@@ -57,4 +57,17 @@ class Video extends Model
     {
         return $this->belongsTo(Image::class);
     }
+
+    /**
+     * Get the public YouTube short URL for this video, if available.
+     */
+    public function youtubeUrl(): ?string
+    {
+        if (empty($this->identifier)) {
+            return null;
+        }
+
+        // Use the youtu.be short link format
+        return sprintf('https://youtu.be/', $this->identifier);
+    }
 }

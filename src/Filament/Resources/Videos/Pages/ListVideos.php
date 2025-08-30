@@ -3,8 +3,8 @@
 namespace DrewRoberts\Media\Filament\Resources\Videos\Pages;
 
 use DrewRoberts\Media\Filament\Resources\Videos\VideoResource;
-use Filament\Resources\Pages\ListRecords;
 use Filament\Actions\CreateAction;
+use Filament\Resources\Pages\ListRecords;
 
 class ListVideos extends ListRecords
 {

@@ -33,6 +33,7 @@ class EditVideo extends EditRecord
                     $record = $this->getRecord();
                     if (! $record instanceof \DrewRoberts\Media\Models\Video || ($record->source ?? 'youtube') !== 'youtube' || empty($record->identifier)) {
                         Notification::make()->title('Cannot refresh')->body('This record does not have a YouTube ID.')->warning()->send();
+
                         return;
                     }
 

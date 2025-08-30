@@ -4,8 +4,8 @@ namespace DrewRoberts\Media\Filament\Resources\Videos\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
@@ -46,6 +46,7 @@ class VideoForm
                     : null)
                 ->formatStateUsing(function ($state, $record) {
                     $url = $record && method_exists($record, 'youtubeUrl') ? $record->youtubeUrl() : null;
+
                     return $url ?: '-';
                 }),
 

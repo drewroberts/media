@@ -14,8 +14,8 @@ class CreateVideo extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-    $raw = $this->form->getState();
-    $url = $raw['youtube_url'] ?? request()->input('youtube_url');
+        $raw = $this->form->getState();
+        $url = $raw['youtube_url'] ?? request()->input('youtube_url');
         unset($data['youtube_url']);
 
         if (! $url) {

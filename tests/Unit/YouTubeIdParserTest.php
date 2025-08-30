@@ -33,7 +33,7 @@ it('accepts plain IDs directly', function () {
 });
 
 it('trims and parses with surrounding whitespace', function () {
-    expect(YouTubeIdParser::parse("  https://youtu.be/dQw4w9WgXcQ  "))
+    expect(YouTubeIdParser::parse('  https://youtu.be/dQw4w9WgXcQ  '))
         ->toBe('dQw4w9WgXcQ');
 });
 

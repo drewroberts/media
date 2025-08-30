@@ -110,6 +110,7 @@ class YouTubeService
                 return (string) $entry['url'];
             }
         }
+
         return null;
     }
 
@@ -119,12 +120,16 @@ class YouTubeService
      */
     public function ensureThumbnailImage(VideoData $data): ?Image
     {
-        if (! $data->thumbnailUrl) return null;
+        if (! $data->thumbnailUrl) {
+            return null;
+        }
 
         try {
             $tmp = tempnam(sys_get_temp_dir(), 'ytthumb_');
             $img = Http::timeout(6.0)->get($data->thumbnailUrl);
-            if (! $img->ok()) return null;
+            if (! $img->ok()) {
+                return null;
+            }
             file_put_contents($tmp, $img->body());
 
             $publicId = 'yt-'.$data->id;
@@ -153,6 +158,7 @@ class YouTubeService
                 'videoId' => $data->id,
                 'error' => $e->getMessage(),
             ]);
+
             return null;
         }
     }

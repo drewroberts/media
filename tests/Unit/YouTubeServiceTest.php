@@ -62,8 +62,8 @@ it('sets broadcast to upcoming when only scheduledStartTime is present', functio
                 'standard' => ['url' => 'https://i.ytimg.com/vi/vid2/sddefault.jpg'],
             ],
         ],
-        'contentDetails' => [ 'duration' => 'PT5M' ],
-        'liveStreamingDetails' => [ 'scheduledStartTime' => '2025-01-01T00:00:00Z' ],
+        'contentDetails' => ['duration' => 'PT5M'],
+        'liveStreamingDetails' => ['scheduledStartTime' => '2025-01-01T00:00:00Z'],
     ];
 
     $data = $service->normalize($item);

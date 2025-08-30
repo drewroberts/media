@@ -35,8 +35,12 @@ class ImageForm
                         }
                         if ($path && file_exists($path)) {
                             [$w, $h] = @getimagesize($path) ?: [null, null];
-                            if ($w) { $set('width', $w); }
-                            if ($h) { $set('height', $h); }
+                            if ($w) {
+                                $set('width', $w);
+                            }
+                            if ($h) {
+                                $set('height', $h);
+                            }
                         }
                     }),
                 TextInput::make('description')
@@ -57,6 +61,7 @@ class ImageForm
                             e($record->url),
                             $alt
                         );
+
                         return new HtmlString($html);
                     }),
                 Placeholder::make('dimensions')
@@ -70,9 +75,10 @@ class ImageForm
                         $w = (int) ($record->width ?? 0);
                         $h = (int) ($record->height ?? 0);
                         $html = '<div style="display:flex;gap:1rem;align-items:center;">'
-                              . '<div><span style="color:#6b7280;">Width:</span> '.e((string) $w).'</div>'
-                              . '<div><span style="color:#6b7280;">Height:</span> '.e((string) $h).'</div>'
-                              . '</div>';
+                              .'<div><span style="color:#6b7280;">Width:</span> '.e((string) $w).'</div>'
+                              .'<div><span style="color:#6b7280;">Height:</span> '.e((string) $h).'</div>'
+                              .'</div>';
+
                         return new HtmlString($html);
                     }),
             ]);

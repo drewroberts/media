@@ -39,8 +39,14 @@ class CreateImage extends CreateRecord
         }
 
         // Fallback dimension detection
-        $localWidth = null; $localHeight = null;
-        try { [$w,$h] = @getimagesize($path) ?: [null,null]; $localWidth=$w; $localHeight=$h; } catch (Exception $e) {}
+        $localWidth = null;
+        $localHeight = null;
+        try {
+            [$w,$h] = @getimagesize($path) ?: [null, null];
+            $localWidth = $w;
+            $localHeight = $h;
+        } catch (Exception $e) {
+        }
 
         if (! is_file($path) || ! is_readable($path)) {
             Log::warning('Upload file not readable', ['path' => $path]);
@@ -70,15 +76,23 @@ class CreateImage extends CreateRecord
         }
 
         // Extract details from result (object or array), fallback to local info
-        $format = null; $width = $localWidth; $height = $localHeight;
+        $format = null;
+        $width = $localWidth;
+        $height = $localHeight;
         if (is_array($result)) {
             $format = $result['format'] ?? null;
             $width = $result['width'] ?? $width;
             $height = $result['height'] ?? $height;
         } elseif (is_object($result)) {
-            if (method_exists($result, 'getFormat')) { $format = $result->getFormat(); }
-            if (method_exists($result, 'getWidth')) { $width = $result->getWidth(); }
-            if (method_exists($result, 'getHeight')) { $height = $result->getHeight(); }
+            if (method_exists($result, 'getFormat')) {
+                $format = $result->getFormat();
+            }
+            if (method_exists($result, 'getWidth')) {
+                $width = $result->getWidth();
+            }
+            if (method_exists($result, 'getHeight')) {
+                $height = $result->getHeight();
+            }
         }
         $format = $format ?: (pathinfo($path, PATHINFO_EXTENSION) ?: 'jpg');
 

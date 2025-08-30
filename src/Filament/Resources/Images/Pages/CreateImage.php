@@ -57,7 +57,7 @@ class CreateImage extends CreateRecord
         $publicId = 'img-'.sha1((string) microtime(true));
         try {
             // Use Cloudinary Upload API directly
-            $result = (new UploadApi())->upload($path, [
+            $result = (new UploadApi)->upload($path, [
                 'public_id' => $publicId,
                 'overwrite' => true,
                 'resource_type' => 'image',
@@ -77,10 +77,10 @@ class CreateImage extends CreateRecord
             throw ValidationException::withMessages(['upload' => 'Upload to Cloudinary failed: '.$e->getMessage()]);
         }
 
-    // Extract details from result array, with local fallbacks
-    $format = $resultArr['format'] ?? null;
-    $width = $resultArr['width'] ?? $localWidth;
-    $height = $resultArr['height'] ?? $localHeight;
+        // Extract details from result array, with local fallbacks
+        $format = $resultArr['format'] ?? null;
+        $width = $resultArr['width'] ?? $localWidth;
+        $height = $resultArr['height'] ?? $localHeight;
         $format = $format ?: (pathinfo($path, PATHINFO_EXTENSION) ?: 'jpg');
 
         // Store clean Root Path filename: "{publicId}.{ext}" (no asset_type/delivery_type)

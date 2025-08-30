@@ -133,7 +133,7 @@ class YouTubeService
             file_put_contents($tmp, $img->body());
 
             $publicId = 'yt-'.$data->id;
-            $result = (new UploadApi())->upload($tmp, [
+            $result = (new UploadApi)->upload($tmp, [
                 'public_id' => $publicId,
                 'overwrite' => true,
                 'resource_type' => 'image',

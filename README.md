@@ -35,27 +35,10 @@ Required (single URL form):
 
 ```
 CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
-FILESYSTEM_DISK=cloudinary
-```
-
-OR required (separate values):
-
-```
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_KEY=
 CLOUDINARY_SECRET=
 FILESYSTEM_DISK=cloudinary
-```
-
-Optional:
-
-```
-# Optional path prefix for all assets
-CLOUDINARY_PREFIX=
-
-# Used by vendor Blade components / widgets (optional)
-CLOUDINARY_UPLOAD_PRESET=
-CLOUDINARY_NOTIFICATION_URL=
 ```
 
 > [!NOTE]  

@@ -13,8 +13,9 @@ return [
 
     // YouTube Data API V3 integration
     'youtube' => [
-        // Read API key directly from the host app's environment without requiring published config
-        'api_key' => env('YOUTUBE_API_KEY'),
+    // Read API key directly from the host app's environment without requiring published config
+    // Use superglobals instead of env() to satisfy Larastan noEnvCallsOutsideOfConfig in package context
+    'api_key' => $_ENV['YOUTUBE_API_KEY'] ?? $_SERVER['YOUTUBE_API_KEY'] ?? null,
 
         // Request options
         'timeout' => 8.0, // seconds

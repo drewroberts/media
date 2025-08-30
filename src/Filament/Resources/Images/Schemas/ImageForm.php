@@ -47,6 +47,7 @@ class ImageForm
                     ->columnSpanFull(),
                 TextInput::make('alt'),
                 TextInput::make('credit'),
+                // @phpstan-ignore-next-line Placeholder is deprecated in newer Filament; compatible here
                 Placeholder::make('preview')
                     ->label('Current Image')
                     ->visibleOn('edit')
@@ -64,6 +65,7 @@ class ImageForm
 
                         return new HtmlString($html);
                     }),
+                // @phpstan-ignore-next-line Placeholder is deprecated in newer Filament; compatible here
                 Placeholder::make('dimensions')
                     ->label('Original Uploaded File Dimensions')
                     ->visibleOn('edit')

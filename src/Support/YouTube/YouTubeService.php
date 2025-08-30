@@ -2,7 +2,7 @@
 
 namespace DrewRoberts\Media\Support\YouTube;
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Api\Upload\UploadApi;
 use DrewRoberts\Media\Models\Image;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -133,7 +133,7 @@ class YouTubeService
             file_put_contents($tmp, $img->body());
 
             $publicId = 'yt-'.$data->id;
-            $result = Cloudinary::uploadApi()->upload($tmp, [
+            $result = (new UploadApi())->upload($tmp, [
                 'public_id' => $publicId,
                 'overwrite' => true,
                 'resource_type' => 'image',
@@ -141,9 +141,9 @@ class YouTubeService
 
             @unlink($tmp);
 
-            $format = is_array($result) ? ($result['format'] ?? 'jpg') : 'jpg';
-            $width = is_array($result) ? ($result['width'] ?? null) : null;
-            $height = is_array($result) ? ($result['height'] ?? null) : null;
+            $format = $result['format'] ?? 'jpg';
+            $width = $result['width'] ?? null;
+            $height = $result['height'] ?? null;
 
             return Image::create([
                 'filename' => $publicId.'.'.$format,

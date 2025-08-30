@@ -2,7 +2,7 @@
 
 namespace DrewRoberts\Media\Filament\Resources\Images\Pages;
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Api\Upload\UploadApi;
 use DrewRoberts\Media\Filament\Resources\Images\ImageResource;
 use Exception;
 use Filament\Notifications\Notification;
@@ -56,12 +56,14 @@ class CreateImage extends CreateRecord
 
         $publicId = 'img-'.sha1((string) microtime(true));
         try {
-            // Use the underlying Upload API via the facade
-            $result = Cloudinary::uploadApi()->upload($path, [
+            // Use Cloudinary Upload API directly
+            $result = (new UploadApi())->upload($path, [
                 'public_id' => $publicId,
                 'overwrite' => true,
                 'resource_type' => 'image',
             ]);
+            /** @var array<string,mixed> $resultArr */
+            $resultArr = $result->getArrayCopy();
         } catch (\Throwable $e) {
             Log::error('Cloudinary upload failed', [
                 'message' => $e->getMessage(),
@@ -75,25 +77,10 @@ class CreateImage extends CreateRecord
             throw ValidationException::withMessages(['upload' => 'Upload to Cloudinary failed: '.$e->getMessage()]);
         }
 
-        // Extract details from result (object or array), fallback to local info
-        $format = null;
-        $width = $localWidth;
-        $height = $localHeight;
-        if (is_array($result)) {
-            $format = $result['format'] ?? null;
-            $width = $result['width'] ?? $width;
-            $height = $result['height'] ?? $height;
-        } elseif (is_object($result)) {
-            if (method_exists($result, 'getFormat')) {
-                $format = $result->getFormat();
-            }
-            if (method_exists($result, 'getWidth')) {
-                $width = $result->getWidth();
-            }
-            if (method_exists($result, 'getHeight')) {
-                $height = $result->getHeight();
-            }
-        }
+    // Extract details from result array, with local fallbacks
+    $format = $resultArr['format'] ?? null;
+    $width = $resultArr['width'] ?? $localWidth;
+    $height = $resultArr['height'] ?? $localHeight;
         $format = $format ?: (pathinfo($path, PATHINFO_EXTENSION) ?: 'jpg');
 
         // Store clean Root Path filename: "{publicId}.{ext}" (no asset_type/delivery_type)

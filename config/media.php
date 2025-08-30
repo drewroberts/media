@@ -13,8 +13,8 @@ return [
 
     // YouTube Data API V3 integration
     'youtube' => [
-        // Set in your application .env
-        'api_key' => env('YOUTUBE_API_KEY'),
+        // API key is expected to be provided by the host app (e.g., via published config or runtime config())
+        'api_key' => null,
 
         // Request options
         'timeout' => 8.0, // seconds

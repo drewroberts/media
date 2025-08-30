@@ -19,8 +19,8 @@ class YouTubeIdParser
             return $value;
         }
 
-        // Normalize
-        $value = preg_replace('/[\u00A0\s]+/u', '', $value) ?? $value; // remove spaces / NBSP
+    // Normalize spaces, including non-breaking space (U+00A0)
+    $value = preg_replace('/[\x{00A0}\s]+/u', '', $value) ?? $value;
 
         // youtu.be/<id>
         if (preg_match('~youtu\.be/([A-Za-z0-9_-]{6,})~i', $value, $m)) {

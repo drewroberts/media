@@ -9,17 +9,17 @@ trait HasMedia
 {
     public function image()
     {
-        return $this->belongsTo(app('image'));
+        return $this->belongsTo(Image::class);
     }
 
     public function ogimage()
     {
-        return $this->belongsTo(app('image'), 'ogimage_id');
+        return $this->belongsTo(Image::class, 'ogimage_id');
     }
 
     public function video()
     {
-        return $this->belongsTo(app('video'));
+        return $this->belongsTo(Video::class);
     }
 
     /**

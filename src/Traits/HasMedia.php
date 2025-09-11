@@ -1,7 +1,6 @@
 <?php
 
 namespace DrewRoberts\Media\Traits;
-\
 use DrewRoberts\Media\Models\Image;
 use DrewRoberts\Media\Models\Video;
 

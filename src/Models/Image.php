@@ -19,7 +19,7 @@ use Roberts\Support\Traits\HasUpdater;
  */
 class Image extends Model
 {
-    use HasCreator, HasUpdater, HasFactory;
+    use HasCreator, HasFactory, HasUpdater;
 
     protected $guarded = ['id'];
 

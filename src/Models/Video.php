@@ -34,7 +34,7 @@ use Roberts\Support\Traits\HasUpdater;
  */
 class Video extends Model
 {
-    use HasCreator, HasUpdater, HasFactory, HasTags;
+    use HasCreator, HasFactory, HasTags, HasUpdater;
 
     protected $guarded = ['id'];
 

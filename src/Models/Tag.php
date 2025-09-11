@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Spatie\EloquentSortable\Sortable;
-use Spatie\EloquentSortable\SortableTrait;
 use Roberts\Support\Traits\HasCreator;
 use Roberts\Support\Traits\HasUpdater;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
 /**
  * @property int $id
@@ -23,7 +23,7 @@ use Roberts\Support\Traits\HasUpdater;
  */
 class Tag extends Model implements Sortable
 {
-    use HasCreator, HasUpdater, HasFactory, SortableTrait;
+    use HasCreator, HasFactory, HasUpdater, SortableTrait;
 
     protected $guarded = ['id'];
 

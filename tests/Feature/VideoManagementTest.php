@@ -73,6 +73,8 @@ it('parses youtube ids and normalizes fetched data', function () {
         ], 200),
     ]);
 
+    // Ensure service has an API key for test context
+    YouTube::swap(new YouTubeService('test-key'));
     $data = YouTube::fetch('VHpxrjqIJDc');
 
     expect($data->id)->toBe('VHpxrjqIJDc')

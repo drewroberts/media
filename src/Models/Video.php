@@ -5,7 +5,8 @@ namespace DrewRoberts\Media\Models;
 use DrewRoberts\Media\Traits\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use Roberts\Support\Traits\HasCreator;
+use Roberts\Support\Traits\HasUpdater;
 
 /**
  * @property int $id
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class Video extends Model
 {
-    use HasFactory, HasTags;
+    use HasCreator, HasUpdater, HasFactory, HasTags;
 
     protected $guarded = ['id'];
 
@@ -49,12 +50,6 @@ class Video extends Model
     {
         parent::boot();
 
-        static::creating(function ($model) {
-            if (Auth::check()) {
-                $model->creator_id = Auth::id();
-            }
-        });
-
         static::saving(function ($video) {
             if (empty($video->identifier)) {
                 $video->identifier = uniqid('vid_', true);
@@ -62,20 +57,7 @@ class Video extends Model
             if (empty($video->source)) {
                 $video->source = 'youtube';
             }
-            if (Auth::check()) {
-                $video->updater_id = Auth::id();
-            }
         });
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'updater_id');
     }
 
     public function image()

@@ -4,8 +4,9 @@ namespace DrewRoberts\Media\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
+use Roberts\Support\Traits\HasCreator;
+use Roberts\Support\Traits\HasUpdater;
 
 /**
  * @property int $id
@@ -18,7 +19,7 @@ use InvalidArgumentException;
  */
 class Image extends Model
 {
-    use HasFactory;
+    use HasCreator, HasUpdater, HasFactory;
 
     protected $guarded = ['id'];
 
@@ -31,12 +32,6 @@ class Image extends Model
     {
         parent::boot();
 
-        static::creating(function ($image) {
-            if (Auth::check()) {
-                $image->creator_id = Auth::id();
-            }
-        });
-
         static::saving(function ($image) {
             // In tests we don't want to hit remote URLs; ensure width/height are set or default
             if (empty($image->width)) {
@@ -45,20 +40,7 @@ class Image extends Model
             if (empty($image->height)) {
                 $image->height = (int) ($image->height ?? 0);
             }
-            if (Auth::check()) {
-                $image->updater_id = Auth::id();
-            }
         });
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'updater_id');
     }
 
     public function getUrlAttribute()

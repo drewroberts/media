@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Collection as DbCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Roberts\Support\Traits\HasCreator;
+use Roberts\Support\Traits\HasUpdater;
 
 /**
  * @property int $id
@@ -22,7 +23,7 @@ use Spatie\EloquentSortable\SortableTrait;
  */
 class Tag extends Model implements Sortable
 {
-    use HasFactory, SortableTrait;
+    use HasCreator, HasUpdater, HasFactory, SortableTrait;
 
     protected $guarded = ['id'];
 
@@ -34,31 +35,11 @@ class Tag extends Model implements Sortable
     {
         parent::boot();
 
-        static::creating(function ($tag) {
-            if (Auth::check()) {
-                $tag->creator_id = Auth::id();
-            }
-        });
-
         static::saving(static function ($tag) {
             $sanitizedName = Sanitizer::keepAlphanumericCharacters($tag->name);
 
             $tag->slug = strtolower($sanitizedName);
-
-            if (Auth::check()) {
-                $tag->updater_id = Auth::id();
-            }
         });
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'creator_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('auth.providers.users.model'), 'updater_id');
     }
 
     public function setNameAttribute($value)

@@ -1,187 +1,192 @@
 <?php
 
 use DrewRoberts\Media\Models\Tag;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 
-uses(RefreshDatabase::class);
+describe('Tag Model', function () {
+    describe('Basic Creation', function () {
+        test('creates tags with proper formatting', function () {
+            $tag = createTag([
+                'name' => 'TestTag',
+                'type' => 'category',
+            ]);
 
-beforeEach(function () {
-    // Create a test user for the relationships
-    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
-});
+            expect($tag)
+                ->toBeInstanceOf(Tag::class)
+                ->name->toBe('#TestTag')
+                ->slug->toBe('testtag')
+                ->type->toBe('category');
+        });
 
-it('can create a tag', function () {
-    $tag = Tag::create([
-        'name' => 'TestTag',
-        'type' => 'category',
-    ]);
+        test('formats names with hash prefix and studly case', function () {
+            $tag = createTag([
+                'name' => 'test tag name',
+                'type' => 'test',
+            ]);
 
-    expect($tag)->toBeInstanceOf(Tag::class)
-        ->and($tag->name)->toBe('#TestTag')
-        ->and($tag->slug)->toBe('testtag')
-        ->and($tag->type)->toBe('category');
-});
+            expect($tag->name)->toBe('#TestTagName');
+        });
 
-it('automatically sets creator_id when authenticated', function () {
-    Auth::login($this->user);
+        test('generates slugs from names correctly', function () {
+            $tag = createTag([
+                'name' => 'Test Tag Name 123',
+                'type' => 'test',
+            ]);
 
-    $tag = Tag::create([
-        'name' => 'AuthorTag',
-        'type' => 'author',
-    ]);
+            expect($tag->slug)->toBe('testtagname123');
+        });
+    });
 
-    expect($tag->creator_id)->toBe($this->user->id);
-});
+    describe('Authentication Tracking', function () {
+        test('sets creator_id when authenticated', function () {
+            $user = authenticateUser();
+            
+            $tag = createTag([
+                'name' => 'AuthorTag',
+                'type' => 'author',
+            ]);
 
-it('automatically sets updater_id when saving while authenticated', function () {
-    Auth::login($this->user);
+            expect($tag)->toHaveCreator($user->id);
+        });
 
-    $tag = Tag::create([
-        'name' => 'UpdateTag',
-        'type' => 'update',
-    ]);
+        test('sets updater_id when saving changes', function () {
+            $user = authenticateUser();
+            
+            $tag = createTag([
+                'name' => 'UpdateTag',
+                'type' => 'update',
+            ]);
 
-    $tag->name = 'UpdatedTag';
-    $tag->save();
+            $tag->update(['name' => 'UpdatedTag']);
 
-    expect($tag->updater_id)->toBe($this->user->id);
-});
+            expect($tag)->toHaveUpdater($user->id);
+        });
 
-it('formats name with hash prefix and studly case', function () {
-    $tag = Tag::create([
-        'name' => 'test tag name',
-        'type' => 'test',
-    ]);
+        test('maintains creator relationship', function () {
+            $user = authenticateUser();
+            
+            $tag = createTag([
+                'name' => 'RelationshipTag',
+                'type' => 'test',
+            ]);
 
-    expect($tag->name)->toBe('#TestTagName');
-});
+            expect($tag->creator)
+                ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
+                ->id->toBe($user->id);
+        });
 
-it('generates correct slug from name', function () {
-    $tag = Tag::create([
-        'name' => 'Test Tag Name 123',
-        'type' => 'test',
-    ]);
+        test('maintains updater relationship', function () {
+            $user = authenticateUser();
+            
+            $tag = createTag([
+                'name' => 'UpdaterTag',
+                'type' => 'test',
+            ]);
 
-    expect($tag->slug)->toBe('testtagname123');
-});
+            $tag->update(['name' => 'UpdatedTag']);
 
-it('has creator relationship', function () {
-    Auth::login($this->user);
+            expect($tag->updater)
+                ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
+                ->id->toBe($user->id);
+        });
+    });
 
-    $tag = Tag::create([
-        'name' => 'RelationshipTag',
-        'type' => 'test',
-    ]);
+    describe('Routing and URLs', function () {
+        test('uses slug as route key', function () {
+            $tag = createTag([
+                'name' => 'RouteTag',
+                'type' => 'test',
+            ]);
 
-    expect($tag->creator)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
-        ->and($tag->creator->id)->toBe($this->user->id);
-});
+            expect($tag->getRouteKeyName())->toBe('slug');
+        });
 
-it('has updater relationship', function () {
-    Auth::login($this->user);
+        test('generates correct path attribute', function () {
+            $tag = createTag([
+                'name' => 'PathTag',
+                'type' => 'test',
+            ]);
 
-    $tag = Tag::create([
-        'name' => 'UpdaterTag',
-        'type' => 'test',
-    ]);
+            expect($tag->path)->toBe('/tags/pathtag');
+        });
+    });
 
-    $tag->update(['name' => 'UpdatedTag']);
+    describe('Type Filtering and Scoping', function () {
+        beforeEach(function () {
+            $this->tags = [
+                createTag(['name' => 'CategoryTag1', 'type' => 'category']),
+                createTag(['name' => 'CategoryTag2', 'type' => 'category']),
+                createTag(['name' => 'AuthorTag', 'type' => 'author']),
+            ];
+        });
 
-    expect($tag->updater)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
-        ->and($tag->updater->id)->toBe($this->user->id);
-});
+        test('scopes by type', function () {
+            $categoryTags = Tag::withType('category')->get();
+            $allTags = Tag::withType(null)->get();
 
-it('uses slug as route key', function () {
-    $tag = Tag::create([
-        'name' => 'RouteTag',
-        'type' => 'test',
-    ]);
+            expect($categoryTags)->toHaveCount(2)
+                ->and($allTags)->toHaveCount(3);
+        });
 
-    expect($tag->getRouteKeyName())->toBe('slug');
-});
+        test('retrieves tags by specific type', function () {
+            $categoryTags = Tag::getWithType('category');
 
-it('generates correct path attribute', function () {
-    $tag = Tag::create([
-        'name' => 'PathTag',
-        'type' => 'test',
-    ]);
+            expect($categoryTags)->toHaveCount(2);
+        });
 
-    expect($tag->path)->toBe('/tags/pathtag');
-});
+        test('gets all unique types', function () {
+            $types = Tag::getTypes();
 
-it('can scope by type', function () {
-    Tag::create(['name' => 'CategoryTag', 'type' => 'category']);
-    Tag::create(['name' => 'AuthorTag', 'type' => 'author']);
-    Tag::create(['name' => 'AnotherCategoryTag', 'type' => 'category']);
+            expect($types)
+                ->toHaveCount(2)
+                ->toContain('category')
+                ->toContain('author');
+        });
+    });
 
-    $categoryTags = Tag::withType('category')->get();
-    $allTags = Tag::withType(null)->get();
+    describe('Finding and Search', function () {
+        test('finds tags from string', function () {
+            $originalTag = createTag([
+                'name' => 'FindableTag',
+                'type' => 'test',
+            ]);
 
-    expect($categoryTags)->toHaveCount(2)
-        ->and($allTags)->toHaveCount(3);
-});
+            $foundTag = Tag::findFromString('#FindableTag', 'test');
 
-it('can get tags by type', function () {
-    Tag::create(['name' => 'CategoryTag1', 'type' => 'category']);
-    Tag::create(['name' => 'CategoryTag2', 'type' => 'category']);
-    Tag::create(['name' => 'AuthorTag', 'type' => 'author']);
+            expect($foundTag)
+                ->not->toBeNull()
+                ->id->toBe($originalTag->id);
+        });
 
-    $categoryTags = Tag::getWithType('category');
+        test('returns null for non-existent tags', function () {
+            $foundTag = Tag::findFromString('NonExistentTag', 'test');
 
-    expect($categoryTags)->toHaveCount(2);
-});
+            expect($foundTag)->toBeNull();
+        });
+    });
 
-it('can find tag from string', function () {
-    $originalTag = Tag::create([
-        'name' => 'FindableTag',
-        'type' => 'test',
-    ]);
+    describe('Model Configuration', function () {
+        test('implements sortable interface', function () {
+            expect(Tag::class)->toImplement(\Spatie\EloquentSortable\Sortable::class);
+        });
 
-    $foundTag = Tag::findFromString('#FindableTag', 'test');
+        test('uses factory trait', function () {
+            expect(in_array(\Illuminate\Database\Eloquent\Factories\HasFactory::class, class_uses(Tag::class)))
+                ->toBeTrue();
+        });
 
-    expect($foundTag)->not->toBeNull()
-        ->and($foundTag->id)->toBe($originalTag->id);
-});
+        test('guards id field', function () {
+            expect((new Tag)->getGuarded())->toBe(['id']);
+        });
+    });
 
-it('returns null when tag not found', function () {
-    $foundTag = Tag::findFromString('NonExistentTag', 'test');
+    describe('Multiple Tags', function () {
+        test('maintains uniqueness across multiple tags', function () {
+            $tag1 = createTag(['name' => 'UniqueTag', 'type' => 'test']);
+            $tag2 = createTag(['name' => 'AnotherUniqueTag', 'type' => 'test']);
 
-    expect($foundTag)->toBeNull();
-});
-
-it('can get all types', function () {
-    Tag::create(['name' => 'CategoryTag', 'type' => 'category']);
-    Tag::create(['name' => 'AuthorTag', 'type' => 'author']);
-    Tag::create(['name' => 'AnotherCategoryTag', 'type' => 'category']);
-
-    $types = Tag::getTypes();
-
-    expect($types)->toHaveCount(2)
-        ->and($types->contains('category'))->toBeTrue()
-        ->and($types->contains('author'))->toBeTrue();
-});
-
-it('is sortable', function () {
-    expect(Tag::class)->toImplement(\Spatie\EloquentSortable\Sortable::class);
-});
-
-it('uses factory', function () {
-    expect(in_array(\Illuminate\Database\Eloquent\Factories\HasFactory::class, class_uses(Tag::class)))
-        ->toBeTrue();
-});
-
-it('has guarded id field', function () {
-    $tag = new Tag;
-
-    expect($tag->getGuarded())->toBe(['id']);
-});
-
-it('can create multiple tags and maintain uniqueness', function () {
-    $tag1 = Tag::create(['name' => 'UniqueTag', 'type' => 'test']);
-    $tag2 = Tag::create(['name' => 'AnotherUniqueTag', 'type' => 'test']);
-
-    expect($tag1->slug)->toBe('uniquetag')
-        ->and($tag2->slug)->toBe('anotheruniquetag')
-        ->and($tag1->slug)->not->toBe($tag2->slug);
+            expect($tag1->slug)->toBe('uniquetag')
+                ->and($tag2->slug)->toBe('anotheruniquetag')
+                ->and($tag1->slug)->not->toBe($tag2->slug);
+        });
+    });
 });

@@ -3,129 +3,111 @@
 use DrewRoberts\Media\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Auth;
 
 uses(RefreshDatabase::class, WithFaker::class);
 
 beforeEach(function () {
-    // Create a test user for the relationships
-    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
+    $this->user = createUser();
 });
 
-it('can create a video', function () {
-    $video = Video::create([
-        'identifier' => 'vmFLvGFHRBM',
-        'duration' => 120,
-        'description' => 'Test video',
-        'credit' => 'Test videographer',
-    ]);
+describe('Video Model', function () {
+    describe('Basic Creation', function () {
+        test('creates videos with all attributes', function () {
+            $video = Video::create(sampleVideoData());
 
-    expect($video)->toBeInstanceOf(Video::class)
-        ->and($video->identifier)->toBe('vmFLvGFHRBM')
-        ->and($video->duration)->toBe(120)
-        ->and($video->description)->toBe('Test video')
-        ->and($video->credit)->toBe('Test videographer');
-});
+            expect($video)
+                ->toBeInstanceOf(Video::class)
+                ->identifier->toBe('sampleVideoId')
+                ->source->toBe('youtube')
+                ->title->toBe('Sample Video')
+                ->description->toBe('Sample description')
+                ->duration->toBe(120);
+        });
 
-it('automatically sets creator_id when authenticated', function () {
-    Auth::login($this->user);
+        test('handles nullable fields gracefully', function () {
+            $video = createVideo(['description' => null, 'credit' => null]);
 
-    $video = Video::create([
-        'identifier' => '/creator-test.mp4',
-        'duration' => 60,
-    ]);
+            expect($video)
+                ->description->toBeNull()
+                ->credit->toBeNull();
+        });
 
-    expect($video->creator_id)->toBe($this->user->id);
-});
+        test('enforces unique identifiers', function () {
+            createVideo(['identifier' => 'unique-video']);
 
-it('automatically sets updater_id when saving while authenticated', function () {
-    Auth::login($this->user);
+            expect(fn () => createVideo(['identifier' => 'unique-video']))
+                ->toThrow(\Illuminate\Database\QueryException::class);
+        });
+    });
 
-    $video = Video::create([
-        'identifier' => 'vmFLvGFHRBM',
-        'duration' => 90,
-    ]);
+    describe('Authentication Tracking', function () {
+        test('sets creator_id when authenticated', function () {
+            $user = authenticateUser();
+            
+            $video = createVideo();
 
-    $video->description = 'Updated description';
-    $video->save();
+            expect($video)->toHaveCreator($user->id);
+        });
 
-    expect($video->updater_id)->toBe($this->user->id);
-});
+        test('sets updater_id when saving changes', function () {
+            $user = authenticateUser();
+            $video = createVideo();
 
-it('has creator relationship', function () {
-    Auth::login($this->user);
+            $video->update(['description' => 'Updated description']);
 
-    $video = Video::create([
-        'identifier' => '/relationship-test.mp4',
-        'duration' => 45,
-    ]);
+            expect($video)->toHaveUpdater($user->id);
+        });
 
-    expect($video->creator)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
-        ->and($video->creator->id)->toBe($this->user->id);
-});
+        test('maintains creator relationship', function () {
+            $user = authenticateUser();
+            $video = createVideo();
 
-it('has updater relationship', function () {
-    Auth::login($this->user);
+            expect($video->creator)
+                ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
+                ->id->toBe($user->id);
+        });
 
-    $video = Video::create([
-        'identifier' => '/updater-relationship.mp4',
-        'duration' => 75,
-    ]);
+        test('maintains updater relationship', function () {
+            $user = authenticateUser();
+            $video = createVideo();
+            $video->update(['title' => 'Updated Title']);
 
-    $video->update(['description' => 'Updated description']);
+            expect($video->updater)
+                ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
+                ->id->toBe($user->id);
+        });
+    });
 
-    expect($video->updater)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
-        ->and($video->updater->id)->toBe($this->user->id);
-});
+    describe('Data Types', function () {
+        test('casts duration as integer', function () {
+            $video = createVideo(['duration' => '300']);
 
-it('can handle nullable fields', function () {
-    $video = Video::create([
-        'identifier' => '/minimal-video.mp4',
-        'duration' => 3,
-    ]);
+            expect($video)
+                ->duration->toBeInt()->toBe(300);
+        });
+    });
 
-    expect($video->description)->toBeNull()
-        ->and($video->credit)->toBeNull();
-});
+    describe('Model Configuration', function () {
+        test('uses factory trait', function () {
+            expect(in_array(\Illuminate\Database\Eloquent\Factories\HasFactory::class, class_uses(Video::class)))
+                ->toBeTrue();
+        });
 
-it('has duration as integer', function () {
-    $video = Video::create([
-        'identifier' => '/integer-test.mp4',
-        'duration' => '120',
-    ]);
+        test('guards id field', function () {
+            $video = new Video;
 
-    expect($video->duration)->toBeInt()
-        ->and($video->duration)->toBe(120);
-});
+            expect($video->getGuarded())->toBe(['id']);
+        });
+    });
 
-it('enforces unique identifier', function () {
-    Video::create([
-        'identifier' => '/unique-test.mp4',
-        'duration' => 60,
-    ]);
+    describe('Multiple Videos', function () {
+        test('handles multiple videos with unique identifiers', function () {
+            $video1 = createVideo(['identifier' => 'video-1']);
+            $video2 = createVideo(['identifier' => 'video-2']);
 
-    expect(fn () => Video::create([
-        'identifier' => '/unique-test.mp4',
-        'duration' => 9,
-    ]))->toThrow(\Illuminate\Database\QueryException::class);
-});
-
-it('uses factory', function () {
-    expect(in_array(\Illuminate\Database\Eloquent\Factories\HasFactory::class, class_uses(Video::class)))
-        ->toBeTrue();
-});
-
-it('has guarded id field', function () {
-    $video = new Video;
-
-    expect($video->getGuarded())->toBe(['id']);
-});
-
-it('can create multiple videos with different identifiers', function () {
-    $video1 = Video::create(['identifier' => '/video1.mp4', 'duration' => 60]);
-    $video2 = Video::create(['identifier' => '/video2.mp4', 'duration' => 120]);
-
-    expect($video1->identifier)->toBe('/video1.mp4')
-        ->and($video2->identifier)->toBe('/video2.mp4')
-        ->and($video1->identifier)->not->toBe($video2->identifier);
+            expect($video1->identifier)->toBe('video-1')
+                ->and($video2->identifier)->toBe('video-2')
+                ->and($video1->identifier)->not->toBe($video2->identifier);
+        });
+    });
 });

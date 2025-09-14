@@ -1,146 +1,110 @@
 <?php
 
 use DrewRoberts\Media\Models\Image;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Auth;
-
-uses(RefreshDatabase::class, WithFaker::class);
 
 beforeEach(function () {
-    // Create a test user for the relationships
-    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
+    $this->user = createUser();
 });
 
-it('can create an image', function () {
-    $image = Image::create([
-        'filename' => '/test-image.jpg',
-        'width' => 1920,
-        'height' => 1080,
-        'description' => 'Test image',
-        'alt' => 'Test alt text',
-        'credit' => 'Test photographer',
-    ]);
+describe('Image Model', function () {
+    describe('Basic Creation', function () {
+        test('creates images with all attributes', function () {
+            $image = createImage(sampleImageData());
 
-    expect($image)->toBeInstanceOf(Image::class)
-        ->and($image->filename)->toBe('/test-image.jpg')
-        ->and($image->width)->toBe(1920)
-        ->and($image->height)->toBe(1080)
-        ->and($image->description)->toBe('Test image')
-        ->and($image->alt)->toBe('Test alt text')
-        ->and($image->credit)->toBe('Test photographer');
-});
+            expect($image)
+                ->toBeInstanceOf(Image::class)
+                ->filename->toBe('/sample-image.jpg')
+                ->width->toBe(1920)
+                ->height->toBe(1080)
+                ->description->toBe('Sample image')
+                ->alt->toBe('Sample alt text')
+                ->credit->toBe('Sample Photographer');
+        });
 
-it('automatically sets creator_id when authenticated', function () {
-    Auth::login($this->user);
+        test('handles nullable fields gracefully', function () {
+            $image = createImage(['description' => null, 'alt' => null, 'credit' => null]);
 
-    $image = Image::create([
-        'filename' => '/creator-test.jpg',
-        'width' => 800,
-        'height' => 600,
-    ]);
+            expect($image)
+                ->description->toBeNull()
+                ->alt->toBeNull()
+                ->credit->toBeNull();
+        });
 
-    expect($image->creator_id)->toBe($this->user->id);
-});
+        test('enforces unique filenames', function () {
+            createImage(['filename' => '/unique-test.jpg']);
 
-it('automatically sets updater_id when saving while authenticated', function () {
-    Auth::login($this->user);
+            expect(fn () => createImage(['filename' => '/unique-test.jpg']))
+                ->toThrow(\Illuminate\Database\QueryException::class);
+        });
+    });
 
-    $image = Image::create([
-        'filename' => '/updater-test.jpg',
-        'width' => 800,
-        'height' => 600,
-    ]);
+    describe('Authentication Tracking', function () {
+        test('sets creator_id when authenticated', function () {
+            $user = authenticateUser();
+            
+            $image = createImage();
 
-    $image->alt = 'Updated alt text';
-    $image->save();
+            expect($image)->toHaveCreator($user->id);
+        });
 
-    expect($image->updater_id)->toBe($this->user->id);
-});
+        test('sets updater_id when saving changes', function () {
+            $user = authenticateUser();
+            $image = createImage();
 
-it('has creator relationship', function () {
-    Auth::login($this->user);
+            $image->update(['alt' => 'Updated alt text']);
 
-    $image = Image::create([
-        'filename' => '/relationship-test.jpg',
-        'width' => 800,
-        'height' => 600,
-    ]);
+            expect($image)->toHaveUpdater($user->id);
+        });
 
-    expect($image->creator)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
-        ->and($image->creator->id)->toBe($this->user->id);
-});
+        test('maintains creator relationship', function () {
+            $user = authenticateUser();
+            $image = createImage();
 
-it('has updater relationship', function () {
-    Auth::login($this->user);
+            expect($image->creator)
+                ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
+                ->id->toBe($user->id);
+        });
 
-    $image = Image::create([
-        'filename' => '/updater-relationship.jpg',
-        'width' => 800,
-        'height' => 600,
-    ]);
+        test('maintains updater relationship', function () {
+            $user = authenticateUser();
+            $image = createImage();
+            $image->update(['description' => 'Updated description']);
 
-    $image->update(['description' => 'Updated description']);
+            expect($image->updater)
+                ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
+                ->id->toBe($user->id);
+        });
+    });
 
-    expect($image->updater)->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class)
-        ->and($image->updater->id)->toBe($this->user->id);
-});
+    describe('Data Types', function () {
+        test('casts dimensions as integers', function () {
+            $image = createImage(['width' => '800', 'height' => '600']);
 
-it('can handle nullable fields', function () {
-    $image = Image::create([
-        'filename' => '/minimal-image.jpg',
-        'width' => 400,
-        'height' => 300,
-    ]);
+            expect($image)
+                ->width->toBeInt()->toBe(800)
+                ->height->toBeInt()->toBe(600);
+        });
+    });
 
-    expect($image->description)->toBeNull()
-        ->and($image->alt)->toBeNull()
-        ->and($image->credit)->toBeNull();
-});
+    describe('Model Configuration', function () {
+        test('uses factory trait', function () {
+            expect(in_array(\Illuminate\Database\Eloquent\Factories\HasFactory::class, class_uses(Image::class)))
+                ->toBeTrue();
+        });
 
-it('has width and height as integers', function () {
-    $image = Image::create([
-        'filename' => '/integer-test.jpg',
-        'width' => '800',
-        'height' => '600',
-    ]);
+        test('guards id field', function () {
+            expect((new Image)->getGuarded())->toBe(['id']);
+        });
+    });
 
-    expect($image->width)->toBeInt()
-        ->and($image->height)->toBeInt()
-        ->and($image->width)->toBe(800)
-        ->and($image->height)->toBe(600);
-});
+    describe('Multiple Images', function () {
+        test('handles multiple images with unique filenames', function () {
+            $image1 = createImage(['filename' => '/image1.jpg']);
+            $image2 = createImage(['filename' => '/image2.jpg']);
 
-it('enforces unique filename', function () {
-    Image::create([
-        'filename' => '/unique-test.jpg',
-        'width' => 800,
-        'height' => 600,
-    ]);
-
-    expect(fn () => Image::create([
-        'filename' => '/unique-test.jpg',
-        'width' => 400,
-        'height' => 300,
-    ]))->toThrow(\Illuminate\Database\QueryException::class);
-});
-
-it('uses factory', function () {
-    expect(in_array(\Illuminate\Database\Eloquent\Factories\HasFactory::class, class_uses(Image::class)))
-        ->toBeTrue();
-});
-
-it('has guarded id field', function () {
-    $image = new Image;
-
-    expect($image->getGuarded())->toBe(['id']);
-});
-
-it('can create multiple images with different filenames', function () {
-    $image1 = Image::create(['filename' => '/image1.jpg', 'width' => 800, 'height' => 600]);
-    $image2 = Image::create(['filename' => '/image2.jpg', 'width' => 1200, 'height' => 800]);
-
-    expect($image1->filename)->toBe('/image1.jpg')
-        ->and($image2->filename)->toBe('/image2.jpg')
-        ->and($image1->filename)->not->toBe($image2->filename);
+            expect($image1->filename)->toBe('/image1.jpg')
+                ->and($image2->filename)->toBe('/image2.jpg')
+                ->and($image1->filename)->not->toBe($image2->filename);
+        });
+    });
 });

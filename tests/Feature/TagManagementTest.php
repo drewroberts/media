@@ -1,63 +1,69 @@
 <?php
 
 use DrewRoberts\Media\Models\Tag;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
-
-uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->user = \DrewRoberts\Media\Tests\TestUser::factory()->create();
+    $this->user = createUser();
 });
 
-it('can manage tag lifecycle with authentication', function () {
-    // Login user
-    Auth::login($this->user);
+describe('Tag Management', function () {
+    describe('Lifecycle Operations', function () {
+        test('creates tags with proper creator tracking', function () {
+            $user = authenticateUser();
+            $tag = createTag(['name' => 'lifecycle tag']);
 
-    // Create tag
-    $tag = Tag::create([
-        'name' => 'lifecycle tag',
-        'type' => 'test',
-    ]);
+            expect($tag)
+                ->toHaveCreator($user->id)
+                ->name->toBe('#LifecycleTag')
+                ->slug->toBe('lifecycletag');
+        });
 
-    expect($tag->creator_id)->toBe($this->user->id)
-        ->and($tag->name)->toBe('#LifecycleTag')
-        ->and($tag->slug)->toBe('lifecycletag');
+        test('updates tags with proper updater tracking', function () {
+            $user = authenticateUser();
+            $tag = createTag(['name' => 'lifecycle tag']);
 
-    // Update tag
-    $tag->update(['name' => 'updated lifecycle tag']);
-    $tag->refresh();
+            $tag->update(['name' => 'updated lifecycle tag']);
 
-    expect($tag->updater_id)->toBe($this->user->id)
-        ->and($tag->name)->toBe('#UpdatedLifecycleTag');
-});
-
-it('can filter and organize tags by type', function () {
-    // Create various tags
-    collect(['category', 'author', 'topic', 'category', 'author'])->each(function ($type, $index) {
-        Tag::create([
-            'name' => "Tag {$index}",
-            'type' => $type,
-        ]);
+            expect($tag->fresh())
+                ->toHaveUpdater($user->id)
+                ->name->toBe('#UpdatedLifecycleTag');
+        });
     });
 
-    expect(Tag::count())->toBe(5)
-        ->and(Tag::getTypes()->count())->toBe(3)
-        ->and(Tag::getWithType('category')->count())->toBe(2)
-        ->and(Tag::getWithType('author')->count())->toBe(2)
-        ->and(Tag::getWithType('topic')->count())->toBe(1);
-});
+    describe('Type Organization', function () {
+        beforeEach(function () {
+            collect(['category', 'author', 'topic', 'category', 'author'])
+                ->each(fn ($type, $i) => createTag(['name' => "Tag {$i}", 'type' => $type]));
+        });
 
-it('handles tag finding and creation workflow', function () {
-    // Try to find non-existent tag
-    $tag = Tag::findFromString('NonExistent', 'test');
-    expect($tag)->toBeNull();
+        test('counts total tags correctly', function () {
+            expect(Tag::count())->toBe(5);
+        });
 
-    // Create the tag
-    $tag = Tag::create(['name' => 'NonExistent', 'type' => 'test']);
+        test('identifies unique tag types', function () {
+            expect(Tag::getTypes())->toHaveCount(3);
+        });
 
-    // Now find it
-    $foundTag = Tag::findFromString('#NonExistent', 'test');
-    expect($foundTag)->not->toBeNull()
-        ->and($foundTag->id)->toBe($tag->id);
+        test('filters tags by specific type', function () {
+            expect(Tag::getWithType('category'))->toHaveCount(2)
+                ->and(Tag::getWithType('author'))->toHaveCount(2)
+                ->and(Tag::getWithType('topic'))->toHaveCount(1);
+        });
+    });
+
+    describe('Find and Create Workflow', function () {
+        test('handles non-existent tag search', function () {
+            expect(Tag::findFromString('NonExistent', 'test'))->toBeNull();
+        });
+
+        test('finds existing tags by string', function () {
+            $tag = createTag(['name' => 'Existing']);
+            
+            $found = Tag::findFromString('#Existing', 'test');
+            
+            expect($found)
+                ->not->toBeNull()
+                ->id->toBe($tag->id);
+        });
+    });
 });

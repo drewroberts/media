@@ -49,7 +49,7 @@ function authenticateUser(): \DrewRoberts\Media\Tests\TestUser
 {
     $user = createUser();
     \Illuminate\Support\Facades\Auth::login($user);
-    
+
     return $user;
 }
 
@@ -136,7 +136,7 @@ expect()->extend('toHaveUpdater', function (int $userId) {
 
 expect()->extend('toBeFormattedTag', function (string $expectedName, ?string $expectedSlug = null) {
     $expectedSlug = $expectedSlug ?: strtolower(str_replace(['#', ' '], ['', ''], $expectedName));
-    
+
     return $this->name->toBe($expectedName)
         ->and($this->slug)->toBe($expectedSlug);
 });

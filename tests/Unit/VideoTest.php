@@ -43,7 +43,7 @@ describe('Video Model', function () {
     describe('Authentication Tracking', function () {
         test('sets creator_id when authenticated', function () {
             $user = authenticateUser();
-            
+
             $video = createVideo();
 
             expect($video)->toHaveCreator($user->id);

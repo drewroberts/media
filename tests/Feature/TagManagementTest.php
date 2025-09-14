@@ -58,9 +58,9 @@ describe('Tag Management', function () {
 
         test('finds existing tags by string', function () {
             $tag = createTag(['name' => 'Existing']);
-            
+
             $found = Tag::findFromString('#Existing', 'test');
-            
+
             expect($found)
                 ->not->toBeNull()
                 ->id->toBe($tag->id);

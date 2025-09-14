@@ -1,7 +1,6 @@
 <?php
 
 use DrewRoberts\Media\Facades\YouTube;
-use DrewRoberts\Media\Models\Video;
 use DrewRoberts\Media\Support\YouTube\YouTubeService;
 use Illuminate\Support\Facades\Http;
 
@@ -13,7 +12,7 @@ describe('Video Management', function () {
     describe('Lifecycle Operations', function () {
         test('creates videos with proper creator tracking', function () {
             $user = authenticateUser();
-            
+
             $video = createVideo(sampleVideoData());
 
             expect($video)
@@ -43,7 +42,7 @@ describe('Video Management', function () {
         test('fetches and normalizes video data from API', function () {
             Http::fake(['*/videos*' => Http::response(youtubeApiResponse(), 200)]);
             YouTube::swap(new YouTubeService('test-key'));
-            
+
             $data = YouTube::fetch('VHpxrjqIJDc');
 
             expect($data)
@@ -58,7 +57,7 @@ describe('Video Management', function () {
 
         test('preserves custom description during API refresh', function () {
             $user = authenticateUser();
-            
+
             $video = createVideo([
                 'title' => 'Old Title',
                 'description' => 'Keep this description',

@@ -39,7 +39,7 @@ describe('Tag Model', function () {
     describe('Authentication Tracking', function () {
         test('sets creator_id when authenticated', function () {
             $user = authenticateUser();
-            
+
             $tag = createTag([
                 'name' => 'AuthorTag',
                 'type' => 'author',
@@ -50,7 +50,7 @@ describe('Tag Model', function () {
 
         test('sets updater_id when saving changes', function () {
             $user = authenticateUser();
-            
+
             $tag = createTag([
                 'name' => 'UpdateTag',
                 'type' => 'update',
@@ -63,7 +63,7 @@ describe('Tag Model', function () {
 
         test('maintains creator relationship', function () {
             $user = authenticateUser();
-            
+
             $tag = createTag([
                 'name' => 'RelationshipTag',
                 'type' => 'test',
@@ -76,7 +76,7 @@ describe('Tag Model', function () {
 
         test('maintains updater relationship', function () {
             $user = authenticateUser();
-            
+
             $tag = createTag([
                 'name' => 'UpdaterTag',
                 'type' => 'test',

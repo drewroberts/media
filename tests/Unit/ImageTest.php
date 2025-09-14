@@ -41,7 +41,7 @@ describe('Image Model', function () {
     describe('Authentication Tracking', function () {
         test('sets creator_id when authenticated', function () {
             $user = authenticateUser();
-            
+
             $image = createImage();
 
             expect($image)->toHaveCreator($user->id);

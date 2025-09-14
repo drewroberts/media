@@ -12,7 +12,7 @@ describe('Image Management', function () {
     describe('Lifecycle Operations', function () {
         test('creates images with proper creator tracking', function () {
             $user = authenticateUser();
-            
+
             $image = createImage(sampleImageData());
 
             expect($image)
@@ -33,7 +33,7 @@ describe('Image Management', function () {
 
         test('handles bulk image operations efficiently', function () {
             $user = authenticateUser();
-            
+
             $images = collect(range(1, 10))
                 ->map(fn ($i) => createImage(['filename' => "/bulk/image-{$i}.jpg"]));
 
@@ -77,7 +77,7 @@ describe('Image Management', function () {
             collect(['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'])
                 ->each(function ($ext) {
                     $image = createImage(['filename' => "/test.{$ext}"]);
-                    
+
                     expect($image->extension)->toBe($ext);
                 });
         });

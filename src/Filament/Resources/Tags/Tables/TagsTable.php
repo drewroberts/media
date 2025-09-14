@@ -4,9 +4,12 @@ namespace DrewRoberts\Media\Filament\Resources\Tags\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
+use Roberts\LaravelSingledbTenancy\Services\SuperAdmin;
 
 class TagsTable
 {
@@ -32,10 +35,13 @@ class TagsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make()
+                    ->visible(fn (): bool => app(SuperAdmin::class)->is(Auth::user())),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->visible(fn (): bool => app(SuperAdmin::class)->is(Auth::user())),
                 ]),
             ]);
     }

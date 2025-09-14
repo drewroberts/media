@@ -9,6 +9,8 @@ use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Roberts\LaravelSingledbTenancy\Services\SuperAdmin;
 
 class EditVideo extends EditRecord
 {
@@ -17,7 +19,8 @@ class EditVideo extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn (): bool => app(SuperAdmin::class)->is(Auth::user())),
         ];
     }
 

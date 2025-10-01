@@ -32,8 +32,10 @@ class CreateVideosTable extends Migration
             $table->dateTime('stream_scheduled_at')->nullable(); // When the stream was scheduled to start on YouTube
             $table->dateTime('published_at')->nullable(); // When video was published on YouTube
 
-            $table->unsignedBigInteger('creator_id')->nullable()->foreign()->references('id')->on('users'); // If user added it via Admin
-            $table->unsignedBigInteger('updater_id')->nullable()->foreign()->references('id')->on('users'); // Nullable since videos can be pulled from YouTube API
+            $table->unsignedBigInteger('creator_id')->nullable(); // If user added it via Admin
+            $table->foreign('creator_id')->references('id')->on('users');
+            $table->unsignedBigInteger('updater_id')->nullable(); // Nullable since videos can be pulled from YouTube API
+            $table->foreign('updater_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

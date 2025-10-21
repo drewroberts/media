@@ -21,7 +21,7 @@
         "cloudinary-labs/cloudinary-laravel": "^3.0",
         "filament/filament": "^4.0.1",
         "illuminate/contracts": "^12.24",
-        "roberts/support": "^12.1",
+        "roberts/support": "^1.0",
         "roberts/laravel-singledb-tenancy": "^12.0",
         "spatie/eloquent-sortable": "^4.5",
         "spatie/laravel-package-tools": "^1.92"

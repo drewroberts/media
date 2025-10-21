@@ -155,3 +155,7 @@ All notable changes to `media` will be documented in this file
 - import roberts support package
 - use creator & updater traits
 - use randomorcreate helper
+
+## 12.1.2 - 2025-10-21
+
+- bump dependencies

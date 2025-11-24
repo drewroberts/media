@@ -45,6 +45,8 @@ class ImageForm
                     }),
                 TextInput::make('description')
                     ->columnSpanFull(),
+                TextInput::make('slug')
+                    ->helperText('Unique identifier for embedding in content (e.g., "my-image")'),
                 TextInput::make('alt'),
                 TextInput::make('credit'),
                 // @phpstan-ignore-next-line Placeholder is deprecated in newer Filament; compatible here

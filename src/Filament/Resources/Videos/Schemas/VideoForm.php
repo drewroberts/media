@@ -23,6 +23,9 @@ class VideoForm
                 ->visibleOn('create'),
 
             TextInput::make('name')->label('Internal Name'),
+            TextInput::make('slug')
+                ->helperText('Unique identifier for embedding in content (e.g., "my-video")')
+                ->visibleOn('edit'),
             TextInput::make('credit')->visibleOn('edit'),
             Select::make('image_id')
                 ->label('Thumbnail Image')

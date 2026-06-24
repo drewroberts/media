@@ -11,6 +11,7 @@ use Roberts\Support\Traits\HasUpdater;
 /**
  * @property int $id
  * @property string $identifier
+ * @property string|null $slug
  * @property string $source
  * @property string|null $name
  * @property string|null $title
@@ -76,5 +77,15 @@ class Video extends Model
 
         // Use the youtu.be short link format
         return sprintf('https://youtu.be/%s', $this->identifier);
+    }
+
+    public function embed(): string
+    {
+        $slug = $this->getAttribute('slug');
+        if (! $slug) {
+            return '';
+        }
+
+        return '{video:'.$slug.'}';
     }
 }

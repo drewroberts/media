@@ -11,6 +11,7 @@ use Roberts\Support\Traits\HasUpdater;
 /**
  * @property int $id
  * @property string|null $filename
+ * @property string|null $slug
  * @property int|null $width
  * @property int|null $height
  * @property string|null $description
@@ -61,6 +62,16 @@ class Image extends Model
         $parts = pathinfo($filename ?? '');
 
         return isset($parts['extension']) ? strtolower($parts['extension']) : null;
+    }
+
+    public function embed(): string
+    {
+        $slug = $this->getAttribute('slug');
+        if (! $slug) {
+            return '';
+        }
+
+        return '{image:'.$slug.'}';
     }
 
     public function videos()
